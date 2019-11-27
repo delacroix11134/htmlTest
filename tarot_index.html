@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="pic/icon.png">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+    <link rel="stylesheet" href="css/victorsWork_Shared.css">
+    <script src="script/jquery-3.3.1.js"></script>
+    <script src="script/jquery.scrolling-parallax.js"></script>
+    <title>Tarot</title>
+    <style>
+        body{
+            background:url('pic/header3.jpg');
+            background-position-y: 0;
+            background-attachment:fixed; 
+            text-align: center;
+        }
+        .title-pic{
+            background: transparent;
+        }
+        main, section{
+            margin: 0 auto;
+            width: 100%;
+            height: 500px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            background: rgba(27, 27, 27, 0.95);
+            position: relative;
+        }
+        main{
+            margin-top: 20px;
+            height: 750px;
+        }
+        main button, section button{
+            color: rgb(31, 204, 175);
+            width: 200px;
+            height: 180px;
+            margin: 20px;
+            border-radius: 10px;
+            background: transparent;
+            border: 1px solid rgb(31, 204, 175);
+            cursor: pointer;
+            text-align: center;
+        }
+        main button:hover, section button:hover{
+            background: rgba(255,255,255,0.1)
+        }
+        .black{
+            display: none;
+            height: 100%;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 10;
+        }
+        .black-exit{
+            width: 80px;
+            height: 80px;
+            color: white;
+            background: rgba(255,255,255,0.2);
+            font-size: 60px;
+            text-align: center;
+            line-height: 80px;
+            position: absolute;
+            top: 70px;
+            right: 40px;
+            cursor: pointer;
+        }
+        .arrow{
+            margin: 30px auto;
+        }
+        .blank{
+            width: 100%;
+            height: 80px;
+        }
+        .sec-title{
+            width: 100%;
+            color: white;
+            position: absolute;
+            top: 80px;
+        }
+        .sec-text{
+            color: #1fccaf;
+            text-align: left;
+            margin: 28px;
+        }
+        .sec-img{
+            position: absolute;
+            bottom: 100px;
+        }
+        .start, .back{
+            color: rgb(31, 204, 175);
+            width: 200px;
+            height: 60px;
+            margin: 0 auto;
+            border-radius: 30px;
+            position: absolute;
+            bottom: 100px;
+            background: transparent;
+            border: 1px solid rgb(31, 204, 175);
+            cursor: pointer;
+            text-align: center;
+        }
+        .allCards img{
+            width: 80%;
+        }
+        .bigCards img{
+            width: 70px;
+        }
+        .allCards > div, .bigCards > div{
+            position: relative;
+            top: 12px;
+        }
+        .cards{
+            width:80%;
+            height: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            flex-wrap: wrap;
+            position:absolute;
+            top: 25%;
+            left: 10%;
+            z-index: 10;
+        }
+        .card{
+            display: none;
+            width: 16%;
+            margin: 20px;
+            transition: 0.3s ease;
+            position: relative;
+            opacity: 0;
+            animation: card-in 0.3s ease-out forwards;
+        }
+        .card-other{
+            animation: card-in-2 0.5s ease-out forwards;
+        }
+        .card-big{
+            width: 16%;
+        }
+        .card:nth-child(2){
+            animation-delay: 0.1s;
+        }
+        .card:nth-child(3){
+            animation-delay: 0.2s;
+        }
+        .card:nth-child(4){
+            animation-delay: 0.3s;
+        }
+        .card:nth-child(5){
+            animation-delay: 0.4s;
+        }
+        .card:nth-child(7){
+            animation-delay: 0.1s;
+        }
+        .card:nth-child(8){
+            animation-delay: 0.2s;
+        }
+        .card:nth-child(9){
+            animation-delay: 0.3s;
+        }
+        .card:nth-child(10){
+            animation-delay: 0.1s;
+        }
+        .card:nth-child(11){
+            animation-delay: 0.2s;
+        }
+        .card:nth-child(12){
+            animation-delay: 0.3s;
+        }
+        .card:nth-child(13){
+            animation-delay: 0.4s;
+        }
+        .card:nth-child(14){
+            animation-delay: 0.5s;
+        }
+        .card:nth-child(16){
+            animation-delay: 0.1s;
+        }
+        .card:nth-child(17){
+            animation-delay: 0.2s;
+        }
+        .card:nth-child(18){
+            animation-delay: 0.3s;
+        }
+        .card:nth-child(19){
+            animation-delay: 0.4s;
+        }
+        .card:nth-child(20){
+            animation-delay: 0.5s;
+        }
+        .card:nth-child(28){
+            animation-delay: 0.1s;
+        }
+        .card:nth-child(29){
+            animation-delay: 0.2s;
+        }
+        .card:nth-child(30){
+            animation-delay: 0.3s;
+        }
+        .card:nth-child(31){
+            animation-delay: 0.4s;
+        }
+
+        /*hover*/
+        .card:hover{
+            transform: matrix3d(0.87,0,0.50,-0.0002,0.00,1,0.00,0,-0.5,0,0.87,0,0,0,0,1);
+        }
+        .card-open:hover{
+            transform: none;
+        }
+        @keyframes card-in{
+            0%{
+                left: 40px;
+                opacity: 0;
+            }
+            100%{
+                left: 0;
+                opacity: 1;
+            }
+        }
+        @keyframes card-in-2{
+            0%{
+                opacity: 0;
+            }
+            100%{
+                opacity: 1;
+            }
+        }
+        @keyframes glow{
+            0%{
+                filter: brightness(3);
+            }
+            100%{
+                filter: brightness(1);
+            }
+        }
+        /*牌陣*/
+        .other{
+            position: absolute;
+            width: 14%;
+        }
+        #card6{
+            top: -30%;
+            left: 33%;
+        }
+        #card7{
+            top: -30%;
+            right: 33%;
+        }
+        #card8{
+            top: 52%;
+            left: 33%;
+        }
+        #card9{
+            top: 52%;
+            right: 33%;
+        }
+        /*十字*/
+        #card10{
+            width:10%;
+            top: -38%;
+            right: 59%;
+        }
+        #card12{
+            width:10%;
+            top: 82%;
+            right: 45%;
+        }
+        #card11{
+            width:10%;
+            top: 22%;
+            right: 52%;
+        }
+        #card13{
+            width:10%;
+            top: 22%;
+            right: 38%;
+        }
+        #card14{
+            width:10%;
+            top: -38%;
+            right: 31%;
+        }
+        /*star*/
+        #card15{
+            width:10%;
+            top: -8%;
+            right: 65%;
+        }
+        #card16{
+            width:10%;
+            top: -38%;
+            right: 45%;
+        }
+        #card17{
+            width:10%;
+            top: -8%;
+            right: 25%;
+        }
+        #card18{
+            width:10%;
+            top: 52%;
+            right: 25%;
+        }
+        #card19{
+            width:10%;
+            top: 82%;
+            right: 45%;
+        }
+        #card20{
+            width:10%;
+            top: 52%;
+            right: 65%;
+        }
+        #card21{
+            width:10%;
+            top: 22%;
+            right: 45%;
+        }
+        /*塞爾特*/
+        #card22{
+            width:10%;
+            top: 22%;
+            right: 72%;
+        }
+        #card23{
+            width:10%;
+            top: 17%;
+            right: 52.5%;
+            transform: rotate(-90deg);
+        }
+        #card23:hover{
+            z-index: 5;
+        }
+        #name23{
+            width: 22px;
+            transform: rotate(90deg) translate(-10px,-65px);
+        }
+        #card24{
+            width:10%;
+            top: -38%;
+            right: 55%;
+        }
+        #card25{
+            width:10%;
+            top: 22%;
+            right: 38%;
+        }
+        #card26{
+            width:10%;
+            top: 83%;
+            right: 55%;
+        }
+        #card27{
+            width:10%;
+            top: 22%;
+            right: 55%;
+        }
+        #card28{
+            width:10%;
+            top: -38%;
+            right: 20%;
+        }
+        #card29{
+            width:10%;
+            top: 2%;
+            right: 20%;
+        }
+        #card30{
+            width:10%;
+            top: 42%;
+            right: 20%;
+        }
+        #card31{
+            width:10%;
+            top: 82%;
+            right: 20%;
+        }
+        #name28,#name29,#name30,#name31{
+            position: absolute;
+            top: 20%;
+            right: -35px;
+            text-orientation: upright;
+            height: 100%;
+            width: 22px;
+            line-height: 1.2;
+        }
+        /*img*/
+        .card img{
+            width: 100%;
+        }
+        .img-glow{
+            animation: glow 0.5s ease-in-out forwards;
+        }
+        .name{
+            width: 100%;
+            height: 40px;
+            color: transparent;
+            text-align: center;
+            transition: 0.5s ease;
+        }
+        .show-name{
+            color: white;
+        }
+        /*footer*/
+        footer{
+            margin-top: 210px;
+        }
+        .footer-black{
+            background: rgba(27, 27, 27, 1);
+        }
+        /*media query*/
+        @media(max-width:500px){
+            main{
+                height: 1100px;
+            }
+            section{
+                height: 800px;
+            }
+            .sec1, .sec4{
+                height: 600px;
+            }
+            .sec-title{
+                top: 60px;
+            }
+            .sec-img{
+                position: relative;
+                bottom: 200px;
+            }
+            .sec1 .sec-title,.sec4 .sec-title,.sec5 .sec-title{
+                top: 100px;
+            }
+            section button{
+                width: 80%;
+                height: 250px;
+                font-size: 20px;
+            }
+            main button{
+                width: 38%;
+                height: 200px;
+                font-size: 16px;
+                margin: 10px;
+            }
+            .cards{
+                width: 95%;
+                left: 2.5%;
+            }
+            .card{
+                width: 25%;
+                margin: 10px;
+            }
+            .name{
+                font-size: 10px;
+                line-height: 1.2;
+            }
+            /*牌陣*/
+            #card6{
+                top: -5%;
+                left: 18%;
+            }
+            #card7{
+                top: -5%;
+                right: 18%;
+            }
+            #card8{
+                top: 53%;
+                left: 18%;
+            }
+            #card9{
+                top: 53%;
+                right: 18%;
+            }
+            /*十字*/
+            #card10{
+                width:18%;
+                top: -12%;
+                right: 60%;
+            }
+            #card11{
+                width:18%;
+                top: 38%;
+                right: 52%;
+            }
+            #card12{
+                width:18%;
+                top: 88%;
+                right: 40%;
+            }
+            #card13{
+                width:18%;
+                top: 38%;
+                right: 28%;
+            }
+            #card14{
+                width:18%;
+                top: -12%;
+                right: 20%;
+            }
+            /*star*/
+            #card15{
+                width:16%;
+                top: 7%;
+                right: 70%;
+            }
+            #card16{
+                width:16%;
+                top: -18%;
+                right: 40%;
+            }
+            #card17{
+                width:16%;
+                top: 7%;
+                right: 10%;
+            }
+            #card18{
+                width:16%;
+                top: 57%;
+                right: 10%;
+            }
+            #card19{
+                width:16%;
+                top: 82%;
+                right: 40%;
+            }
+            #card20{
+                width:16%;
+                top: 57%;
+                right: 70%;
+            }
+            #card21{
+                width:16%;
+                top: 32%;
+                right: 40%;
+            }
+            /*塞爾特*/
+            #card22{
+                width:16%;
+                top: 42%;
+                right: 76%;
+            }
+            #card23{
+                width:16%;
+                top: 37%;
+                right: 46%;
+                transform: rotate(-90deg);
+            }
+            #card23:hover{
+                z-index: 5;
+            }
+            #name23{
+                width: 22px;
+                transform: rotate(90deg) translate(-33px,-40px);
+            }
+            #card24{
+                width:16%;
+                top: -12%;
+                right: 52%;
+            }
+            #card25{
+                width:16%;
+                top: 42%;
+                right: 28%;
+            }
+            #card26{
+                width:16%;
+                top: 96%;
+                right: 52%;
+            }
+            #card27{
+                width:16%;
+                top: 42%;
+                right: 52%;
+            }
+            #card28{
+                width:16%;
+                top: -12%;
+                right: 5%;
+            }
+            #card29{
+                width:16%;
+                top: 24%;
+                right: 5%;
+            }
+            #card30{
+                width:16%;
+                top: 60%;
+                right: 5%;
+            }
+            #card31{
+                width:16%;
+                top: 96%;
+                right: 5%;
+            }
+            #name28,#name29,#name30,#name31{
+                position: absolute;
+                top: 100%;
+                right: -25%;
+                height: 22px;
+                width: 150%;
+            }
+            /*調整*/
+            .card-big{
+                width: 45% !important;
+            }
+            .card:hover, card:active{
+            transform: none;
+            }
+            .black-exit{
+                width: 60px;
+                height: 60px;
+                font-size: 50px;
+                line-height: 60px;
+            }
+            .img-glow{
+                animation-duration: 1.5s;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="black">
+        <div class="black-exit">X</div>
+        <div class="cards">
+            <div id="card1" class="card"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name1"class="name"></div></div>
+            <div id="card2" class="card"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name2"class="name"></div></div>
+            <div id="card3" class="card"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name3"class="name"></div></div>
+            <div id="card4" class="card"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name4"class="name"></div></div>
+            <div id="card5" class="card"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name5"class="name"></div></div>
+            <!-- 4 elements -->
+            <div id="card6" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name6"class="name"></div></div>
+            <div id="card7" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name7"class="name"></div></div>
+            <div id="card8" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name8"class="name"></div></div>
+            <div id="card9" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name9"class="name"></div></div>
+            <!-- cross -->
+            <div id="card10" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name10"class="name"></div></div>
+            <div id="card11" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name11"class="name"></div></div>
+            <div id="card12" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name12"class="name"></div></div>
+            <div id="card13" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name13"class="name"></div></div>
+            <div id="card14" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name14"class="name"></div></div>
+            <!-- star -->
+            <div id="card15" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name15"class="name"></div></div>
+            <div id="card16" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name16"class="name"></div></div>
+            <div id="card17" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name17"class="name"></div></div>
+            <div id="card18" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name18"class="name"></div></div>
+            <div id="card19" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name19"class="name"></div></div>
+            <div id="card20" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name20"class="name"></div></div>
+            <div id="card21" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name21"class="name"></div></div>    
+            <!-- celtic -->
+            <div id="card22" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name22"class="name"></div></div>
+            <div id="card23" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name23"class="name"></div></div>
+            <div id="card24" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name24"class="name"></div></div>
+            <div id="card25" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name25"class="name"></div></div>
+            <div id="card26" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name26"class="name"></div></div>
+            <div id="card27" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name27"class="name"></div></div>
+            <div id="card28" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name28"class="name"></div></div>
+            <div id="card29" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name29"class="name"></div></div>
+            <div id="card30" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name30"class="name"></div></div>
+            <div id="card31" class="card other"><img src="porject_tarot/pic/images/t_back.png" alt=""><div id="name31"class="name"></div></div>
+
+        </div>
+    </div>
+    <!-- header -->
+    <header>
+        <div class="bar">
+            <div class="logo"><img src="pic/logo.png" ></div>
+        </div>
+        <div class="title-pic"></div>
+        <h1 class="title-text">塔羅抽排程式</h1>
+        <p class="title-sub-text">線上簡易版抽排</p>
+    </header>
+    <!-- mian -->
+    <section class="sec5">
+        <div class="sec-title">塔羅牌是什麼?</div>
+        <div class="sec-text">塔羅牌在傳統上由78張牌組成的牌組，集合了神秘學、基督教、猶太教、埃及神話、星座符號、象徵學等的占卜體系<br>
+            除了用於占卜，現代人更傾向於將塔羅牌作爲一種自我探索和發展的工具</div>
+        <div class="sec-img"><img src="porject_tarot/pic/icon/icon12.png" alt=""></div>
+    </section>
+    <div class="blank"></div>
+    <section class="sec5">
+        <div class="sec-title">塔羅牌的組成</div>
+        <div class="sec-text">塔羅牌由22張「大秘儀」和56張「小秘儀」組成<br>
+            大秘儀用來解釋事物的背景與原因，可以獨自占卜<br>
+            小秘儀包含權杖、聖杯、寶劍、錢幣四個牌組，各組中更細分為十張數字牌<br>
+            和國王、王后、騎士、侍者四張宮廷牌，常表示事件的細節與單獨的表徵
+        </div>
+    </section>
+    <div class="blank"></div>
+    <section class="sec5">
+        <div class="sec-title">占卜的原理</div>
+        <div class="sec-text">
+            塔羅牌的圖像包含神秘學、卡巴拉數字學、占星術等象徵符號，但儘管塔羅擁有豐富的內涵<br>
+            它仍然只是一種好用的「工具」，本身並不帶有任何神秘的力量<br>
+            塔羅之所以神準，係因為問題的解答都存在於人類的潛意識之中，而塔羅牌的22張大牌，正是集體潛意識之中原型的圖像<br>
+            解牌者只須做出忠實的解讀，即可獲得許多的啟發，並做出準確的預測
+        </div>
+    </section>
+    <div class="blank"></div>
+    <section class="sec1">
+        <div class="sec-title">馬上來抽牌吧！首先在心中默想你的問題</div>
+        <img src="porject_tarot/pic/icon/icon6.png" alt="">
+        <button class="start">好了!</button>
+    </section>
+    <div class="arrow"><img src="porject_tarot/pic/icon/arrow1.png" alt=""></div>
+    <section class="sec2">
+        <div class="sec-title">請先選擇牌組</div>
+        <div class="buttons">
+            <button class="bigCards">
+                <img src="porject_tarot/pic/icon/icon4.png" alt="">
+                <div>22張牌</div>
+            </button>
+            <button class="allCards">
+                <img src="porject_tarot/pic/icon/icon5.png" alt="">
+                <div>78張牌</div>
+            </button>
+        </div>
+    </section>
+    <div class="arrow"><img src="porject_tarot/pic/icon/arrow1.png" alt=""></div>
+    <main id="main">
+        <div class="sec-title">選擇抽排方式</div>
+        <div class="buttons">
+            <button class="oneCard">
+                <img src="porject_tarot/pic/icon/icon1.png" alt="">
+                <div>一張牌</div>
+            </button>
+            <button class="threeCards">
+                <img src="porject_tarot/pic/icon/icon2.png" alt="">
+                <div>三張牌</div>
+            </button>
+            <button class="fiveCards">
+                <img src="porject_tarot/pic/icon/icon3.png" alt="">
+                <div>五張牌</div>
+            </button>
+            <button class="threeCards">
+                <img src="porject_tarot/pic/icon/icon7.png" alt="">
+                <div>時間之箭占卜法</div>
+            </button>
+            <button class="fourCards">
+                <img src="porject_tarot/pic/icon/icon8.png" alt="">
+                <div>四要素占卜法</div>
+            </button>
+            <button class="cross">
+                <img src="porject_tarot/pic/icon/icon9.png" alt="">
+                <div>二擇一占卜法</div>
+            </button>
+            <button class="star">
+                <img src="porject_tarot/pic/icon/icon10.png" alt="">
+                <div>六芒星占卜法</div>
+            </button>
+            <button class="celtic">
+                <img src="porject_tarot/pic/icon/icon11.png" alt="">
+                <div>塞爾特十字占卜法</div>
+            </button>
+        </div>
+    </main>
+    <div class="arrow"><img src="porject_tarot/pic/icon/arrow1.png" alt=""></div>
+    <section class="sec4">
+        <div class="sec-title">得到結果了嗎?</div>
+        <button class="back">重新抽牌</button>
+    </section>
+    <div class="blank"></div>
+    <section class="sec5">
+        <div class="sec-title">解牌</div>
+        <div class="sec-text">
+            請找專業的占卜師或自行研究牌義
+        </div>
+    </section>
+    <!-- footer -->
+    <footer>
+        <div class="footer-green"></div>
+        <div class="footer-black">
+            <div class="footer-black-left">
+                <div><h1>A Victor's Work</h1></div>
+                <div>Only for study & practices.<br>
+                Visit my other practices:</div>
+                <ul>
+                    <li><a href="Hangman.html">Hangman game</a></li>
+                    <li><a href="wheel_event.html">Wheel Event</a></li>
+                    <li><a href="DOM_Test.html">DOM Test</a></li>
+                    <li><a href="CSS_Animation.html">CSS_Animation</a></li>
+                    <li><a href="CSS_Grid.html">CSS_Grid</a></li>
+                    <li><a href="CSS_Flexbox.html">CSS_Flexbox</a></li>
+                </ul>
+            </div>
+            <div class="footer-black-middle">
+                <div><h1>All rights reserved</h1></div>
+                <div>Only for study & practices.<br>
+                </div>
+            </div>
+            <div class="footer-black-right">
+                <div><h1>Contact me</h1></div>
+                <div>Please contact me on the internet.</div>
+                <div class="links">
+                    <a href=""><img src="pic/facebook.png" ></a>
+                    <a href=""><img src="pic/instagram.png" ></a>
+                    <a href=""><img src="pic/behance.png" ></a>
+                    <a href=""><img src="pic/pen.png" ></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+<script>
+    // 基本處理DOM的函式工廠 可以鍊式呼叫
+    var $$ = function(selector){
+        var elements = document.querySelectorAll(selector);
+        return{
+            elements,
+            html(newHTML){
+                this.elements.forEach(function(ele){
+                    ele.innerHTML = newHTML;
+                })
+                return this;
+            },
+            css(newCSS){
+                this.elements.forEach(function(ele){
+                    Object.assign(ele.style,newCSS);
+                })
+                return this;
+            },
+            on(event,handler){
+                this.elements.forEach(function(ele){
+                    ele.addEventListener(event,handler);
+                })
+                return this;
+            },
+            remove(event,handler){
+                this.elements.forEach(function(ele){
+                    ele.removeEventListener(event,handler);
+                })
+                return this;
+            },
+            addClass(className){
+                this.elements.forEach(function(ele){
+                    ele.classList.add(className);
+                })
+                return this;
+            },
+            removeClass(className){
+                this.elements.forEach(function(ele){
+                    ele.classList.remove(className);
+                })
+                return this;
+            },
+            toggleClass(className){
+                this.elements.forEach(function(ele){
+                    ele.classList.toggle(className);
+                })
+                return this;
+            },
+            hide(){
+                this.elements.forEach(function(ele){
+                    ele.style.display = 'none';
+                })
+                return this;
+            },
+            show(){
+                this.elements.forEach(function(ele){
+                    ele.style.display = 'block';
+                })
+                return this;
+            },
+            changePic(path){
+                this.elements.forEach(function(ele){
+                    ele.src = path;
+                })
+                return this;
+            }
+    }}
+    // 按鈕功能
+    $('.start').on('click', function () {
+        // jQuery頁面滑動
+        $('html,body').animate({scrollTop:$('.sec2').offset().top},500);
+    });
+    $('.back').on('click', function () {
+        $('html,body').animate({scrollTop:$('.sec1').offset().top},1000);
+    });
+    $('.bigCards').on('click', function () {
+        $('html,body').animate({scrollTop:$('#main').offset().top},500);
+        mode = 22;
+    });
+    $('.allCards').on('click', function () {
+        $('html,body').animate({scrollTop:$('#main').offset().top},500);
+        mode = 78;
+    });
+    $$('.oneCard').on('click',function(){
+        $$('.black').show();
+        $$('#card1').show().addClass('card-big');
+        pickCrads(1);
+    })
+    $$('.threeCards').on('click',function(){
+        $$('.black').show();$$('#card1').show();$$('#card2').show();$$('#card3').show();pickCrads(3);
+    })
+    $$('.fiveCards').on('click',function(){
+        $$('.black').show();$$('#card1').show();$$('#card2').show();
+        $$('#card3').show();$$('#card4').show();$$('#card5').show();
+        pickCrads(5);
+    })
+    //牌陣按鈕
+    $$('.fourCards').on('click',function(){
+        $$('.black').show();
+        $$('.card').css({animationName:'card-in-2'});
+        $$('#card6').show();$$('#card7').show();$$('#card8').show();$$('#card9').show();
+        pickCrads(9);
+    })
+    $$('.cross').on('click',function(){
+        $$('.black').show();
+        $$('.card').css({animationName:'card-in-2'});
+        $$('#card10').show();$$('#card11').show();$$('#card12').show();
+        $$('#card13').show();$$('#card14').show();
+        pickCrads(14);
+    })
+    $$('.star').on('click',function(){
+        $$('.black').show();
+        $$('.card').css({animationName:'card-in-2'});
+        $$('#card15').show();$$('#card16').show();$$('#card17').show();$$('#card18').show();
+        $$('#card19').show();$$('#card20').show();$$('#card21').show();
+        pickCrads(21);
+    })
+    $$('.celtic').on('click',function(){
+        $$('.black').show();
+        $$('.card').css({animationName:'card-in-2'});
+        // $$('#card22').show();$$('#card23').show();$$('#card24').show();$$('#card25').show();$$('#card26').show();
+        // $$('#card27').show();$$('#card28').show();$$('#card29').show();$$('#card30').show();$$('#card31').show();
+        //用IIFE來避開for回圈的閉包
+        for(i=22;i<32;i++){
+            (function(){
+                $$(`#card${i}`).show();
+            }());
+        }
+        pickCrads(31);
+    })
+    // 離開按鈕
+    $$('.black-exit').on('click',function(){
+        $$('.black').hide();
+        $$('.card').hide().removeClass('card-big').removeClass('card-open').css({animationName:'card-in'});
+    });
+    // 視差滾動外掛(http://rettamkrad.blogspot.com/2013/05/blog-post.html)
+    $('body').parallax({offsetY:-200,speedDactor:0.15}); 
+    // 宣告
+    var mode = 78;
+    var cardNameArr = [];
+    var deck = [];
+    var pick = [];
+    var pickName = [];
+    var isMobile = function(){
+        if(window.screen.width>500){
+            return false;
+        }else{
+            return true;
+    }}
+    var init = function(){
+        deck.length = 0;
+        pick.length = 0;
+        pickName.length = 0;
+        cardNameArr = ['0愚者','I魔術師','II女祭司','III皇后','IV皇帝','V教宗','VI戀人','VII戰車','VIII正義','IX隱者','X命運之輪','XI力量','XII倒吊人','XIII死神','XIV節制','XV惡魔','XVI塔','XVII星星','XVIII月亮','XIX太陽','XX審判','XXI世界',
+        '權杖1','權杖2','權杖3','權杖4','權杖5','權杖6','權杖7','權杖8','權杖9','權杖10','權杖侍者','權杖騎士','權杖皇后','權杖國王',
+        '寶劍1','寶劍2','寶劍3','寶劍4','寶劍5','寶劍6','寶劍7','寶劍8','寶劍9','寶劍10','寶劍侍者','寶劍騎士','寶劍皇后','寶劍國王',
+        '聖杯1','聖杯2','聖杯3','聖杯4','聖杯5','聖杯6','聖杯7','聖杯8','聖杯9','聖杯10','聖杯侍者','聖杯騎士','聖杯皇后','聖杯國王',
+        '錢幣1','錢幣2','錢幣3','錢幣4','錢幣5','錢幣6','錢幣7','錢幣8','錢幣9','錢幣10','錢幣侍者','錢幣騎士','錢幣皇后','錢幣國王',]
+        for(i=0;i<=mode;i++){
+            deck.push(i);
+        }
+        $$('.card img').css({transform:'rotate(0)'}).changePic('porject_tarot/pic/images/t_back.png').removeClass('img-glow');
+        $$('.name').html('').removeClass('show-name');
+        $$('.card').removeClass('card-other');
+    }
+    // 抽卡
+    var pickCrads = function(number){
+        init();
+        // 從deck隨機牌並加入陣列pick
+        if(mode<number){
+            for(i=0;i<10;i++){
+                var picked =Math.abs(Math.floor(Math.random()*(mode-i)));
+                var ifReverse = Math.floor(Math.random()*2);
+                if(ifReverse){
+                    pick.push([deck[picked]]);
+                    pickName.push(cardNameArr[picked]);
+                }else{
+                    // 隨機正逆位
+                    pick.push([deck[picked],'reverse']);
+                    pickName.push(cardNameArr[picked]+' 逆位');
+                }
+                $$(`#name${i+22}`).html(pickName[i]);
+                deck.splice(picked,1);
+                cardNameArr.splice(picked,1)
+            }
+            for(let i=22;i<=number;i++){
+                $$(`#card${i} img`).on('click',function(){
+                    this.src = 'porject_tarot/pic/images/t'+ pick[i-22][0] + '.png';
+                    this.classList.add('img-glow');
+                    if(pick[i-22][1]){$$('#card'+i+' img').css({transform:'rotate(180deg)'});}
+                    $$(`#name${i}`).addClass('show-name');
+                    $$(`#card${i}`).addClass('card-open');
+                });
+            }
+        }else{
+            for(i=0;i<number;i++){
+                var picked =Math.abs(Math.floor(Math.random()*(mode-i)));
+                var ifReverse = Math.floor(Math.random()*2);
+                if(ifReverse){
+                    pick.push([deck[picked]]);
+                    pickName.push(cardNameArr[picked]);
+                }else{
+                    // 隨機正逆位
+                    pick.push([deck[picked],'reverse']);
+                    pickName.push(cardNameArr[picked]+' 逆位');
+                }
+                $$(`#name${i+1}`).html(pickName[i]);
+                deck.splice(picked,1);
+                cardNameArr.splice(picked,1)
+            }
+            // 顯示牌面圖案
+            for(let i=1;i<=number;i++){
+                $$(`#card${i} img`).on('click',function(){
+                    this.src = 'porject_tarot/pic/images/t'+ pick[i-1][0] + '.png';
+                    this.classList.add('img-glow');
+                    if(pick[i-1][1]){$$('#card'+i+' img').css({transform:'rotate(180deg)'});}
+                    $$(`#name${i}`).addClass('show-name');
+                    $$(`#card${i}`).addClass('card-open');
+                });
+            }
+        }
+        
+        //以下錯誤寫法 閉包造成的鬼bug
+        // for(i=0;i<number;i++){
+        //     (function(){
+        //         $$(`#card${i+1} img`).on('click',function(){
+        //             this.src = 'porject_tarot/pic/images/t'+ pick[i][0] + '.png';
+        //         });
+        //     }())
+        // } // Uncaught TypeError: Cannot read property '0' of undefined
+
+        console.log(pickName);
+    };
+</script>
+</html>

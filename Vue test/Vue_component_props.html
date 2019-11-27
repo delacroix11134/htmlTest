@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue_props</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="vue">
+        <!-- 1-1. 兩個類似的內容 -->
+        <h2>原本要定義兩個組件要寫兩次</h2>
+        <input-name></input-name>
+        <input-nickname></input-nickname>
+
+        <br>
+
+        <!-- 2-1. 改用props的寫法 -->
+        <h2>使用props屬性可以簡化程式碼</h2>
+        <input-data title="姓名" place="Name"></input-data>
+        <input-data title="暱稱" place="nickname"></input-data>
+    </div>
+    <br>
+    <div id="vue2">
+        <!-- 3-1. 加上v-for可以更簡潔 -->
+        <h2>如果重複的DOM元素過多 加上v-for是更好的做法</h2>
+        <input-data v-for="type in types" :title="type.title" :place="type.place"></input-data>
+        <br>
+
+        <!-- 4-1. 但是當屬性越來越多時 在DOM中寫的也越多 此時把整個物件傳進屬性裡會更簡潔(這段有點複雜?) -->
+        <h2>把整個物件傳進DOM屬性中會更簡潔</h2>
+        <input-data2 v-for="type in types" :msg="type"></input-data2>
+    </div>
+</body>
+<script>
+    // 1-2. 如果要定義兩個類似 但只有些微不同的組件 原本要像下面這樣寫兩個幾乎一樣的內容
+    Vue.component('input-name',{
+        data: function(){
+            return {
+                input: '',
+                place: 'Name'
+            }
+        },
+        template: `<div>
+                    <div>請輸入姓名</div>
+                    <input :placeholder="place" v-model="input"></input>
+                    <div>你的名字是: {{input}}</div>
+                </div>`
+    })
+    Vue.component('input-nickname',{
+        data: function(){
+            return {
+                input: '',
+                place: 'nickname'
+            }
+        },
+        template: `<div>
+                    <div>你的暱稱是?</div>
+                    <input :placeholder="place" v-model="input"></input>
+                    <div>你的暱稱是: {{input}}</div>
+                </div>`
+    })
+
+    
+    // 2-2. 更簡潔的寫法是使用props屬性
+    Vue.component('input-data',{
+        // 用props陣列代替原本的data屬性(陣列物件也相當於data裡的物件) 然後在DOM中寫陣列內物件須代入的值
+        props: ['title','place','input'],
+        template:`<div>
+                    <div>請輸入{{title}}</div>
+                    <input :placeholder="place" v-model="input"/>
+                    <div>你的{{title}}是: {{input}}</div>
+                </div>`,
+    })
+    let vue = new Vue({
+        el: '#vue',
+    })
+
+    // 4-2. 為了把整個物件傳進HTML屬性中 在props這裡只用一個值
+    Vue.component('input-data2',{
+        props: ['msg'],
+        // 4-3. 並且為了取得types物件中的值(:msg = type) 模板中的變數要加上前綴
+        template:`<div>
+                    <div>請輸入{{msg.title}}</div>
+                    <input :placeholder="msg.place" v-model="msg.input"/>
+                    <div>你的{{msg.title}}是: {{msg.input}}</div>
+                </div>`,
+    })
+
+    // 3-2. 如果DOM中需要產生的元素太多 加上v-for自動產生是更好的選擇
+    let vue2 = new Vue({
+        el: '#vue2',
+        data:{
+            // 這裡3和4共用這個陣列和物件
+            types:[
+                {title:'姓名',place:'Name',input:''},
+                {title:'暱稱',place:'Nickname',input:''},
+                {title:'年齡',place:'Age',input:''},
+            ]
+        }
+    })
+</script>
+</html>

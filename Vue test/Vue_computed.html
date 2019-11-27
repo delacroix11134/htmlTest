@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue compute</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <!-- computed和 method不同的是前者只有在相依的data改變時才會更新 後者不管有沒有改變 調用method中的函數時都會更新 -->
+    <div id="vue">
+        <h2>Computed的基本使用</h2>
+        <p>使用computed對輸入文字做更新</p>
+        <!-- 這裡就填入computed中的函數名 -->
+        <input type="text" v-model="text">
+        <div>把字倒過來： {{reText}}</div>
+        <br><br>
+
+        <h2>利用computed屬性監視data，並返回不同文字內容</h2>
+        <!-- 第二個例子，利用computed屬性監視i，並返回不同文字內容 -->
+        <button @click="add">按鈕</button>
+        <span>點擊了 {{i}}下，{{showText}}</span>
+        <br><br><br>
+
+        <h2>利用正規表達式監視輸入文字</h2>
+        <p>驗證輸入資料是否為英數組成</p>
+        <!-- 延伸使用：可以用正規表達式監視input，並即時更新文字如：請輸入英文或數字 -->
+        <input type="text" v-model="input">
+        <span>{{checkInput}}</span>
+        <br><br>
+    </div>
+</body>
+<script>
+    let myData = {
+        text : '請輸入文字',
+        i: 0,
+        input: '',
+    }
+    let test = new Vue({
+        el: '#vue',
+        data: myData,
+        // computed可以用表達式來處理資料
+        // computed和method不同的是 computed只有在使用的data改變時 才會重新取值
+        // 可以提升效能 但不會實時更新
+        computed:{
+            reText: function(){
+                return this.text.split('').reverse().join('')
+            },
+            showText: function(){
+                if(this.i < 5){
+                    return '請點擊按鈕'
+                } else if(this.i < 10){
+                    return '繼續點'
+                } else if(this.i < 15){
+                    return '加油好嗎?'
+                } else {
+                    return '恭喜你'
+                }
+            },
+            checkInput: function(){
+                // 正規表達式: 匹配英文大小寫及數字
+                let reg = RegExp('^[a-zA-Z0-9]+$')
+                return (this.input ? (reg.test(this.input) ? '可以使用的帳號' : '請輸入英文或數字') : "請輸入帳號")
+                //return (reg.test(this.input) ? '可以使用的帳號' : '請輸入英文或數字')
+            }
+        },
+        methods:{
+            add: function(){
+                this.i ++
+            }
+        }
+    })
+</script>
+</html>

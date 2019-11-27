@@ -1,0 +1,16 @@
+body {
+  margin: 0;
+  line-height: 1.5;
+  color: #fff; }
+
+header {
+  color: blue;
+  background: gray;
+  font-weight: bold;
+  color: aqua;
+  font-size: 24px; }
+  header ul {
+    width: 100%; }
+
+main {
+  width: 50%; }

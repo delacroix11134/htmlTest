@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-on事件綁定</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        .red{
+            width: 300px;
+            height: 100px;
+            background-color: red;
+        }
+        .blue{
+            width: 300px;
+            height: 100px;
+            background-color: aqua;
+        }
+        #box{
+            text-align: center;
+            line-height: 100px; 
+        }
+    </style>
+</head>
+<body>
+    <div id="vOn">
+        <div id="box" class="red">{{count}}</div>
+        <button v-on:click="changeBoxColor">Change color</button>
+        <!-- v-on:click 可以簡寫成 @click -->
+        <button @click="add">Count</button>
+    </div>
+</body>
+<script>
+    var vOn = new Vue({
+        el: '#vOn',
+        data:{
+            count: 0,
+        },
+        methods:{
+            //Vue methods裡面的函數盡量不要使用箭頭函數 在某些情況會出錯
+            changeBoxColor: function(){document.querySelector("#box").classList.toggle('blue')},
+            add: function(){this.count++;console.log(this.count)}
+        }
+    })
+</script>
+</html>

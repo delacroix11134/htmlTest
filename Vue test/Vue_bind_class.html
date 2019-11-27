@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        .bold{
+            font-weight: bold;
+        }
+        .red{
+            color: red;
+        }
+        .blue{
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="vue">
+        <!-- 1. 如果有多個class要套用 可以使用一個陣列(或物件)來列出class -->
+        <div :class="arr">用陣列綁定class</div>
+        
+        <!-- 2. 或是在屬性中寫陣列 然後在data中寫入對應的class名-->
+        <div :class="[classBold,classRed]">另一種綁定陣列</div>
+
+        <!-- 3. 也可以使用表達式 在這裡用表達式來判斷不使用粗體  -->
+        <div :class="['' ? classBold : '', classRed]">在屬性中寫表達式 在這裡沒有粗體</div>
+
+        <!-- 4. 如果 .red是常駐的樣式 也可以和一般的class也混用 -->
+        <div class="red" :class="['' ? classBold : '']">:class可以和 class混用</div>
+
+        <!-- 5-1. 如果覺得寫在屬性裡面有點亂 也可以把表達式提出來 -->
+        <div :class="[checkRed,classBold]">也可以把表達式提出來</div>
+        <button @click="change">切換顏色</button>
+
+        <!-- 6. 接著是用物件的方式 注意物件的key值要加上括號 而且key值這裡要直接寫樣式名 寫data裡的項目是無效的-->
+        <div :class="{'red':false,'bold':true}">用物件的話會多一個key值</div>
+
+        <!-- 7. 當然 把物件放到data裡面也是可以的 -->
+        <div :class="obj">把物件放到data裡也是可以的</div>
+    </div>
+</body>
+<script>
+    let myData = {
+        // 列出所有的class
+        arr: ['bold','red'],
+
+        classBold: 'bold',
+        classRed: 'red',
+        classBlue: 'blue',
+
+        colorRed: true, 
+        
+        obj: {
+            // 這裡的鍵值可以不用加括號
+            red: true,
+            bold: false,
+        }
+    }
+    let myMethods = {
+        // 5-3. 按鈕的功能: 切換變數的bool值
+        change: function(){
+            myData.colorRed = !myData.colorRed
+        }
+    }
+    let myComputed = {
+        // 5-2. 在computed屬性中寫表達式來判斷套用哪個樣式
+        checkRed: function(){
+            return myData.colorRed ? myData.classRed : myData.classBlue 
+        }
+    }
+    let vue = new Vue({
+        el: '#vue',
+        data: myData,
+        methods: myMethods,
+        computed: myComputed,
+    })
+</script>
+</html>

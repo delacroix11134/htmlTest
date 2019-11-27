@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>class的繼承</title>
+</head>
+<body>
+    <img src="art/Class_inheritant.png" alt="">
+</body>
+<script>
+    // 過去使用構造函數如果要繼承另一個構造函數必須要使用call指定this的指向
+    // 並且要把新的構造函數的prototype指定給父類別的函數的prototype
+    let Dog = function(name){
+        this.name = name
+        this.getName = function(){
+            console.log(this.name)
+        }
+    }
+
+    let Pug = function(name){
+        // 把this指向Dog
+        Dog.call(this, name)
+        // Pug自己的變數
+        this.tail = 'Curl'
+    }
+
+    let dog1 = new Dog()
+    // 建立一個在原型上的方法
+    Dog.prototype.say = function(){
+        console.log('WOOF!')
+    }
+
+    // 指定Pug的原型為Dog的原型
+    // 用Object.create()這個建立物件，傳入給它的參數會成為創建出物件的原型
+    Pug.prototype = Object.create(Dog.prototype)
+    
+    // 另外一種寫法(?) 直接指定原型的指向 
+    // 但是如果修改PUG的原型同樣會改到Dog原型 不建議這樣寫
+    // Pug.prototype = Dog.prototype
+    
+
+    let stupid = new Pug('Mr.Stupid')
+    stupid.getName()              // Mr.Stupid
+    console.log(stupid.tail)      // Curl
+    stupid.say()                  // WOOF!
+
+
+    Dog.prototype.color = 'white'
+    console.log(stupid.color)     // white (Pug的原型指向Dog的原型 詳見本頁圖片*)
+
+
+
+    // 現在使用class則可以使用extends和super來處理class的繼承
+    class Person{
+        constructor(name){
+            this.name = name
+            // 實例方法
+            this.getName = function(){
+                console.log('My name is ' + this.name)
+            }
+        }
+        // 位於prototype上的實例方法
+        sayHello(){
+            console.log('Hello!')
+        }
+        // 靜態方法
+        static sayYes(){
+            console.log('YES!')
+        }
+    }
+
+    // 使用extend指定父層級class
+    class Man extends Person{
+        constructor(name, age){
+            // 用super調用繼承下來的變數 只要使用過一次super(*一定要寫) 就會繼承父物件所有的東西(包括getName和sayHello方法)
+            // *子類class必須在使用this關鍵字前調用super
+            super(name)
+            this.age = age
+            this.getAge = () => console.log(this.name + ' is ' + this.age + ' years old.')
+        }
+
+        // 如果子類也自定義了同名的方法 會被優先使用
+        sayHello(){
+            // 有時會需要在父類的方法上拓展其功能 super提供了調用父類方法的寫法
+            super.sayHello()
+            console.log('BOOYA!')
+        }
+    }
+
+    // super(name) 用來取屬性 等同於 Person.prorotype.constructor.call(this,name) 或 Person.call(this, name)
+
+    let victor = new Man('Victor',31)
+
+    victor.getName()        // My name is Victor ( 繼承了實例方法)
+    victor.sayHello()       // Hello!  BOOYA! ( 繼承了prototype並透過super調用了父類的sayHello )
+    victor.getAge()         // Victor is 31 years old. ( 繼承了name變數 )
+    Man.sayYes()            // YES! ( 繼承了靜態方法 )
+
+
+</script>
+</html>

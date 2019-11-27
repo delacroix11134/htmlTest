@@ -1,0 +1,27 @@
+$main-color: #fff;
+@mixin header-style {
+    font-weight: bold;
+    color: aqua;
+    font-size: 24px;
+}
+@function calc-width($wid){
+    @return 100% / $wid;
+}
+
+body{
+    margin: 0;
+    line-height: 1.5;
+    color: $main-color;
+}
+
+header{
+    color: blue;
+    background: gray;
+    @include header-style();
+    ul {
+        width: 100%;
+    }
+}
+main{
+    width: calc-width(2);
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ES6_fetch</title>
+    <style>
+        img{
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+</head>
+<body>
+    
+</body>
+<script>
+    // fetch是用來取代XHR的方法
+    // 最基本的寫法
+
+    // 從JSONPlaceholder網頁取得假資料
+    fetch('https://jsonplaceholder.typicode.com/todos/1')
+
+    // 從fetch取回來的資料是一個readable stream 無法直接讀取資料內容
+    // 可以使用arrayBuffer(),blob(),formData(),json(),text()等方法來取得資料
+    .then(function(response){
+        return response.json();
+    })
+    .then(function(myJson){
+        console.log(myJson);
+        return myJson;
+    })
+    .then(function(myJson){
+        document.write(myJson.title)
+    })
+
+
+    // 從JSONPlaceholder網頁取得圖片
+    fetch('https://jsonplaceholder.typicode.com/photos/3')
+    .then(function(myPic){
+        return myPic.json();
+    })
+    .then(function(myPic){
+        console.log(myPic);
+        return myPic;
+    })
+    .then(function(myPic){
+        let img = document.createElement('img');
+        document.querySelector('body').appendChild(img);
+        img.src = myPic.url;
+        img.width = 300;
+    })
+
+
+    // 一個比較完整的fetch寫法 加上了狀態碼的判斷
+    fetch('https://jsonplaceholder.typicode.com/todos/10',{method:'GET'})
+    .then(function(response){
+        if(response.status >= 200 && response.status <= 300){
+            return response.json(); // 把資料轉為json格式
+        } else {
+            return new Error(response.statusText)
+        }
+    })
+    .then(function(data){
+        console.log(data); // 這裡的data才是實際的json資料
+    })
+    .catch(function(error){
+        return error.status.json();
+    })
+    .then(function(errorData){
+        console.log(errorData); // 這裡的errorData才是實際的json資料
+    })
+</script>
+</html>

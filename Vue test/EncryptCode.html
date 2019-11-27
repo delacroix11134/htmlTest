@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Project Harmony</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        #vue{
+            width: 50%;
+            margin: 20px auto;
+            margin-top: 100px;
+        }
+        #inputBox{
+            width: 100%;
+            height: 100px;
+            vertical-align: top;
+        }
+        button{
+            width: 80px;
+            height: 30px;
+            margin: 40px 0;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="vue">
+        <h2>中文字元&廢文轉換器</h2>
+        <input type="text"id="inputBox"placeholder="請輸入中文字"v-model="input">
+        <button id="Btn-convert"v-on:click="encrypt">convert</button>
+        <button id="Btn-clear"v-on:click="clear">clear</button>
+        <h2>{{output}}</h2>
+        <br>
+        <h2>{{encryptCodeOut}}</h2>
+    </div>
+</body>
+<script>
+    var data = {
+        input:'',
+        output:'',
+        encryptCodeOut:'',
+        dic:[
+        
+        [['','','','聽說','到底','結果','你說'],
+        ['是','沒有','為什麼','不知道','從前從前','好像','有可能','說不定','有沒有','到底'],
+        ['你','我','他','長頸鹿','尼哥','很','洋人','巨巨','老闆','那個'],
+        ['棒棒','很大','有','都要','好','八成','','',''],
+        ['的','是','吧','der','好','嗎?','','','']],
+
+        [['','','','因為','如果','所以','但是'],
+        ['尼','鄉民','我','我媽','他','','哥哥','靠北','誰','什麼'],
+        ['是','都','全部','害怕','所以','大大','沒有','想','應該','可以'],
+        ['小','硬硬','嗑了','你','我ㄉ','知道','沒有','不知道','想','強'],
+        ['霸氣','地精','不要問','什麼','嚇死人','好不好','結果','要','阿，','嗎？']],
+
+        [['','','','','','',''],
+        ['','','','','','','','','',''],
+        ['','','','','','','','','',''],
+        ['','','','','','','','','',''],
+        ['','','','','','','','','','']],
+        ]
+    }
+    var vue = new Vue({
+        el: "#vue",
+        data: data,
+        methods: {
+            //第一版
+            encrypt:()=>{
+                var result = [];
+                var encryptCodeOut = '';
+                data.input.split('').forEach((element)=>{
+                    var code = element.charCodeAt(0)
+                    var encryptCode = code.toString(16)
+                    encryptCodeOut += encryptCode
+                    console.log(encryptCodeOut)
+                    code.toString().split('').forEach((element,index)=>{
+                        var randomDic = Math.floor(Math.random()*3)
+                        result.push(data.dic[randomDic][index][element])
+                        if(index==4 && element < 6) result.push('，')
+                    })
+                    
+                })
+                data.output = result.join('')
+                data.encryptCodeOut = encryptCodeOut
+            }, 
+            
+            clear: ()=>{data.input = '';data.output='';},
+
+            //把文字轉成unicode: string.charCodeAt(0)
+            //把數字轉成16進位: number.toString(16)
+            //把16進位值轉成原數字: parseInt(value,16)
+            // encrypt: ()=>{
+            //     var result = []
+            //     data.input.split('').forEach((element)=>{
+            //         result.push(element.charCodeAt(0).toString(16))
+            //     })
+            //     console.log(result)
+            // }
+        }
+    })
+</script>
+</html>

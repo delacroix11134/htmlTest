@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>1.如何開始使用vue?</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>    <!--1. 引入vue庫-->
+</head>
+<body>
+    <!--2. 創建一個標籤 -->
+    <div id="app">
+        <!--4. 在標籤中顯示vue對象的值 -->
+        {{message}}     
+    </div>
+</body>
+<script>
+    var myData = {
+        message: "Hello world",
+    }
+    // 3. 創建一個vue對象
+    var app = new Vue({
+        el: "#app",     // Vue對象的掛載點
+        // data: {
+        //     message: "Hello vue",    // 自定義數據
+        //     haha: "哈哈",
+        // }
+        data: myData,
+    })
+    
+</script>
+</html>

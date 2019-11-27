@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue watch</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <!-- watch的功能為即時監聽綁定的參數變化 並用異步的方式做出反應 -->
+    <!-- 因此常用於驗證輸入 -->
+    <div id="vue">
+        <!-- 1. 綁定input的輸入文字 -->
+        <input type="text" v-model="name">
+        <div>{{text}}</div>
+    </div>
+</body>
+<script>
+    let myData = {
+        // 注意: watch在data裡也要有同名的資料 否則會找不到要監視的對象
+        name: '',
+        text: '請輸入文字',
+    }
+    let vue = new Vue({
+        el: '#vue',
+        data: myData,
+        // 3. 在watch物件下加入監聽name的變化 只要name的值發生變化就調用函數
+        watch:{
+            name: function(value){
+                if(this.checkName(value) == 'none'){
+                    this.text = '請輸入文字'
+                } else if(this.checkName(value) == 'number'){
+                    this.text = '開頭不可為數字'
+                } else if(this.checkName(value) == 'en'){
+                    this.text = '須由英數組成'
+                } else {
+                    this.text = '可以使用的名稱'
+                }
+            }
+        },
+        // 2. 在methods裡面加入檢查文字的方法
+        methods:{
+            checkName: function(name){
+                if(!name){
+                    return 'none'
+                    // 使用正規表示式檢查輸入文字並返回結果
+                }  else if( name && /^[0-9]/.test(name)) {
+                    return 'number'
+                    // 檢查是否為英文字
+                } else if( name && !/[a-z]/.test(name)){
+                    return 'en'
+                } else {
+                    return 'ok'
+                }
+            }
+        }
+    })
+</script>
+</html>

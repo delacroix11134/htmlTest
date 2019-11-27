@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>靜態方法</title>
+    <style>
+    </style>
+</head>
+<body>
+    
+</body>
+<script>
+    window.onload = function(){
+        //建構式&静態方法&實例方法
+        function Person(){
+            this.name = 'Mary';
+            //這是一個透過this定義的實例方法
+            this.sayName = function(){
+            console.log('My name is '+ this.name);
+            }
+        }
+        //這是一個靜態方法
+        Person.sayBye = function(){
+            console.log('Bye!')
+        }
+        //這是一個透過原型定義的實例方法
+        Person.prototype.sayHi = function(){
+            console.log('Hi!');
+        }
+        //實例方法沒辦法直接用類名調用
+        //Person.sayHi();//Person.sayHi is not a function
+        //可以用類名調用的方法叫做靜態方法
+        Person.sayBye();
+        //必須實例化後才能調用的是實例方法
+        let mary = new Person();
+        //這是一個直接定義在實例對象上的實例方法(只有這個實例對象可使用)
+        mary.sayHello = function(){
+            console.log('Hello!')
+        }
+        mary.sayName();
+        mary.sayHi();
+        mary.sayHello();
+        //靜態方法不能被實例對象調用
+        //mary.sayBye();  **mary.sayBye is not a function
+
+        let john = new Person;
+        //sayHello是定義在mary實例對象上 john無法調用(方法沒有在原型鏈上)
+        //john.sayHello();  **john.sayHello is not a function
+        john.name = 'John';
+        //sayName在john的構造函數上(原型鏈上一層) 因此可以調用到sayName()
+        john.sayName();//My name is John
+        //sayHi在構造函數的原型上(原型鏈最底層) 所以可以調用到sayHi()
+        john.sayHi();//Hi!
+        
+        //原型鏈: 實例對象>>構造函數>>原型prototype
+        //所以實例方法有三種建立方式: 用this定義在構造函式上,定義在prototype,直接定義在實例對象上
+        //靜態方法必需用類名建立EX: Person.sayHi = function(){...}
+        
+        //差別在於靜態方法不需實例化就能調用
+        //常用在於一些輔助函數如:Array.isArray()
+        //像這種用於判斷是否為陣列的函數 如果需要實體出一個陣列才能使用 就沒有意義了
+        
+        //而實例方法中 可通用的方法盡量定義在prototype上
+        //也盡量不要事後修改原型上的屬性及方法(所有實例都會動到)
+        //可以避免建立實例對象時 對象上都有該方法
+        //節省空間及資源
+
+        
+
+
+
+
+    }
+</script>
+</html>

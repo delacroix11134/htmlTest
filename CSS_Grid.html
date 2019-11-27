@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="pic/icon.png">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+	<link rel="stylesheet" href="css/victorsWork_Shared.css">
+    <title>CSS Grid</title>
+	<style>
+		main{
+			margin: 40px auto;
+			width: 80%;
+		}		
+		.sec{
+			width: 100%;
+			margin: 40px auto;
+		}
+		h2 img{
+			width: 24px;
+			margin: 3px;
+			vertical-align: middle;
+			display: inline-block;
+			transition: 0.5s ease;
+			transform: rotate(90deg);
+		}
+		.folded{
+			transform: rotate(0);
+		}
+		.sec1-samples{
+			width: 100%;
+			height: 350px;
+			display: grid;
+			border: 1px solid black;
+			grid-gap: 5px;
+			grid-template-columns:  20% repeat(3, 1fr)  ;
+			grid-template-rows:  20%  40%  auto 20%;
+			grid-template-areas: "h h h h"
+					   			 "s m m m"
+					  			 "s b1 b2 b3"	
+								 "f f f f"  
+		}
+		.sec1-sample{
+			background: #4e3f88;
+			border: 1px dashed black;
+			color: white;
+		}
+		.sec1-1{
+			grid-area: h;
+		}
+		.sec1-2{
+			grid-area: s;
+		}
+		.sec1-3{
+			grid-area: m;
+		}
+		.sec1-4{
+			grid-area: b1;
+		}
+		.sec1-5{
+			grid-area: b2;
+		}
+		.sec1-6{
+			grid-area: b3;
+		}
+		.sec1-7{
+			grid-area: f;
+		}
+		/* sec2 */
+		.grid-sup{
+			width: 100%;
+		}
+		/* sec3 */
+		.code{
+			width: 100%;
+			color: white;
+			border-radius: 10px;
+			background: #272727;
+		}
+		.code div{
+			position: relative;
+			top: 15px;
+			left: 20px;
+		}
+		.text-green{
+			color:rgb(135, 204, 122);
+		}
+		.code1{
+			height: 100px;
+		}
+		.code2{
+			height: 170px;
+		}
+		.code3{
+			height: 100px;
+		}
+		.code6{
+			height: 130px;
+		}
+		.grid-sample{
+			width: 200px;
+			height: 150px;
+			border: 1px solid black;
+			margin: 20px 0;
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			grid-template-rows: repeat(2, 1fr);
+		}
+		.grid-sample1-child{
+			width: 100%;
+			height: 100%;
+			border: 1px dashed black;
+			text-align: center;
+			line-height: 40px;
+			background: #4e3f88;
+			color: white;
+		}
+		.grid-sample2{
+			grid-gap: 5px;
+		}
+		.grid-sample3{
+			grid-template-columns: repeat(3, 1fr);
+			grid-template-rows: repeat(3, 1fr);
+			grid-template-areas: "h h h"
+								 "n m m"
+								 "f f f"	
+		}
+		.grid-sample1-child-h{
+			grid-area: h;
+		}
+		.grid-sample1-child-n{
+			grid-area: n;
+		}
+		.grid-sample1-child-m{
+			grid-area: m;
+		}
+		.grid-sample1-child-f{
+			grid-area: f;
+		}
+		.grid-sample4{
+			grid-template-columns: repeat(3, 1fr);
+			grid-template-rows: repeat(2, 1fr);
+			justify-items: center;	
+			align-items: center;
+			grid-template-areas: "a b c"
+								 "x y z"
+		}
+		.grid-sample4-child-a{
+			grid-area: a;
+			width: 100%;
+		}
+		.grid-sample4-child-b{
+			grid-area: b;
+			width: 75%;
+		}
+		.grid-sample4-child-c{
+			grid-area: c;
+			width: 50%;
+		}
+		.grid-sample4-child-x{
+			grid-area: x;
+			width: 50%;
+		}
+		.grid-sample4-child-y{
+			grid-area: y;
+			width: 75%;
+		}
+		.grid-sample4-child-z{
+			grid-area: z;
+			width: 100%;
+		}
+		.grid-sample5-child-a{
+			grid-area: a;
+			height: 100%;
+		}
+		.grid-sample5-child-b{
+			grid-area: b;
+			height: 75%;
+		}
+		.grid-sample5-child-c{
+			grid-area: c;
+			height: 50%;
+		}
+		.grid-sample5-child-x{
+			grid-area: x;
+			height: 50%;
+		}
+		.grid-sample5-child-y{
+			grid-area: y;
+			height: 75%;
+		}
+		.grid-sample5-child-z{
+			grid-area: z;
+			width: 100%;
+		}
+		.grid-sample6-child{
+			grid-row: 2/-1;
+			grid-column: 2/-1;
+			background: #4e3f88;
+			border: 1px dashed black;
+		}
+	</style>
+	<script src="script/jquery-3.3.1.js"></script>
+</head>
+<body>
+    <!-- header -->
+    <header>
+		<div class="bar">
+			<div class="logo"><img src="pic/logo.png" ></div>
+		</div>
+		<img class="title-pic" src="pic/header3.jpg">
+		<h1 class="title-text">CSS Grid</h1>
+		<p class="title-sub-text">CSS Grid排版筆記</p>
+    </header>
+	<!-- main -->
+	<main>
+		<section class="sec sec1">
+			<h2><img class="fold-btn1" src="pic/arrow2.png">使用Grid排版</h2>
+			<div class="fold">
+				<p>Flexbox可做出單向的排版，而Grid可以簡單的做出雙向的版型</p>
+				<div class="sec1-samples">
+					<div class="sec1-sample sec1-1">Header</div>
+					<div class="sec1-sample sec1-2">Sidebar</div>
+					<div class="sec1-sample sec1-3">Main</div>
+					<div class="sec1-sample sec1-4">Box1</div>
+					<div class="sec1-sample sec1-5">Box2</div>
+					<div class="sec1-sample sec1-6">Box3</div>
+					<div class="sec1-sample sec1-7">Footer</div>
+				</div>
+			</div>
+		</section>
+		<section class="sec sec2">
+			<h2><img src="pic/arrow2.png">瀏覽器的支援度</h2>
+			<p>2018/09的瀏覽器支援度約83%</p>
+			<img class="grid-sup" src="pic/grid-sup.png" alt="">
+		</section>
+		<section class="sec sec3">
+			<h2><img src="pic/arrow2.png">名詞解釋</h2>
+			<p>在開始了解各項屬性之前要先了解一些Grid專用的名詞</p>
+			<ul>
+				<li>Grid container: Grid的父層元素</li>
+				<li>Grid item: Grid的子層元素</li>
+				<li>Grid line: 當產生grid網格時，用來切分空間的線</li>
+				<li>Grid track: Grid網格中的一整欄/列</li>
+				<li>Grid cell: Grid網格中的最小單位格</li>
+				<li>Grid area: 由Grid數個最小單位組成的區塊</li>
+			</ul>
+		</section>
+		<section class="sec sec4">
+			<h2><img src="pic/arrow2.png">Grid屬性(Grid container)</h2>
+			<p>Grid的屬性和Flex相近，分成兩種:parent/ children</p>
+			<br>
+			<h2><img src="pic/arrow2.png">Parent屬性</h2>
+			<h2>dispaly</h2>
+			<ul>
+				<li>grid 最基本要先把父物件設為grid</li>
+				<li>inline-grid 另一選項是行內grid</li>
+			</ul>
+			<br>
+			<h2>grid-template-columns<br>
+				grid-template-rows</h2>
+			<p>用來設定網格的欄數和行數，單位可以是px,%,auto或是fr等等</p>
+			<div class="grid-sample grid-sample1">
+				<div class="grid-sample1-child"></div>
+				<div class="grid-sample1-child"></div>
+				<div class="grid-sample1-child"></div>
+				<div class="grid-sample1-child"></div>
+			</div>
+			<div class="code code1">
+				<div>
+					<span class="text-green">display:</span>  grid;<br>
+					<span class="text-green">grid-template-columns:</span>  repeat(2, 1fr);<br>
+					<span class="text-green">grid-template-rows:</span>  repeat(2, 1fr);
+				</div>
+			</div>
+			<br>
+			<h2>Grid-gap</h2>
+			<p>用來規定grid cells間的間距</p>
+			<div class="grid-sample grid-sample2">
+				<div class="grid-sample1-child"></div>
+				<div class="grid-sample1-child"></div>
+				<div class="grid-sample1-child"></div>
+				<div class="grid-sample1-child"></div>
+			</div>
+			<br>
+			<h2>Grid-template-area</h2>
+			<p>用命名的方式規定網格空間的分配<br>必須配合子元素的grid-area屬性來代入</p>
+			<div class="grid-sample grid-sample3">
+				<div class="grid-sample1-child grid-sample1-child-h">h</div>
+				<div class="grid-sample1-child grid-sample1-child-n">n</div>
+				<div class="grid-sample1-child grid-sample1-child-m">m</div>
+				<div class="grid-sample1-child grid-sample1-child-f">f</div>
+			</div>
+			<div class="code code2">
+				<div>
+					<span class="text-green">grid-template-columns:</span> repeat(3, 1fr);<br>
+					<span class="text-green">grid-template-rows:</span> repeat(3, 1fr);<br>
+					<span class="text-green">grid-template-areas: </span><br>
+									"h h h"<br>
+									"n m m"<br>
+									"f f f"<br>
+				</div>
+			</div>
+			<br>
+			<h2>justify-items</h2>
+			<p>當子物件長度未填滿父物件切分出的空間時，對齊子物件的X軸方向，此屬性套用到所有子物件</p>
+			<ul>
+				<li>start 對齊左側</li>
+				<li>end 對齊右側</li>
+				<li>center 對齊中線</li>
+				<li>stretch 延展</li>
+			</ul>
+			<div class="grid-sample grid-sample4">
+				<div class="grid-sample1-child grid-sample4-child-a"></div>
+				<div class="grid-sample1-child grid-sample4-child-b"></div>
+				<div class="grid-sample1-child grid-sample4-child-c"></div>
+				<div class="grid-sample1-child grid-sample4-child-x"></div>
+				<div class="grid-sample1-child grid-sample4-child-y"></div>
+				<div class="grid-sample1-child grid-sample4-child-z"></div>
+			</div>
+			<div class="code code3">
+				<div>
+					<span class="text-green">grid-template-columns:</span> repeat(3, 1fr);<br>
+					<span class="text-green">grid-template-rows:</span> repeat(2, 1fr);<br>
+					<span class="text-green">justify-items:</span> center;<br>
+				</div>
+			</div>
+			<br>
+			<h2>align-items</h2>
+			<p>當子物件寬度未填滿父物件切分出的空間時，對齊子物件的Y軸方向，此屬性套用到所有子物件</p>
+			<ul>
+				<li>start 對齊上側</li>
+				<li>end 對齊下側</li>
+				<li>center 對齊中線</li>
+				<li>stretch 延展</li>
+			</ul>
+			<div class="grid-sample grid-sample4">
+				<div class="grid-sample1-child grid-sample5-child-a"></div>
+				<div class="grid-sample1-child grid-sample5-child-b"></div>
+				<div class="grid-sample1-child grid-sample5-child-c"></div>
+				<div class="grid-sample1-child grid-sample5-child-x"></div>
+				<div class="grid-sample1-child grid-sample5-child-y"></div>
+				<div class="grid-sample1-child grid-sample5-child-z"></div>
+			</div>
+			<div class="code code3">
+				<div>
+					<span class="text-green">grid-template-columns:</span> repeat(3, 1fr);<br>
+					<span class="text-green">grid-template-rows:</span> repeat(2, 1fr);<br>
+					<span class="text-green">align-items:</span> center;<br>
+				</div>
+			</div>
+			</section>
+			<section>
+				<h2><img src="pic/arrow2.png">Children屬性(Grid item)</h2>
+				<h2>grid-column-start<br>
+					grid-column-end<br>
+					grid-row-start<br>
+					grid-row-end
+				</h2>
+				<p>分別定義子物件在網格中直向及橫向的起點及終點</p>
+				<div class="grid-sample grid-sample6">
+					<div class="grid-sample6-child"></div>
+				</div>
+				<div class="code code6">
+					<div>
+						<span class="text-green">grid-column-start:</span> 2;<br>
+						<span class="text-green">grid-column-end:</span> 3;<br>
+						<span class="text-green">grid-row-start:</span> 2;<br>
+						<span class="text-green">grid-row-end:</span> 3;<br>
+					</div>
+				</div>
+				<br>
+				<h2>grid-column<br>grid-row</h2>
+				<p>上例也可以簡寫成grid-column和grid-row</p>
+				<div class="code code1">
+					<div>
+						<span class="text-green">grid-column:</span> 2/3;<br>
+						<span class="text-green">grid-row:</span> 2/3;<br>
+					</div>
+				</div>
+				<br>
+				<h2>grid-area</h2>
+				<p>功能同上，但是grid-area可與父物件的grid-template-areas一起使用<br>所以有兩種寫法:</p>
+				<ul>
+					<li>在父物件中自定義的名字</li>
+					<li>row-start / column-start / row-end / column-end 四個屬性簡寫在一起</li>
+				</ul>
+				<br>
+				<h2>align-self/ justify-self</h2>
+				<p>用來對齊自身在grid網格中的位置，和flex相似</p>
+				
+			</section>
+	</main>
+    <!-- footer -->
+    <footer>
+		<div class="footer-green"></div>
+		<div class="footer-black">
+			<div class="footer-black-left">
+				<div><h1>A Victor's Work</h1></div>
+				<div>Only for study & practices.<br>
+				Visit my other practices:</div>
+				<ul>
+					<li><a href="CSS_Animation.html">CSS Animation</a></li>
+					<li><a href="CSS_Lesson2.html">CSS Lesson2</a></li>
+					<li><a href="coffee.html">Coffee</a></li>
+					<li><a href="中午吃什麼.html">WhatToEat</a></li>
+					<li><a href="CSS_Align.html">CSS_Align</a></li>
+					<li><a href="CSS_Flexbox.html">CSS_Flexbox</a></li>
+				</ul>
+			</div>
+			<div class="footer-black-middle">
+				<div><h1>All rights reserved</h1></div>
+				<div>Only for study & practices.<br>
+				</div>
+			</div>
+			<div class="footer-black-right">
+				<div><h1>Contact me</h1></div>
+				<div>Please contact me on the internet.</div>
+				<div class="links">
+					<a href=""><img src="pic/facebook.png" ></a>
+					<a href=""><img src="pic/instagram.png" ></a>
+					<a href=""><img src="pic/behance.png" ></a>
+					<a href=""><img src="pic/pen.png" ></a>
+				</div>
+			</div>
+		</div>
+	</footer>
+</body>
+<script>
+	$('.fold-btn1').click(function(){
+		$('.fold-btn1').toggleClass('folded')
+		$('.fold').slideToggle(500);
+	})
+
+</script>
+</html>

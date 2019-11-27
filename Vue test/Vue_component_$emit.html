@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>$emit</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="vue">
+        <!-- 在使用組件時 如果會使用到data的變數 都是使用實例模組時新創的變數(各自獨立的變數 如:count) -->
+        <!-- 那如果我想用組件 同時影響到外層vue物件data裡的變數呢 可以使用$emit方法 -->
+        <h2>Vue實體的變數</h2>
+        <div>count1: {{count}}</div>
+        <div>count2: {{count2}}</div>
+        <div>count3: {{count3}}</div>
+        <div>args: {{args}}</div>
+        
+        <br>
+
+        <h2>使用組件內部的變數</h2>
+        <div>無法訪問到Vue實體的count1變數</div>
+        <counter></counter>
+
+        <br>
+
+        <!-- 1-2. 父物件上的v-on事件 參數設定為Vue實體物件methods裡的方法 -->
+        <!-- 父物件就可以訪問到Vue物件的data和方法了 -->
+        <!-- 原理應該是DOM事件傳遞的機制 利用內部物件監聽父物件的冒泡 來達成內部影響外部的結果 -->
+        <h2>使用$emit訪問父物件的方法和變數</h2>
+        <counter-emit @add-count="addCount"></counter-emit>
+        <span>目前點了 {{count2}}下</span>
+
+        <br><br>
+
+        <h2>使用$emit並帶入複數參數</h2>
+        <counter-emit-args @add-count="addCountAndArgs(arguments)"></counter-emit-args>
+        <span>目前點了 {{count3}}下</span>
+
+    </div>
+</body>
+<script>
+    Vue.component('counter',{
+        data: function(){
+            return {
+                // 組件所使用的變數是各自獨立的
+                count: 0,
+            }
+        },
+        methods: {
+            counting: function(){
+                this.count++
+            }
+        },
+        template: `<div>
+                    <button @click="counting">Click me</button>
+                    <span>目前點了 {{count}}下</span>
+                </div>`
+    })
+
+    // 1. 在組件內button的v-on事件使用$emit方法 參數設定為DOM父物件上的v-on事件
+
+    Vue.component('counter-emit',{
+        // 注意: $emit裡面的名稱都會被轉成小寫 所以不要使用駝峰命名 使用短橫線命名
+        template: `<button @click="$emit('add-count')">Click me</button>`
+    })
+
+    // 2. 另外 如果在使用$emit時需另外傳入複數參數 需要在DOM中用arguments這個物件來取得
+    Vue.component('counter-emit-args',{
+        template: `<button @click="$emit('add-count','第一個參數','第二個參數')">Click me</button>`
+    })
+
+
+
+    let vue = new Vue({
+        el: '#vue',
+        data: {
+            // 使用組件基本沒辦法訪問到這個變數
+            count: 0,
+
+            count2: 0,
+
+            count3: 0,
+
+            args: '',
+        },
+        methods: {
+            addCount: function(){
+                this.count2++
+            },
+
+            // 2-2. 方法帶入引數來接收arguments這個物件 並使用args[0]來取得物件
+            addCountAndArgs: function(args){
+                this.count3++
+                this.args += args[0]
+                this.args += args[1]
+                console.log(args)
+                console.log(args[0] + ' ' + args[1])
+            }
+        },
+    })
+
+</script>
+</html>

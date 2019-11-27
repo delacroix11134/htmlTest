@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>CSS Flexbox</title>
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+	<link rel="stylesheet" href="css/flexbox.css">
+</head>
+<body>
+	<header>
+		<div class="bar">
+			<div class="logo"><img src="pic/logo.png" ></div>
+		</div>
+		<div class="title-pic"></div>
+		<h1>CSS flexbox</h1>
+	</header>
+	<main>
+		<section class="section section1">
+			<h2>CSS flexbox有以下幾種屬性</h2>
+			<ul>
+				<li><a href="#section2">display</a></li>
+				<li><a href="#section3">flex-direction</a></li>
+				<li><a href="#section4">justify-content</a></li>
+				<li><a href="#section5">align-items</a></li>
+				<li><a href="#section6">align-sel</a>f</li>
+				<li><a href="#section7">align-content</a></li>
+				<li><a href="#section8">flex-wrap</a></li>
+				<li><a href="#section9">order</a></li>
+				<li><a href="#section10">flex</a></li>
+			</ul>
+		</section>
+		<section class="section section2" id="section2">
+			<h2>display</h2>
+			<p>display 是我們熟知的 CSS 屬性，對於 Flexbox 來說，多了兩種方式可以設定。<br>若設為flex則容器會變成flexbox，其內部的元素會多出許多排版上的彈性可以調整，並且容器之後的項目會自動換行。<br>另外一種屬性則是設為inline-flex，容器之後的項目不會換行，相當於inline-block的表現方式。</p>
+			<div class="code">
+				.flex{<br>
+                display:flex;<br>
+                }<br>
+                .inline-flex{<br>
+                display:inline-flex;<br>
+                }<br>
+                <div class="code-tag">CSS</div>
+            </div>
+			<div class="samples">
+				<div class="sample sample1_1">
+					<div class="box1">flex</div>
+					<div class="test">test</div>
+					<div class="tag">flex</div>
+				</div>
+				<div class="sample sample1_2">
+					<div class="box2">inline-flex</div>
+					<div class="test">test</div>
+					<div class="tag">inline-flex</div>
+				</div>
+			</div>
+		</section>
+		<section class="section section3" id="section3">
+			<h2>flex-direction</h2>
+			<p>表示內容元素的排列方向</p>
+			<ul>
+				<li><span class="bold">row(default)</span> ：從左至右，從上到下</li>
+				<li><span class="bold">row-reverse</span> ：與row相反</li>
+				<li><span class="bold">column</span> ：從上到下，從左至右</li>
+				<li><span class="bold">column-reverse</span> ：與column相反</li>
+			</ul>
+			<div class="code">
+				.row {<br>
+                flex-direction:row;<br>
+                } <br>
+                .row-reverse {<br>
+                flex-direction:row-reverse;<br>
+                } <br>
+                .column {<br>
+                flex-direction:column;<br>
+                } <br>
+                .column-reverse {<br>
+                flex-direction:column-reverse;<br>
+                } <br>
+                <div class="code-tag">CSS</div>
+            </div>
+			<div class="samples">
+				<div class="sample sample2_1">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="tag">row</div>
+				</div>
+				<div class="sample sample2_2">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="tag">row-reverse</div>
+				</div>
+				<div class="sample sample2_3">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="tag">column</div>
+				</div>
+				<div class="sample sample2_4">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="tag">column-reverse</div>
+				</div>
+			</div>
+		</section>
+		<section class="section section4" id="section4">
+			<h2>justify-content</h2>
+			<p>用來設定內容元素的水平對齊位置</p>
+			<ul>
+				<li><span class="bold">flex-start(default)</span> ：對齊左邊(main start)</li>
+				<li><span class="bold">flex-end</span> ：對齊右邊(main end)</li>
+				<li><span class="bold">center</span> ：置中對齊</li>
+				<li><span class="bold">space-between</span> ：平均分配空間，左右元素會貼齊邊緣</li>
+                <li><span class="bold">space-around</span> ：平均分配空間</li>
+			</ul>
+			<div class="code">
+				.flex-start {<br>
+                justify-content:flex-start;<br>
+                }<br>
+				.flex-end {<br>
+				    justify-content:flex-end;<br>
+				}<br>
+				.center {<br>
+				    justify-content:center;<br>
+				}<br>
+				.space-between {<br>
+				    justify-content:space-between;<br>
+				}<br>
+				.space-around {<br>
+				    justify-content:space-around;<br>
+				}<br>
+                <div class="code-tag">CSS</div>
+			</div>
+			<div class="samples">
+				<div class="sample sample3_1">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="tag">flex-start</div>
+				</div>
+				<div class="sample sample3_2">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="tag">flex-end</div>
+				</div>
+				<div class="sample sample3_3">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="tag">center</div>
+				</div>
+				<div class="sample sample3_4">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="tag">space-between</div>
+				</div>
+				<div class="sample sample3_5">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="tag">space-around</div>
+				</div>
+			</div>
+		</section>
+		<section class="section section5" id="section5">
+			<h2>align-items</h2>
+			<p>設定內容元素的垂直對齊方式</p>
+			<ul>
+				<li><span class="bold">flex-start(default)</span> ：靠上對齊</li>
+				<li><span class="bold">flex-end</span> ：靠下對齊</li>
+				<li><span class="bold">center</span> ：置中對齊</li>
+				<li><span class="bold">stretch</span> ：將元素全部撐開至容器的高度(*必須沒有設定元素的高)</li>
+				<li><span class="bold">baseline</span> ：以內容元素的基線作為標準對齊</li>
+			</ul>
+			<div class="code">
+				.flex-start{<br>
+				    align-items:flex-start;<br>
+				}<br>
+				.flex-end{<br>
+				    align-items:flex-end;<br>
+				}<br>
+				.center{<br>
+				    align-items:center;<br>
+				}<br>
+				.stretch{<br>
+				    align-items:stretch;<br>
+				}<br>
+				.baseline{<br>
+				    align-items:baseline;<br>
+				}<br>
+				.flex-item{<br>
+				    width:60px;<br>
+				    text-align:center;<br>
+				}<br>
+        		<div class="code-tag">CSS</div>
+            </div>
+			<div class="samples">
+				<div class="sample sample5_1">
+					<div class="box5_1">1</div>
+					<div class="box5_2">2</div>
+					<div class="box5_3">3</div>
+					<div class="tag">flex-start</div>
+				</div>
+				<div class="sample sample5_2">
+					<div class="box5_1">1</div>
+					<div class="box5_2">2</div>
+					<div class="box5_3">3</div>
+					<div class="tag">flex-end</div>
+				</div>
+				<div class="sample sample5_3">
+					<div class="box5_1">1</div>
+					<div class="box5_2">2</div>
+					<div class="box5_3">3</div>
+					<div class="tag">center</div>
+				</div>
+				<div class="sample sample5_4">
+					<div class="box5_1">1</div>
+					<div class="box5_2">2</div>
+					<div class="box5_3">3</div>
+					<div class="tag">stretch</div>
+				</div>
+				<div class="sample sample5_5">
+					<div class="box5_1">1</div>
+					<div class="box5_2">2</div>
+					<div class="box5_3">3</div>
+					<div class="tag">baseline</div>
+					<div class="line"></div>
+				</div>
+			</div>
+		</section>
+        <section class="section section6" id="section6">
+			<h2>align-self</h2>
+			<p>設定與align-item相同，不同的是必須寫在內容元素上，用來覆蓋align-item屬性<br>如果只有其中一個元素使用baseline屬性，該元素沒有對位參考，因此會顯示靠上對齊</p>
+			<ul>
+				<li><span class="bold">flex-start(default)</span> ：靠上對齊</li>
+				<li><span class="bold">flex-end</span> ：靠下對齊</li>
+				<li><span class="bold">center</span> ：置中對齊</li>
+				<li><span class="bold">stretch</span> ：將元素全部撐開至容器的高度</li>
+				<li><span class="bold">baseline</span> ：以內容元素的基線作為標準對齊</li>
+			</ul>
+			<div class="code">
+				.box1 {<br>
+			    align-self: flex-start;<br>
+			    line-height: 30px;<br>
+			    }<br>
+        		<div class="code-tag">CSS</div>
+            </div>
+			<div class="samples">
+				<div class="sample sample6_1">
+					<div class="box6_1">1</div>
+					<div class="box6_2">2</div>
+					<div class="box6_3">3</div>
+					<div class="tag">flex-start</div>
+				</div>
+				<div class="sample sample6_2">
+					<div class="box6_1">1</div>
+					<div class="box6_2">2</div>
+					<div class="box6_3">3</div>
+					<div class="tag">flex-end</div>
+				</div>
+				<div class="sample sample6_3">
+					<div class="box6_1">1</div>
+					<div class="box6_2">2</div>
+					<div class="box6_3">3</div>
+					<div class="tag">center</div>
+				</div>
+				<div class="sample sample6_4">
+					<div class="box6_1">1</div>
+					<div class="box6_2">2</div>
+					<div class="box6_3">3</div>
+					<div class="tag">stretch</div>
+				</div>
+				<div class="sample sample6_5">
+					<div class="box6_1">1</div>
+					<div class="box6_2">2</div>
+					<div class="box6_3">3</div>
+					<div class="tag">baseline</div>
+					<div class="line"></div>
+				</div>
+			</div>
+		</section>
+		<section class="section section7" id="section7">
+			<h2>align-content</h2>
+			<p>align-items 是針對內容為單行的元素進行處理，如果遇到多行的元素(需搭配flex-wrap使用)，就要使用 align-content 這個屬性，這個屬性總共有六個設定值。</p>
+			<ul>
+				<li><span class="bold">flex-start(default)</span> ：靠上對齊</li>
+				<li><span class="bold">flex-end</span> ：靠下對齊</li>
+				<li><span class="bold">center</span> ：置中對齊</li>
+				<li><span class="bold">stretch</span> ：將元素全部撐開至容器的高度(*必須沒有設定元素高度)</li>
+				<li><span class="bold">space-between</span> ：平均間距，但第一行與最後一行靠齊上下</li>
+				<li><span class="bold">space-around</span> ：平均間距</li>
+			</ul>
+			<div class="code">
+				.flex-start{<br>
+				    align-content:flex-start;<br>
+				}<br>
+				.flex-end{<br>
+				    align-content:flex-end;<br>
+				}<br>
+				.center{<br>
+				    align-content:center;<br>
+				}<br>
+				.space-between{<br>
+				    align-content:space-between;<br>
+				}<br>
+				.space-around{<br>
+				    align-content:space-around;<br>
+				}<br>
+				.stretch{<br>
+				    align-content:stretch;<br>
+				}<br>
+        		<div class="code-tag">CSS</div>
+            </div>
+			<div class="samples">
+				<div class="sample sample7_1">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="box2_4">4</div>
+					<div class="box2_5">5</div>
+					<div class="tag">flex-start</div>
+				</div>
+				<div class="sample sample7_2">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="box2_4">4</div>
+					<div class="box2_5">5</div>
+					<div class="tag">flex-end</div>
+				</div>
+				<div class="sample sample7_3">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="box2_4">4</div>
+					<div class="box2_5">5</div>
+					<div class="tag">center</div>
+				</div>
+				<div class="sample sample7_4">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="box2_4">4</div>
+					<div class="box2_5">5</div>
+					<div class="tag">stretch</div>
+				</div>
+				<div class="sample sample7_5">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="box2_4">4</div>
+					<div class="box2_5">5</div>
+					<div class="tag">baseline</div>
+				</div>
+				<div class="sample sample7_6">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="box2_4">4</div>
+					<div class="box2_5">5</div>
+					<div class="tag">baseline</div>
+				</div>
+			</div>
+		</section>
+		<section class="section section8" id="section8">
+			<h2>flex-wrap</h2>
+			<p>設定是否讓內容元素自動換行</p>
+			<ul>
+				<li><span class="bold">nowrap(default)</span> ：單行</li>
+				<li><span class="bold">wrap</span> ：多行(自動換行)</li>
+				<li><span class="bold">wrap-reverse</span> ：多行，但是順序反轉</li>
+			</ul>
+			<div class="code">
+				.nowrap {<br>
+				    flex-wrap: nowrap;<br>
+				}<br>
+				.wrap {<br>
+				    flex-wrap: wrap;<br>
+				}<br>
+				.wrap-reverse {<br>
+				    flex-wrap: wrap-reverse;<br>
+				}<br>
+				.nowrap-column {<br>
+				    flex-direction: column;<br>
+				    flex-wrap: nowrap;<br>
+				}<br>
+				.wrap-column {<br>
+				    flex-direction: column;<br>
+				    flex-wrap: wrap;<br>
+				}<br>
+				.wrap-reverse-column {<br>
+				    flex-direction: column;<br>
+				    flex-wrap: wrap-reverse;<br>
+				}<br>
+        		<div class="code-tag">CSS</div>
+            </div>
+			<div class="samples">
+				<div class="sample sample8_1">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="box2_4">4</div>
+					<div class="box2_5">5</div>
+					<div class="tag">nowrap</div>
+				</div>
+				<div class="sample sample8_2">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="box2_4">4</div>
+					<div class="box2_5">5</div>
+					<div class="tag">wrap</div>
+				</div>
+				<div class="sample sample8_3">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="box2_4">4</div>
+					<div class="box2_5">5</div>
+					<div class="tag">wrap-reverse</div>
+				</div>
+			</div>
+			<div class="samples">
+				<div class="sample sample8_4">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="box2_4">4</div>
+					<div class="box2_5">5</div>
+					<div class="tag">nowrap-column</div>
+				</div>
+				<div class="sample sample8_5">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="box2_4">4</div>
+					<div class="box2_5">5</div>
+					<div class="tag">wrap-column</div>
+				</div>
+				<div class="sample sample8_6">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="box2_4">4</div>
+					<div class="box2_5">5</div>
+					<div class="tag">wrap-reverse-column</div>
+			</div>
+			</div>
+		</section>
+		<section class="section section9" id="section9">
+			<h2>order</h2>
+			<p>可以直接指定內容元素的排列順序</p>
+			<div class="code">
+				.box5 {<br>
+				    order: 1;<br>
+				}<br>
+				.box2 {<br>
+				    order: 2;<br>
+				}<br>
+				.box4 {<br>
+				    order: 3;<br>
+				}<br>
+				.box3 {<br>
+				    order: 4;<br>
+				}<br>
+				.box1 {<br>
+				    order: 5;<br>
+				}<br>
+        		<div class="code-tag">CSS</div>
+            </div>
+			<div class="samples">
+				<div class="sample sample9_1">
+					<div class="box2_1">1</div>
+					<div class="box2_2">2</div>
+					<div class="box2_3">3</div>
+					<div class="box2_4">4</div>
+					<div class="box2_5">5</div>
+					<div class="tag">order</div>
+				</div>
+			</div>
+		</section>
+		<section class="section section10" id="section10">
+			<h2>flex</h2>
+			<p>由三個屬性組成：flex-grow, flex-shrink, flex-basis 如果只填一個數字(無單位)預設以flex-grow呈現</p>
+			<ul>
+				<li><span class="bold">flex-grow</span> ：數字無單位，當元素的flex-basis小於他在容器中分配到的長度則會照數字的比例分配空間。預設0，不作彈性變化，設為1以上則會自動分配(不能為負值)</li>
+				<li><span class="bold">flex-shrink</span> ：數字無單位，當元素的flex-basis大於他在容器中分配到的長度則會照數字的比例分配空間。預設1，設為0則不作彈性變化(不能為負值)</li>
+				<li><span class="bold">flex-basis</span> ：子元素的基本大小，作為父元素的大小比較基準，預設值為 0，也因為預設值為 0，所以沒有設定此屬性的時候，會直接採用 flex-grow 屬性，flex-basis 也可以設為 auto，如果設為 auto，就表示子元素以自己的基本大小為單位。</li>
+			</ul>
+			<div class="code">
+				.box1 {<br>
+				    flex: 1 2 200px;<br>
+				}<br>
+				.box2 {<br>
+				    flex: 2 1 100px;<br>
+				}<br>
+        		<div class="code-tag">CSS</div>
+            </div>
+			<div class="samples">
+				<div class="sample sample10_1">
+					<div class="box10 box10_1">1</div>
+					<div class="box10 box10_2">2</div>
+					<div class="tag">width: 40%</div>
+				</div>
+				<div class="sample sample10_2">
+					<div class="box10 box10_1">1</div>
+					<div class="box10 box10_2">2</div>
+					<div class="tag">width: 10%</div>
+				</div>
+			</div>
+		</section>
+	</main>
+	<footer>
+    	<div class="footer-green"></div>
+    	<div class="footer-black">
+    		<div class="footer-black-left">
+    			<div><h1>A Victor's Work</h1></div>
+    			<div>Only for study & practices.<br>
+    			Visit my other practices:</div>
+    			<ul>
+    				<li><a href="CSS_Lesson2.html">CSS Lesson2</a></li>
+    				<li><a href="coffee.html">Coffee</a></li>
+                    <li><a href="中午吃什麼.html">WhatToEat</a></li>
+                    <li><a href="CSS_Align.html">CSS_Align</a></li>
+                    <li><a href="CSS_Flexbox.html">CSS_Flexbox</a></li>
+    			</ul>
+    		</div>
+    		<div class="footer-black-middle">
+    			<div><h1>All rights reserved</h1></div>
+    			<div>Only for study & practices.<br>
+    			</div>
+    		</div>
+    		<div class="footer-black-right">
+    			<div><h1>Contact me</h1></div>
+    			<div>Please contact me on the internet.</div>
+    			<div class="links">
+    			    <a href=""><img src="pic/facebook.png" ></a>
+    			    <a href=""><img src="pic/instagram.png" ></a>
+    			    <a href=""><img src="pic/behance.png" ></a>
+    			    <a href=""><img src="pic/pen.png" ></a>
+    		    </div>
+    		</div>
+    	</div>
+    </footer>
+	
+</body>
+</html>

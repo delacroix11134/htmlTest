@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Shrikhand" rel="stylesheet">
+    <title>Wheel Event</title>
+    <style>
+        *{
+            margin: 0;
+            line-height: 1.5;
+            box-sizing: border-box;
+        }
+        html, body{
+            width: 100%;
+            height: 100%;
+            font-family: 'Open Sans', sans-serif;
+        }
+        .body{
+            background: #f9f7f5;
+            transition: 1s cubic-bezier(0.52, 0, 0.25, 1);
+            position: relative;
+            left: 0;
+            top: 0;
+            overflow: hidden;
+        }
+        .body-contact{
+            width: 80%;
+            height: 80%;
+            left: 10%;
+            top: 10%;
+        }
+        /*Contact*/
+        .contact-back{
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            visibility: hidden;
+            opacity: 0;
+            background: #1f1f1f;
+            transition: 1s ease;
+            z-index: 15;
+        }
+        .contact-back-show{
+            visibility: visible;
+            opacity: 1;
+        }
+        .contact-info{
+            width: 80%;
+            height: 50%;
+            margin: 0 auto;
+            margin-top: 25%;
+        }
+        .contact-title{
+            color: white;
+        }
+        .contact-sub{
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 10px;
+            transition: 0.5s ease;
+        }
+        .contact-btn{
+            width: 100px;
+            height: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            line-height: 30px;
+            margin: 20px 0;
+            cursor: pointer;
+            position: relative;
+            transition: 0.5s ease;
+        }
+        .contact-btn-back{
+            position: absolute;
+            height:100%;
+            width: 0;
+            background: rgba(253, 255, 255, 0.8);
+            transform-origin: left;
+            transition: 0.5s ease;
+            z-index: -1;
+        }
+        .contact-btn:hover{
+            color: black;
+        }
+        .contact-btn:hover .contact-btn-back{
+            width: 100%;
+        }
+        /*header*/
+        header {
+            width: 100%;
+            height:15%;
+            position: absolute;
+            /* padding-bottom: 10px; */
+        }
+        #check-contact{
+            display: none;
+        }
+        .header-logo{
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.1);
+            position: absolute;
+            top: 0;
+            left: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        header img{
+            height: 40px;
+            filter: brightness(0.2);
+            transition: 1s ease;
+        }
+        .header-contact{
+            width: 150px;
+            height: 100px;
+            position: absolute;
+            top: 0;
+            right: 20px;
+            color: black;
+            cursor: pointer;
+            display: flex;
+            font-size: 24px;
+            justify-content: center;
+            align-items: center;
+            transition: 1s ease;
+            z-index: 20;
+        }
+        .header-contact-open{
+            color: white;
+        }
+        .header-contact-out{
+            opacity: 0;
+        }
+        /*decoration*/
+        .decoration{
+            width: 98%;
+            height: 100%;
+            position: absolute;
+            left: 1%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            pointer-events: none;
+        }
+        .text-small{
+            color: #191919ed;
+            font-size: 20px;
+            line-height: 100%;
+            transition: 2s ease;
+        }
+        .text-small-dark{
+            color:rgba(255, 255, 255, 0.2);
+        }
+        /*lines*/
+        .lines{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .lines-contact{
+            z-index: 20;
+        }
+        .line{
+            height:100%;
+            width: 11%;
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+            transition: 1s ease;
+        }
+        .line-dark{
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .lines-large{
+            transform: translate(40%);
+        }
+        /*slider-text*/
+        #text-box{
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            overflow: hidden;
+            z-index: 10;
+            /*穿透物件 使物件不會被點擊*/
+            pointer-events: none;
+        }
+        #slider-text{
+            width: 300%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            position: relative;
+            transition: 1.8s cubic-bezier(0.57, 0.01, 0.13, 0.99);
+        }
+        .slider-text-place1{
+            transform: translate(0);
+        }
+        .slider-text-place2{
+            transform: translate(-33.33%);
+        }
+        .slider-text-place3{
+            transform: translate(-66.66%);
+        }
+        .slider-text-out1{
+            transform: translate(5%);
+            opacity: 0;
+            transition: 0.6s cubic-bezier(0.57, 0.01, 0.52, 0.99)!important;
+        }
+        .slider-text-out2{
+            transform: translate(-28.33%);
+            opacity: 0;
+            transition: 0.6s cubic-bezier(0.57, 0.01, 0.52, 0.99)!important;
+        }
+        .slider-text-out3{
+            transform: translate(-58.33%);
+            opacity: 0;
+            transition: 0.6s cubic-bezier(0.57, 0.01, 0.52, 0.99)!important;
+        }
+        .text{
+            color: #191919ed;
+            text-align: center;
+            width: 33.33%;
+            font-size: 150px;
+            /*強制不換行*/
+            white-space: nowrap;
+            cursor: default;
+            transition: 1.6s cubic-bezier(0.52, 0, 0.25, 1);    
+        }
+        
+        .text-dark{
+            color: rgba(255, 255, 255, 0.2);
+        }
+        /*text-large*/
+        .text-large-container{
+            position: absolute;
+            left: 14%;
+            top: 37%;
+            pointer-events: none;
+        }
+        .text-large-title{
+            color:rgb(49, 49, 49);
+            font-size: 80px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: 0.5s ease;
+        }
+        .text-large-title-show{
+            animation: large-title-show 1s ease 0.5s forwards;
+        }
+        .text-large-title-back{
+            animation: large-title-back 0.5s ease forwards;
+        }
+        .text-large-title-dark{
+            color: white;
+        }
+        .text-large-sub{
+            color: rgba(0, 0, 0, 0.6);
+            font-size: 10px;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: 0.5s ease;
+        }
+        .text-large-sub-show{
+            animation: large-title-show 1s ease 1s forwards;
+        }
+        .text-large-sub-back{
+            animation: large-title-back 0.5s ease forwards;
+        }
+        .text-large-sub-dark{
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .text-large-btn{
+            width: 100px;
+            height: 30px;
+            border: 1px solid rgba(0, 0, 0, 0.6);
+            color: rgba(0, 0, 0, 0.6);
+            text-align: center;
+            line-height: 30px;
+            margin: 20px 0;
+            cursor: pointer;
+            position: relative;
+            transition: 0.5s ease;
+            transform: translateY(20px);
+            opacity: 0;
+            pointer-events: auto;
+        }
+        .text-large-btn-dark{
+            color:rgba(255, 255, 255, 0.6);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+        .text-large-btn-back{
+            position: absolute;
+            height:100%;
+            width: 0;
+            background: rgba(0, 0, 0, 0.7);
+            transform-origin: left;
+            transition: 0.5s ease;
+            z-index: -1;
+        }
+        .text-large-btn:hover {
+            color: white;
+        }
+        .text-large-btn:hover .text-large-btn-back{
+            width: 100%;
+        }
+        .text-large-btn-show{
+            animation: large-title-show 1s ease 1.5s forwards;
+        }
+        @keyframes large-title-back{
+            0%{
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100%{
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+        }
+        @keyframes large-title-show{
+            0%{
+                transform: translateY(-30px);
+                opacity: 0;
+            }
+            100%{
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /*box*/
+        .box{
+            width: 50%;
+            height: 70%;
+            position: relative;
+            top: 15%;
+            left: 25%;
+            overflow: hidden;
+            background: rgb(49, 49, 49);
+            transition: 1s cubic-bezier(0.52, 0, 0.25, 1);  
+        }
+        .box-open{
+            width: 50%;
+            height: 100%;
+            top: 0;
+            left: 50%;
+        }
+        /*solids*/
+        #slider-solid{
+            height: 100%;
+            width: 500%;
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 5;
+            pointer-events: none;
+            transition: 1.6s cubic-bezier(0.57, 0.01, 0.52, 0.99);
+        }
+        .solid1{
+            background: #528199;
+        }
+        .solid2{
+            background: rgb(75, 27, 73);
+        }
+        .solid1-place3{
+            transition: 2s step-end;
+            background: white;
+        }
+        .solid2-place3{
+            transition: 2s step-end;
+            background: #528199;
+        }
+        .slider-solid-place1{
+            transform: translate(20%);
+        }
+        .slider-solid-place2{
+            transform: translate(-20%);
+        }
+        .slider-solid-place3{
+            transform: translate(-60%);
+        }
+        .solids{
+            height: 100%;
+            width: 20%;
+            transition: 2s step-end;
+        }
+        /*pics*/
+        #slider-pic{
+            height: 100%;
+            width: 100%;
+            position: relative;
+            transition:2s cubic-bezier(0.52, 0, 0.25, 1);
+        }
+        .check-pic{
+            display: none;
+        }
+        .label-pic{
+            pointer-events: none;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            transform: scale(1.1,1.1);
+            opacity: 0;
+            transition: 2s cubic-bezier(0.52, 0, 0.25, 1);
+            cursor: pointer;
+        }
+        .label-pic-show{
+            pointer-events: auto;
+            transform: scale(1,1);
+            opacity: 1;
+        }
+        .label-pic-large{
+            transform: scale(1.1,1.1);
+        }
+        #label1{
+            background: url(pic/girl1.jpg);
+            background-position: bottom;
+            background-size: cover;
+        }
+        #label2{
+            background: url(pic/girl2.jpg);
+            background-position: center;
+            background-size: cover;
+        }
+        #label3{
+            background: url(pic/girl3.jpg);
+            background-position: bottom;
+            background-size: cover;
+        }
+        /*arrows*/
+        .arrow-box{
+            width: 125px;
+            height: 100px;
+            position: absolute;
+            right: 80px;
+            bottom: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+        .arrow{
+            height: 50px;
+            transition: .2s ease;
+            filter: brightness(0.3);
+            pointer-events: auto;
+        }
+        .pre{
+            transform: rotateZ(180deg);
+        }
+        .arrow:hover{
+            transition: .2s ease;
+            filter: brightness(0.4);
+            animation: arrowHover 0.2s linear;
+        }
+        .pre:hover{
+            animation: arrowPreHover 0.2s linear;
+        }
+        .arrow-dark{
+            transition: 1s ease;
+            filter: brightness(0.8);
+        }
+        .arrow-dark:hover{
+            transition: .2s ease;
+            filter: brightness(1);
+        }
+        .arrow-hide{
+            opacity: 0;
+        }
+        @keyframes arrowHover{
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+        @keyframes arrowPreHover{
+            0% {
+                transform: translateY(0) rotateZ(180deg);
+            }
+            50% {
+                transform: translateY(-5px) rotateZ(180deg);
+            }
+            100% {
+                transform: translateY(0) rotateZ(180deg);
+            }
+        }
+        /*links*/
+        .links{
+            width: 100px;
+            height: 180px;
+            position: absolute;
+            left: 10px;
+            bottom: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .links-hide{
+            visibility: hidden;
+        }
+        .link-bright{
+            width: 25px;
+            height: 25px;
+            transition: .2s ease;
+            filter: brightness(0.3);
+        }
+        .link-bright:hover{
+            transition: .2s ease;
+            filter: brightness(0.4);
+            animation: arrowHover 0.2s linear;
+        }
+        .link-dark{
+            transition: 1s ease;
+            filter: brightness(0.8);
+        }
+        .link-dark:hover{
+            transition: .2s ease;
+            filter: brightness(1);
+        }
+        /*Media query*/
+        @media(max-width: 500px){
+            .header-logo{
+                left: 0;
+                background: none;
+            }
+            .header-contact{
+                right: 0;
+            }
+            #text-box{
+                display: none;
+            }
+            .box{
+                width: 100%;
+                left: 0;
+            }
+            .arrow-box{
+                width: 90%;
+                right: 5%;
+                bottom: 40%;
+                z-index: 20;
+            }
+            .arrow{
+                height: 30px;
+                filter: brightness(0.8);
+            }
+            .arrow:hover{
+                filter: brightness(1);
+            }
+            .links{
+                flex-direction: row;
+                width: 140px;
+                left: 58%;
+                bottom: -3%;
+                z-index: -1
+            }
+            .contact-info{
+                margin-top: 50%;
+            }
+            .text-large-container{
+                left: 5%;
+                top: 50%;
+                z-index: 20;
+            }
+            .text-large-title{
+                color: white;
+                line-height: 1;
+            }
+            .text-large-sub{
+                color: rgba(255, 255, 255, 0.8);
+            }
+            .text-large-btn{
+                color: rgba(255, 255, 255, 0.8);
+                border-color: rgba(255, 255, 255, 0.8);
+            }
+        }
+    </style>
+</head>
+<body id="body" class="body">
+    <input type="checkbox" name="check-contact" id="check-contact">
+    <div class="contact-back">
+        <div class="contact-info">
+            <div class="contact-title"><h1>Tnanks for visit my work!</h1></div>
+            <div class="contact-sub">Please contact me on social media or E-mail</div>
+            <div class="contact-btn"><div class="contact-btn-back"></div>Got it!</div>
+        </div>
+    </div>
+    <header>
+        
+        <div class="header-logo"><img src="pic/icon-white.png" alt="Victor's Work"></div>
+        <label for="check-contact" class="header-contact">contact &#8801;</div>
+    </header>
+    <div class="decoration">
+        <div class="text-small">01</div>
+        <div class="text-small">02</div>
+    </div>
+    <div id="lines" class="lines">
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+    <div id="text-box">
+        <div id="slider-text" class="slider-text-place1">
+            <div class="text">Wheel Event</div>
+            <div class="text">CSS & Js Slider</div>
+            <div class="text">Toggle Class</div>
+        </div>
+    </div>
+    <div class="text-large-container">
+        <div id="text-large-title" class="text-large-title">Wheel Event</div>
+        <div id="text-large-sub" class="text-large-sub">A practice project of javascript wheel event, Mostly simple css <br>slider and toggle classes, Useing vanilla js and css3</div>
+        <div id="text-large-btn" class="text-large-btn"><div class="text-large-btn-back"></div>Got it!</div>
+        
+    </div>
+    <div id="box" class="box">
+        <div id="slider-solid" class="slider-solid-place1">
+            <div class="solids solid1"></div>
+            <div class="solids solid2"></div>
+            <div class="solids solid3"></div>
+        </div>
+        <div id="slider-pic" class="slider-text-place1">
+            <input type="checkbox" name="check1" id="check1" class="check-pic">
+            <input type="checkbox" name="check2" id="check2" class="check-pic">
+            <input type="checkbox" name="check3" id="check3" class="check-pic">
+            <label for="check1" id="label1" class="label-pic label-pic-show"></label>
+            <label for="check2" id="label2" class="label-pic"></label>
+            <label for="check3" id="label3" class="label-pic"></label>
+        </div>
+    </div>
+    <div class="arrow-box">
+        <div><img src="pic/arrow.png" id="pre" class="pre arrow" alt="next"></div>
+        <div><img src="pic/arrow.png" id="next" class="next arrow" alt="previous"></div>
+    </div>
+    <div class="links">
+        <a href=""><img src="pic/facebook.png" alt="fb" class="link-bright"></a>
+        <a href=""><img src="pic/instagram.png" alt="ig" class="link-bright"></a>
+        <a href=""><img src="pic/behance.png" alt="be" class="link-bright"></a>
+        <a href=""><img src="pic/pen.png" alt="mail" class="link-bright"></a>
+    </div>
+</body>
+<script>
+    window.onload = function(){
+        var logo = document.querySelector('.header-logo img')
+        var contact = document.getElementsByClassName('header-contact');
+        var checkContact = document.getElementById('check-contact');
+        var solids = document.getElementById('slider-solid');
+        var solid1 = document.getElementsByClassName('solid1');
+        var solid2 = document.getElementsByClassName('solid2');
+        var sliderPic = document.getElementById('slider-pic');
+        var links = document.querySelectorAll('.link-bright');
+        var body = document.getElementById('body');
+        var lineContact = document.getElementById('lines');
+        var lines = document.querySelectorAll('.line');
+        var text = document.getElementById('slider-text');
+        var label1 = document.getElementById('label1');
+        var label2 = document.getElementById('label2');
+        var label3 = document.getElementById('label3');
+        var textColor = document.querySelectorAll('.text');
+        var textSmall = document.querySelectorAll('.text-small');
+        var arrow =document.querySelectorAll('.arrow');
+        var box = document.getElementById('box');
+        var check1 = document.getElementById('check1');
+        var pre = document.getElementById('pre');
+        var next = document.getElementById('next');
+        var textLargeBtn = document.getElementById('text-large-btn');
+        var textLargeTitle = document.getElementById('text-large-title');
+        var textLargeSub = document.getElementById('text-large-sub');
+        var contactBack = document.getElementsByClassName('contact-back');
+        var contactBtn = document.querySelector('.contact-btn');
+        var isTransEnd = true;
+        var currentPic = 1;
+        var isContactOpen = false;
+
+        //用迴圈把querySelectotAll的回傳值(array)做classList的處理
+        addClass = function(elements,className){
+            for(i=0 ; i < elements.length ; i++){
+                elements[i].classList.add(className);
+            }
+        }
+        removeClass = function(elements,className){
+            for(i=0 ; i < elements.length ; i++){
+                elements[i].classList.remove(className);
+            }
+        }
+        toggleClass = function(elements,className){
+            for(i=0 ; i < elements.length ; i++){
+            elements[i].classList.toggle(className);
+            }
+        }
+
+        delay = function(){
+            setTimeout(function(){
+                isTransEnd = true;
+            },2000)
+        }
+        //按下logo時
+        var backToFirstPage = function(){
+            if(isBoxOpen){
+                openBox();
+                textLargeShow();
+                gotoPage(1);
+            } else {
+                gotoPage(1);
+            } 
+        }
+        logo.addEventListener('click',backToFirstPage)
+        //事件處理函式(要寫在事件註冊前面)
+        var gotoPage = function(page){
+            switch(page){
+                case 1:
+                    logo.style.filter = 'brightness(0.2)';
+                    label1.classList.add('label-pic-show');
+                    label2.classList.remove('label-pic-show');
+                    label3.classList.remove('label-pic-show');
+                    solids.classList.add('slider-solid-place1');
+                    solids.classList.remove('slider-solid-place2','slider-solid-place3');
+                    solid1[0].classList.remove('solid1-place3');
+                    solid2[0].classList.remove('solid2-place3');
+                    text.classList.add('slider-text-place1');
+                    text.classList.remove('slider-text-place2','slider-text-place3');
+                    textLargeTitle.classList.remove('text-large-title-dark');
+                    textLargeSub.classList.remove('text-large-sub-dark');
+                    textLargeBtn.classList.remove('text-large-btn-dark');
+                    removeClass(textColor, 'text-dark');
+                    removeClass(links,'link-dark');
+                    removeClass(lines,'line-dark');
+                    removeClass(textSmall,'text-small-dark');
+                    removeClass(arrow,'arrow-dark');
+                    contact[0].classList.remove('header-contact-open');
+                    body.style.background = '#f9f7f5';                   
+                    currentPic = 1;
+                    isTransEnd = false;
+                    delay();
+                break;
+                case 2:
+                    logo.style.filter = 'brightness(0.2)';
+                    label1.classList.remove('label-pic-show');
+                    label2.classList.add('label-pic-show');
+                    label3.classList.remove('label-pic-show');
+                    solids.classList.add('slider-solid-place2');
+                    solids.classList.remove('slider-solid-place1','slider-solid-place3');
+                    solid2[0].classList.remove('solid2-place3');
+                    text.classList.add('slider-text-place2');
+                    text.classList.remove('slider-text-place1','slider-text-place3');
+                    textLargeTitle.classList.remove('text-large-title-dark');
+                    textLargeSub.classList.remove('text-large-sub-dark');
+                    textLargeBtn.classList.remove('text-large-btn-dark');
+                    addClass(textColor, 'text-dark');
+                    removeClass(links,'link-dark');
+                    removeClass(lines,'line-dark');
+                    addClass(textSmall,'text-small-dark');
+                    removeClass(arrow,'arrow-dark');
+                    contact[0].classList.remove('header-contact-open');
+                    body.style.background = '#6e9ab0';
+                    currentPic = 2;
+                    isTransEnd = false;
+                    delay();
+                break;
+                case 3:
+                    logo.style.filter = 'brightness(0.9)';
+                    label1.classList.remove('label-pic-show');
+                    label2.classList.remove('label-pic-show');
+                    label3.classList.add('label-pic-show');
+                    solids.classList.add('slider-solid-place3');
+                    solids.classList.remove('slider-solid-place1','slider-solid-place2');
+                    solid1[0].classList.add('solid1-place3');
+                    solid2[0].classList.add('solid2-place3');
+                    text.classList.add('slider-text-place3');
+                    text.classList.remove('slider-text-place1','slider-text-place2');
+                    textLargeTitle.classList.add('text-large-title-dark');
+                    textLargeSub.classList.add('text-large-sub-dark');
+                    textLargeBtn.classList.add('text-large-btn-dark');
+                    addClass(textColor, 'text-dark');
+                    addClass(links,'link-dark');
+                    addClass(lines,'line-dark');
+                    addClass(textSmall,'text-small-dark');
+                    addClass(arrow,'arrow-dark');
+                    contact[0].classList.add('header-contact-open');
+                    body.style.background = '#5a2857';
+                    currentPic = 3;
+                    isTransEnd = false;
+                    delay();
+                break;
+            }
+        }
+        var delta = function(e){
+            //**偵測滾輪往上或往下滾動
+            if( e.deltaY > 0 && currentPic == 1 && isTransEnd == true ){
+                gotoPage(2);
+            }
+            else if( e.deltaY > 0 && currentPic == 2 && isTransEnd == true ){
+                gotoPage(3);
+            }
+            else if( e.deltaY > 0 && currentPic == 3 && isTransEnd == true ){
+                gotoPage(1);
+            }
+            else if( e.deltaY < 0 && currentPic == 1 && isTransEnd == true ){
+                gotoPage(3);
+            }
+            else if( e.deltaY < 0 && currentPic == 2 && isTransEnd == true ){
+                gotoPage(1);
+            }
+            else if( e.deltaY < 0 && currentPic == 3 && isTransEnd == true ){
+                gotoPage(2);
+            }
+        }
+        //註冊滾輪事件
+        //也可以寫 window.onmousewheel = document.onmousewheel = delta;
+        document.addEventListener('wheel', delta);
+
+        //左右按鈕
+        nextBtn = function(){
+            if(currentPic == 1){
+                gotoPage(2);
+            }
+            else if(currentPic == 2){
+                gotoPage(3);
+            }
+            else if(currentPic == 3){
+                gotoPage(1);
+            }
+        }
+        preBtn = function(){
+            if(currentPic == 1){
+                gotoPage(3);
+            }
+            else if(currentPic == 2){
+                gotoPage(1);
+            }
+            else if(currentPic == 3){
+                gotoPage(2);
+            }
+        }
+        next.addEventListener('click', nextBtn);
+        pre.addEventListener('click', preBtn);
+
+        //打開圖片資訊   
+        var isBoxOpen = false;
+        var textLargeShow = function(){
+            if(currentPic == 3){
+                textLargeTitle.classList.add('text-large-title-dark');
+                textLargeSub.classList.add('text-large-sub-dark');
+                textLargeBtn.classList.add('text-large-btn-dark');
+            } else {
+                textLargeTitle.classList.remove('text-large-title-dark');
+                textLargeSub.classList.remove('text-large-sub-dark');
+                textLargeBtn.classList.remove('text-large-btn-dark');
+            }
+            if(isBoxOpen == true){
+                textLargeTitle.classList.remove('text-large-title-back');
+                textLargeSub.classList.remove('text-large-sub-back');
+                textLargeBtn.classList.remove('text-large-btn-back');
+                textLargeTitle.classList.add('text-large-title-show');
+                textLargeSub.classList.add('text-large-sub-show');
+                textLargeBtn.classList.add('text-large-btn-show');
+            } else {
+                textLargeTitle.classList.remove('text-large-title-show');
+                textLargeSub.classList.remove('text-large-sub-show');
+                textLargeBtn.classList.remove('text-large-btn-show');
+                textLargeTitle.classList.add('text-large-title-back');
+                textLargeSub.classList.add('text-large-sub-back');
+                textLargeBtn.classList.add('text-large-btn-back');
+            }
+        }
+        var sliderTextOut = function(){
+            if(isBoxOpen){
+                switch (currentPic){
+                    case 1:
+                    text.classList.add('slider-text-out1');
+                    break;
+                    case 2:
+                    text.classList.add('slider-text-out2');
+                    break;
+                    case 3:
+                    text.classList.add('slider-text-out3');
+                    break;
+                }
+            } else {
+                text.classList.remove('slider-text-out1','slider-text-out2','slider-text-out3');
+            }
+        }
+        var sliderTextOutAnyway = function(){
+            if(isContactOpen){
+                switch (currentPic){
+                    case 1:
+                    text.classList.add('slider-text-out1');
+                    break;
+                    case 2:
+                    text.classList.add('slider-text-out2');
+                    break;
+                    case 3:
+                    text.classList.add('slider-text-out3');
+                    break;
+                }
+            } else {
+                text.classList.remove('slider-text-out1','slider-text-out2','slider-text-out3');
+            }
+        }
+        var openBox = function(){
+            if (isBoxOpen){
+                isBoxOpen = false;
+            } else {
+                isBoxOpen = true;
+            }
+            box.classList.toggle('box-open');
+            toggleClass(lines,'lines-large');
+            label1.classList.toggle('label-pic-large');
+            label2.classList.toggle('label-pic-large');
+            label3.classList.toggle('label-pic-large');
+            pre.classList.toggle('arrow-hide');
+            next.classList.toggle('arrow-hide');
+            contact[0].classList.toggle('header-contact-out');
+            sliderTextOut();
+            textLargeShow();
+        }
+
+        //Contact open
+        var contactOpen = function(){
+            if(!isContactOpen){
+                isContactOpen = true;
+                contact[0].classList.add('header-contact-open');
+            } else {
+                isContactOpen = false;
+                contact[0].classList.remove('header-contact-open');
+            }
+            body.classList.toggle('body-contact');
+            contactBack[0].classList.toggle('contact-back-show');
+            lineContact.classList.toggle('lines-contact');
+            pre.classList.toggle('arrow-hide');
+            next.classList.toggle('arrow-hide');
+            toggleClass(links,'links-hide');
+            toggleClass(lines,'line-dark');
+            sliderTextOutAnyway();
+        }
+
+
+        checkContact.addEventListener('change', contactOpen);
+        contactBtn.addEventListener('click', contactOpen);
+        check1.addEventListener('change', openBox);
+        check2.addEventListener('change', openBox);
+        check3.addEventListener('change', openBox);
+        textLargeBtn.addEventListener('click', openBox);
+
+
+
+        //**偵側滾動了多少距離(頁面頂端和可見畫面頂端的距離差)
+        //为了保证兼容性，这里取两个值，哪个有值取哪一个
+        //scrollTop就是触发滚轮事件时滚轮的高度
+        //如果頁面沒有捲動 則不會觸發
+        window.onscroll = function() {
+        var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+        console.log("滚动距离" + scrollTop);
+        }
+
+
+        
+    }
+</script>
+</html>

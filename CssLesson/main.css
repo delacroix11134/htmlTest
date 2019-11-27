@@ -1,0 +1,36 @@
+h1 {
+	color: red;
+}
+
+[id] {
+	color: blue;
+}
+
+.green {
+	color: green;
+}
+
+code {
+	font-family: monospace;
+	color: red;
+}
+
+body {
+	font-family: sans-serif;
+}
+
+li + li {
+	background: black;
+	color: white;
+}
+
+li:first-child {
+	background: gray;
+	color: white;
+}
+
+ol > li {
+	background: green;
+	color: white;
+
+}

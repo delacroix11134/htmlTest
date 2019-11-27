@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX Test</title>
+    <style>
+        /* XHR */
+        body{
+            margin:0;
+            box-sizing: border-box;
+        }
+        .title{
+            width: 100%;
+            height: 80px;
+            border-bottom: 1px solid black;
+            margin:0;
+            line-height: 80px;
+        }
+        .title h1{
+            margin: 20px;
+        }
+        .nav{
+            box-sizing: border-box;
+            text-align: center;
+            display: inline-block;
+            width: 60px;
+            height: 25px;
+            margin: 20px ;
+            cursor: pointer;
+        }
+        .border{
+            width: 0%;
+            height: 2px;
+            border-bottom: 2px solid black;
+            transition: 0.2s ease;
+        }
+        .nav:hover .border{
+            width: 100%;
+        }
+        li{
+            list-style: none;
+            display: inline-block;
+            margin: 0 10px;
+        }
+        li img{
+            width: 150px;
+        }
+        /* Promise */
+        .box{
+            width:150px;
+            height:250px;
+            background: lightgrey;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            //XHR
+            const latest = document.getElementById("latest");
+            const popular = document.getElementById("popular");        
+            function getData(pageName){
+                var XHRreq = new XMLHttpRequest();
+                XHRreq.open("GET","http://127.0.0.1:80/" + pageName);
+                XHRreq.onload = function(){
+                    var content = document.getElementById("content");
+                    content.innerHTML = this.responseText;
+                }
+                XHRreq.send();
+            }
+            latest.addEventListener("click", function(){ getData("latest.html") });
+            popular.addEventListener("click", function(){ getData("popular.html") });
+            //XHR in Promise
+            const latest2 = document.getElementById("latest2");
+            const popular2 = document.getElementById("popular2");        
+            function getDataWithPromise(pageName){
+                return new Promise(function(resolve,reject){
+                    var XHRreq = new XMLHttpRequest();
+                    XHRreq.open("GET","http://127.0.0.1:80/" + pageName);
+                    XHRreq.onload = function(){
+                        if(XHRreq.readyState == 4 && XHRreq.status == 200){
+                            console.log("resolve:" + XHRreq.response);
+                            resolve(XHRreq.response);
+                            var content2 = document.getElementById("content2");
+                            content2.innerHTML = this.responseText;
+                        } else {
+                            console.log(XHRreq.response);
+                            reject(XHRreq.response);
+                        }
+                    }
+                    XHRreq.send();
+                })
+            }
+            getDataWithPromise("popular2.html");
+            latest2.addEventListener("click", function(){ 
+                getDataWithPromise("latest2.html"); 
+                });
+            popular2.addEventListener("click", function(){  
+                getDataWithPromise("popular2.html")
+                .then(function(data){
+                    console.log("first .then:"+data);
+                })
+                .catch(function(err){
+                    console.log(err);
+                })
+            });
+        } //end onload
+    </script>
+</head>
+<body>
+    <!-- XHR -->
+    <div class="title"><h1>AJAX Test</h1></div>
+    <div id="latest" class="nav">Lastest<div class="border"></div></div>
+    <div id="popular" class="nav">Popular<div class="border"></div></div>
+    <div id="content"></div>
+    <!-- promise -->
+    <div class="title"><h1>AJAX with Promise</h1></div>
+    <div id="latest2" class="nav">Lastest<div class="border"></div></div>
+    <div id="popular2" class="nav">Popular<div class="border"></div></div>
+    <div id="content2"></div>
+</body>
+</html>

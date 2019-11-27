@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="vue">
+        <!-- Vue組件可以自己創建新的html tag,標籤內容可以在屬性中設定 -->
+        <!-- 1. 在vue的標籤下使用自定義的tag name -->
+        <h2>Vue組件</h2>
+        <input-name></input-name>  
+
+        <br>
+
+        <h2>按鈕計數器</h2>
+        <div>注意這邊用了三次同一個組件 但是他們的count不是共用而是獨立的</div>
+        <btn-counter></btn-counter>
+        <btn-counter></btn-counter>
+        <btn-counter></btn-counter>
+        
+        <br>
+
+        <h2>私有的Vue組件*</h2>
+        <p>如果在非創建該組件的DOM中使用 是顯示不出來的</p>
+        <private-component></private-component>
+
+        
+    </div>
+
+    <br>
+
+    <div id="vue2">
+        <h2>以上都是全域中創造的組件</h2>
+        <div>所以不管在DOM中哪一個vue實體都可以使用</div>
+        <btn-counter></btn-counter>
+        <br>
+        <h2>私有的Vue組件</h2>
+        <p>在第二個vue實體物件中的component屬性裡創建組件</p>
+        <p>就只能在這個DOM中使用</p>
+        <private-component></private-component>
+
+    </div>
+</body>
+<script>
+    // vue.component()代入兩個引數，第一個值是自定義組件的名稱，第二個是組件的內容
+    // 2. 這裡名稱是駝峰式命名(或是寫短橫線命名也可以)，但是在html中只能使用短橫線命名
+    Vue.component('inputName',{
+        // 3. 組件和其他Vue物件一樣，都有data,methods,computed,watch 但是他不會對某個DOM建立實體 所以沒有el
+        // 4. 另外 data的值必須要是方法的回傳值，而回傳的是一個物件
+        data: function(){
+            return {
+                inputType: '姓名',
+                place: 'Name',
+                // *但是vue屬性所用到的data參數要寫在這裡
+                name: '',
+            }
+        },
+        // 5. template底下寫的是組件內容
+        // 在組件中一樣也可以使用vue的屬性*
+        template: `<div>  
+                    <div>請輸入{{inputType}}: </div>
+                    <input :placeholder="place" v-model="name">
+                    <div>你的名字是: {{name}}</div>
+                </div>`
+    })
+
+
+    // 第二個例子: 做一個按鈕計數器
+    Vue.component('btn-counter',{
+        data: function(){
+            return {
+                count: 0,
+            }
+        },
+        methods:{
+            btn: function(){
+                this.count++
+            }
+        },
+        template: `<div>
+                    <button @click="btn">按鈕</button>
+                    <div>點擊: {{count}}</div>
+                </div>`,
+    })
+    
+    
+    
+    let vue = new Vue({
+        el: '#vue',
+    
+    })
+
+    let vue2 = new Vue({
+        el: '#vue2',
+        components:{
+            privateComponent:{
+                data: function(){
+                    return {
+                        count: 0,
+                    }
+                },
+                methods:{
+                    btn: function(){
+                        this.count++
+                    }
+                },
+                template:`<div>
+                            <button @click="btn">私有組件按鈕</button>
+                            <div>{{count}}</div>
+                        </div>`,
+            }
+        }
+    })
+
+</script>
+</html>

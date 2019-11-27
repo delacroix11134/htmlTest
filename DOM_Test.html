@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>DOM_Test</title>
+    <link rel="shortcut icon" href="pic/icon.png">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans|Shrikhand" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+	<link rel="stylesheet" href="css/victorsWork_Shared.css">
+	<style>
+		*{
+			box-sizing: border-box;
+			line-height: 1.5;
+			letter-spacing: 0.1em;
+		}
+		body{
+			margin: 0;
+    		background: #f0f0f0;
+			/*font-family: 'Shrikhand', cursive;*/
+			font-family: 'Open Sans', sans-serif;
+		}
+		.part1-label{
+			width: 100%;
+			margin: 0 auto;
+		}
+		.part3-label{
+			width: 80%;
+			margin: 0 auto;
+		}
+		#partOne{
+			margin: 60px auto;
+			width: 80%;
+			height: 300px;			
+		}
+		#canvas{
+			width: 100%;
+			height: 300px;
+			border-radius: 10px;
+			box-shadow: 2px 2px 12px rgba(0,0,0,0.5);
+			display: inline-block;
+			text-align: center;
+			background: url("pic/header3.jpg");
+		}
+		.container{
+			display: inline-block;
+			vertical-align: middle;
+		}
+		#canvas::before{
+			content: '';
+			display: inline-block;
+			height: 100%;
+			vertical-align: middle;
+		}
+		#text{
+			color: white;
+			font-size: 20px;
+		}
+		#link{
+			color: white;
+			font-size: 20px;
+			text-decoration: none;
+		}
+		#link:hover{
+			color: red!important;
+		}
+		/*part2*/
+		#part2{
+			margin: 20px auto;
+			width: 80%;
+            height: 100px;
+            display: flex;
+		    justify-content: center;
+		    align-items: flex-start;
+		}
+		.btn{
+			display: inline-block;
+			margin: 0 20px;
+		}
+		/*part3_nba*/
+		#part3{
+			margin-top:100px;
+		}
+		.canvas2{
+			background:rgb(24, 24, 24);
+			width:80%;
+			height:450px;
+			margin:0 auto;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			position: relative;
+		}
+		.canvas2 .btn{
+			position:absolute;
+			width:150px;
+			height:100%;
+			margin:0;
+			padding: 0;
+			border:none;
+			color: white;
+			background: rgba(0,0,0,0);
+			transition: 0.2s ease-in-out;
+		}
+		.canvas2 .btn:hover{
+			background: #4e4e4e;
+		}
+		.canvas2 .btn:focus{
+			outline: none;
+		}
+		#next{
+			right: 0;
+		}
+		#preview{
+			left: 0;
+		}
+		.canvas2 .view{
+			width:350px;
+			height:350px;
+			overflow:hidden;
+			position: relative;
+			box-shadow: 5px 5px 10px rgb(0, 0, 0); 
+		}
+		.canvas2 .view .hidden-link{
+			position: absolute;
+			width: 350px;
+			height: 100%;
+			top:0;
+			left:0;
+			z-index: 3;
+		}
+		.canvas2 .view .slider1{
+			height:100%;
+			width:1000%;
+			transform:translate(0);
+			transition:0.4s ease-in-out;
+			justify-content: flex-start;
+			align-items: center;
+		}
+		.canvas2 .view .slider2{
+			transform: translateX(-355px);
+		}
+		.canvas2 .view .slider3{
+			transform: translateX(-710px);
+		}
+		.canvas2 .view .slider4{
+			transform: translateX(-1065px);
+		}
+		.canvas2 .pic{
+			display:inline-block;
+			vertical-align: top;
+			width: 350px;
+			overflow: hidden;
+			position: relative;
+		}
+		.canvas2 .view img{
+			width:100%;
+			object-fit: cover;
+		}
+		.bullets{
+			margin: 0 auto;
+			position:absolute;
+			bottom: 15px;
+		}
+		.bullet{
+			width: 10px;
+			height: 10px;
+			border:none;
+			padding: 0;
+			margin: 0 5px;
+			border-radius: 50%;
+			background: rgb(128, 128, 128);
+		}
+		.bullet:focus{
+			outline: none;
+		}
+		.bullet-light{
+			background: white;
+		}
+		#part3 .section{
+			text-align: center;
+		}
+		/*BG-black*/
+		#bg-Black > div:target {
+			opacity: 1;
+			display: block;
+		}
+		/*esc*/
+		#bg-Black-Exit {
+			z-index: 10;
+			width: 50px;
+			height: 50px;
+			position: fixed;
+			top: 120px;
+			right: 320px;
+			color: white;
+			text-decoration: none;
+			font-size: 50px;
+		}
+		#controlPad:target #bg-Black{
+			opacity: 0;
+			display: none;
+		}
+		/*pic*/
+		.large-pic {
+			text-align: center;
+			background: rgba(0,0,0,0.8);
+			position:fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			z-index: 5;
+			opacity: 0;
+			display: none;
+		}
+
+		#bg-Black img{
+			margin-top: 12%;
+			z-index: 10;
+			height: 50%;
+			width: auto;
+			object-fit: contain;
+		}
+		.large-pic-info{
+			color:white;
+		}
+		/*banner*/
+		@keyframes banner{
+			0% { left: 0; }
+			28% { left: 0;}
+			33% { left: -100%; }
+			61% { left: -100%; }
+			66% { left: -200%; }
+			94% { left: -200%; }
+			100% { left: -300%; }
+		}
+		.banner-section{
+			margin-top: 100px;
+		}
+		#banner-slider{
+			width: 600px;
+			margin-left: 10% ;
+			overflow: hidden;
+			box-shadow: 5px 5px 10px rgba(0, 0, 0,0.3); 
+		}
+		#banner-slider figure img{
+			float: left;
+			width: 25%;
+		}
+		#banner-slider figure{
+			position:relative;
+			width: 400%;
+			margin:0;
+			left:0;
+			text-align: left;
+			animation: banner 12s ease infinite backwards;
+		}
+		#banner-slider figure:hover{
+			animation-play-state: paused; 
+		}
+		/*nav-side*/
+		.part4-label{
+			margin-top: 100px;
+			margin-left: 10%;
+		}
+		.section-nav-side{
+			width: 80%;
+			height: 500px;
+			margin: 0 auto;
+			overflow: hidden;
+			position: relative;
+			background: #4e4e4e;
+		}
+		#switch{
+			display: none;
+		}
+		#main{
+			width: 100%;
+			height: 100%;
+			background: #f44336;
+			position: relative;
+			left: 0;
+			float: right;
+			overflow: auto;
+			transform: none;
+			transition: .75s ease;
+		}
+		#nav-side{
+			width: 25%;
+			height: 100%;
+			z-index: 9;
+			background: #afafaf;
+			/*position: fixed;*/
+			position: absolute;
+			left:-30%;
+			transition: .75s ease;
+		}
+		#nav-slide-logo{
+			width: 100%;
+			height: 100px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		#nav-slide-logo img{
+			width: 80%;
+			filter: brightness(.3);
+		}
+		.nav-slide-item{
+			font-size: 16px;
+			width: 100%;
+			height: 50px;
+			text-align: center;
+			line-height: 50px;
+			cursor: pointer;
+			transition: .4s;
+		}
+		.nav-slide-item:hover{
+			color: #fff;
+			background: #4e4e4e;
+		}
+		.label-for-switch{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform:translate(-15px,-15px);
+			color:white;
+			font-size: 30px;
+			cursor: pointer;
+		}
+		#nav-side .label-for-switch{
+			width: 50px;
+			height: 50px;
+			text-align: center;
+			color: white;
+			top: 30px;
+			left: 115%;
+			opacity: 0;
+			transition: 0.2s;
+		}
+		#switch:checked ~ #nav-side{
+			left:0%;
+		}
+		#switch:checked ~ #main{
+			left: 10%;
+			transform: matrix3d(0.62,0,0.00,-.0002,0.00,0.7,0.00,0,0,0,1,0,0,0,0,1);
+		}
+		#switch:checked ~ #nav-side .label-for-switch{
+			opacity: 1;
+		}
+		/*media query*/
+		@media(max-width: 500px){
+			.canvas2{
+				width: 100%;
+			}
+			/*banner*/
+			#banner-slider{
+				width: 100%;
+				margin-left: 0;
+				box-shadow: none;
+			}
+			#banner-slider figure img{
+				width: 25%;
+			}
+			/*nav-side*/
+			.section-nav-side{
+				width: 100%;
+			}
+			#nav-side{
+				width:40%;
+				left:-40%;
+			}
+			#switch:checked ~ #main{
+				left: 20%;
+				transform: none;
+			}
+		}
+	</style>
+	
+</head>
+<body>
+	<header>
+		<div class="bar">
+			<div class="logo"><img src="pic/logo.png" ></div>
+		</div>
+		<img class="title-pic" src="pic/header2.jpg">
+		<h1 class="title-text">DOM基本操作</h1>
+		<p class="title-sub-text">網頁元素實作</p>
+	</header>
+	<article id="partOne">
+		<div class="part1-label"><h2>Change css styles with javascript</h2></div>
+		<section id="canvas">
+			<div class="container">
+				<div id="text">DOM Text Test</div>
+				<a id="link"href="#">DOM Link Test</a>
+			</div>	
+		</section>
+	</article>
+	<article id="part2">
+		<section id="controlPad">
+			<div class="btns">
+				<div class="btn">
+					<p>BG Color</p>
+					<select name="selectBGcolor" id="selectBGcolor">
+						<option value="pic">Pic</option>
+						<option value="red">Red</option>
+						<option value="blue">Blue</option>
+						<option value="white">White</option>
+					</select>
+			    </div>
+			    <div class="btn">
+					<p>Font Color</p>
+					<select name="selectFontColor" id="selectFontColor">
+						<option value="white">White</option>
+						<option value="blue">Blue</option>
+						<option value="gray">Gray</option>
+					</select>
+			    </div>
+			</div>
+		</section>
+	</article>
+	<article id="part3">
+		<section>
+			<div class="part3-label"><h2>Slider with css & javascript</h2></div>
+			<div id="bg-Black">
+				<div id="large-pic1" class="large-pic">
+					<a href="#controlPad" id="bg-Black-Exit">X</a>
+					<img src="pic/album1.jpg" alt="nba">
+					<div class="large-pic-info">Album cover design</div>
+				</div>
+				<div id="large-pic2" class="large-pic">
+					<a href="#controlPad" id="bg-Black-Exit">X</a>
+					<img src="pic/album2.jpg" alt="nba">
+					<div class="large-pic-info">Album cover design</div>
+				</div>
+				<div id="large-pic3" class="large-pic">
+					<a href="#controlPad" id="bg-Black-Exit">X</a>
+					<img src="pic/album3.jpg" alt="nba">
+					<div class="large-pic-info">Album cover design</div>
+				</div>
+				<div id="large-pic4" class="large-pic">
+					<a href="#controlPad" id="bg-Black-Exit">X</a>
+					<img src="pic/album4.png" alt="nba">
+					<div class="large-pic-info">Album cover design</div>
+				</div>
+			</div>
+			<div class="canvas2">
+				<button id="next" class="btn">NEXT</button>
+				<button id="preview" class="btn">PRE</button>
+				<div class="view">
+					<div id="slider" class="slider1">
+						<div class="pic pic1">
+							<a href="#large-pic1" class="hidden-link"></a>
+							<img src="pic/album1.jpg" alt="nba">
+						</div>
+						<div class="pic pic2">
+							<a href="#large-pic2" class="hidden-link"></a>
+							<img src="pic/album2.jpg" alt="nba">
+						</div>
+						<div class="pic pic3">
+							<a href="#large-pic3" class="hidden-link"></a>
+							<img src="pic/album3.jpg" alt="nba">
+						</div>
+						<div class="pic pic4">
+							<a href="#large-pic4" class="hidden-link"></a>
+							<img src="pic/album4.png" alt="nba">
+						</div>
+					</div>
+				</div>
+				<div class="bullets">
+					<button id="bullet-pic1" class="bullet bullet-light"></button>
+					<button id="bullet-pic2" class="bullet"></button>
+					<button id="bullet-pic3" class="bullet"></button>
+					<button id="bullet-pic4" class="bullet"></button>
+				</div>
+			</div>
+		</section>
+		<!-- banner -->
+		<section class="banner-section">
+			<div class="part3-label"><h2>Slider with pure css</h2></div>
+			<div id="banner-slider">
+				<figure>
+					<img src="pic/banner01.jpg" alt="banner">
+					<img src="pic/banner02.jpg" alt="banner">
+					<img src="pic/banner03.jpg" alt="banner">
+					<img src="pic/banner01.jpg" alt="banner">
+				</figure>
+			</div>
+		</section>
+	</article>
+	<!-- check box & label for -->
+	<article>
+		<div class="part4-label"><h2>Side nav bar with css(with RWD)</h2></div>
+		<section class="section-nav-side">
+			<input type="checkbox" name="switch" id="switch">
+			<div id="nav-side">
+				<label for="switch" class="label-for-switch">X</label>
+				<div id="nav-slide-logo"><img src="pic/logo.png" alt=""></div>
+				<div class="nav-slide-item">Home</div>
+				<div class="nav-slide-item">Works</div>
+				<div class="nav-slide-item">About me</div>
+				<div class="nav-slide-item">Contact</div>
+			</div>
+			<div id="main">
+				<label for="switch" class="label-for-switch">&#9776;</label>
+			</div>
+		</section>
+	</article>
+	<!-- footer -->
+    <footer>
+		<div class="footer-green"></div>
+		<div class="footer-black">
+			<div class="footer-black-left">
+				<div><h1>A Victor's Work</h1></div>
+				<div>Only for study & practices.<br>
+				Visit my other practices:</div>
+				<ul>
+					<li><a href="CSS_Animation.html">CSS Animation</a></li>
+					<li><a href="CSS_Lesson2.html">CSS Lesson2</a></li>
+					<li><a href="coffee.html">Coffee</a></li>
+					<li><a href="中午吃什麼.html">WhatToEat</a></li>
+					<li><a href="CSS_Align.html">CSS_Align</a></li>
+					<li><a href="CSS_Flexbox.html">CSS_Flexbox</a></li>
+				</ul>
+			</div>
+			<div class="footer-black-middle">
+				<div><h1>All rights reserved</h1></div>
+				<div>Only for study & practices.<br>
+				</div>
+			</div>
+			<div class="footer-black-right">
+				<div><h1>Contact me</h1></div>
+				<div>Please contact me on the internet.</div>
+				<div class="links">
+					<a href=""><img src="pic/facebook.png" ></a>
+					<a href=""><img src="pic/instagram.png" ></a>
+					<a href=""><img src="pic/behance.png" ></a>
+					<a href=""><img src="pic/pen.png" ></a>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- script -->
+	<script>
+		//change BG color
+		var color = document.getElementById("selectBGcolor");
+		var canvas = document.getElementById("canvas");
+		color.addEventListener("change",changeBGcolor);
+		function changeBGcolor(){
+			if( color.value == 'blue'){
+				canvas.style.background = 'blue';
+			} else if(color.value == 'red') {
+				canvas.style.background = 'red';
+			} else if(color.value == 'pic') {
+                canvas.style.background = ' url("pic/header3.jpg") ';
+			} else {
+				canvas.style.background = 'white';
+			}
+			console.log(canvas.style.background);
+		}
+		//change font color
+		var text = document.getElementById("text");
+		var link = document.getElementById("link");
+		var selectFontColor = document.getElementById("selectFontColor");
+		selectFontColor.addEventListener("change",changeFontColor);
+		function changeFontColor(){
+			text.style.color = selectFontColor.value;
+			link.style.color = selectFontColor.value;	
+		}
+		//nba
+		var next = document.getElementById("next");
+		var pre = document.getElementById("preview");
+		var slider = document.getElementById("slider");
+		var currentBullet = 1;
+		var bullet1 = document.getElementById("bullet-pic1");
+		var bullet2 = document.getElementById("bullet-pic2");
+		var bullet3 = document.getElementById("bullet-pic3");
+		var bullet4 = document.getElementById("bullet-pic4");
+		next.addEventListener("click",nextPic);
+		pre.addEventListener("click",prePic);
+		bullet1.addEventListener("click",bullet1Click);
+		bullet2.addEventListener("click",bullet2Click);
+		bullet3.addEventListener("click",bullet3Click);
+		bullet4.addEventListener("click",bullet4Click);
+
+		function nextPic(){
+			var currentPic = slider.classList.length;
+			var sliderName = "slider" + (currentPic + 1 );
+			if(currentPic < 4){
+				slider.classList.toggle(sliderName);
+			} else {
+				slider.classList.remove("slider2","slider3","slider4");
+			}
+			currentBullet < 4 ?	currentBullet++ : currentBullet = 1;
+			bulletMove();
+			console.log(currentBullet); 
+		}
+		function prePic(){
+			var currentPic = slider.classList.length;
+			var sliderName = "slider" + currentPic;
+			if(currentPic > 1){
+				slider.classList.remove(sliderName);
+			} else {
+				slider.classList.add("slider2","slider3","slider4");
+			}
+			currentBullet > 1 ?	currentBullet-- : currentBullet = 4;
+			bulletMove();
+			console.log(currentBullet); 
+		}
+		function bullet1Click(){
+			currentBullet = 1;
+			bulletMove();
+			slider.classList.remove("slider2","slider3","slider4");
+		}
+		function bullet2Click(){
+			currentBullet = 2;
+			bulletMove();
+			slider.classList.add("slider2");
+			slider.classList.remove("slider3","slider4");
+		}
+		function bullet3Click(){
+			currentBullet = 3;
+			bulletMove();
+			slider.classList.add("slider3");
+			slider.classList.remove("slider4");
+		}
+		function bullet4Click(){
+			currentBullet = 4;
+			bulletMove();
+			slider.classList.add("slider2","slider3","slider4");
+		}
+		function bulletMove(){
+			switch(currentBullet){
+				case 1:
+					bullet1.classList.add("bullet-light");
+					bullet2.classList.remove("bullet-light");
+					bullet3.classList.remove("bullet-light");
+					bullet4.classList.remove("bullet-light");
+					break;
+				case 2:
+					bullet2.classList.add("bullet-light");
+					bullet1.classList.remove("bullet-light");
+					bullet3.classList.remove("bullet-light");
+					bullet4.classList.remove("bullet-light");
+					break;
+				case 3:
+					bullet3.classList.add("bullet-light");
+					bullet2.classList.remove("bullet-light");
+					bullet1.classList.remove("bullet-light");
+					bullet4.classList.remove("bullet-light");
+					break;
+				case 4:
+					bullet4.classList.add("bullet-light");
+					bullet2.classList.remove("bullet-light");
+					bullet3.classList.remove("bullet-light");
+					bullet1.classList.remove("bullet-light");
+					break;	
+			}
+		}
+		//bg-Black
+	</script>
+</body>
+</html>

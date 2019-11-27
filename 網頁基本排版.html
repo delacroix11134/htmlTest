@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!--設定viewport以符合裝置解析度-->
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>網頁基本排版</title>
+	<style>
+	    @import url('https://fonts.googleapis.com/css?family=Gugi');
+	    * {
+	    	box-sizing: border-box;
+	    }
+	    body {
+	    	margin: 0px;
+	    	background-color: #eeeeee;
+	    }
+		#header {
+			background-color: #003344;
+			color: white;
+			height: 40px;
+			padding: 5px; 
+			font-size: 24px;
+			text-align: center;
+			font-family: 'Gugi', cursive;
+		}
+		.content {
+			width: 1000px;
+			margin: 20px auto;
+			text-align: center;
+		}
+		.box {
+			background-color: white;
+			width: 250px;
+			height: 150px;
+			line-height: 24px;
+			padding: 10px;
+			margin: 10px;
+			display: inline-block;
+			vertical-align: top;
+		}
+		.title {
+			font-weight: bold;
+		}
+		.TextGray {
+			color: gray;
+		}
+		@media screen and (max-width: 600px){
+			#header {font-size: 24px}
+			.content {width: 100%;}
+		}
+	</style>
+</head>
+<body>
+	<div id="header">Basic Website Layout</div>
+
+	<div class = "content">
+		<div class = "box">
+			<div class="title">元素與頁面間有空白像素</div>
+			<div>對body的margin設定0px</div>
+		</div>
+		<div class = "box">
+			<div class="title">讓原素不會撐開Box</div>
+			<div>在style的最上端寫</div>
+			<div>* { box-sizing : border-box}</div>
+		</div>
+		<div class = "box">
+			<div class="title">讓元素在行內並排</div>
+			<div class="TextGray">//顯示方式改為行內</div>
+			<div>display: inline-block;</div>
+			<div class="TextGray">//對齊行內原素的最高點</div>
+			<div>vertical-align: top;</div>
+
+		</div>
+	</div>
+</body>
+</html>

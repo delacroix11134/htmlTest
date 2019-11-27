@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="pic/lighting.png">
+    <link href="https://fonts.googleapis.com/css?family=Concert+One|Fredoka+One" rel="stylesheet">
+    <title>HANGMAN GAME</title>
+    <style>
+        html, body{
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            box-sizing: border-box;
+            line-height: 1.5;
+            font-family: 'Concert One', cursive;
+        }
+        body{
+            background: rgb(255, 220, 62);
+        }
+        .canvas{
+            width: 30%;
+            height: 90%;
+            position: absolute;
+            top: 5%;
+            left: 35%;
+            border-radius: 35px;
+            overflow: hidden;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+        }
+        .canvas2{
+            background: rgb(235, 235, 235);
+            width: 100%;
+            height: 100%;
+        }
+        .title{
+            color: rgb(183, 217, 255);
+            background: rgb(12, 55, 134);
+            width: 100%;
+            height: 80px;
+            font-size: 2em;
+            text-align: center;
+            line-height: 80px;
+        }
+        /*top*/
+        .top-slider{
+            width: 400%;
+            height: 53%;
+            display: flex;
+            transform: translate(0%);
+            transition: 1s ease ;
+            position: relative;
+        }
+        .top-slider-page2{
+            transform: translate(0);
+        }
+        .top-slider-page2{
+            transform: translate(-25%);
+        }
+        .top-slider-page3{
+            transform: translate(-50%);
+        }
+        .top-start, .top-end{
+            width: 25%;
+            height: 100%;
+            background: rgb(79, 181, 255);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .top-end-lose{
+            background: rgb(248, 101, 187);
+        }
+        .top-start-text, .top-end-text, .top-end-score{
+            width: 240px;
+            height: 70px;
+            text-align: center;
+            line-height: 30px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+        }
+        .top-end-score{
+            height: 40px;
+        }
+        .top{
+            width: 25%;
+            height: 100%;
+            background: rgb(47, 151, 226);
+            position: relative;
+        }
+        .top-wrong{
+            animation: top-wrong 1s ease forwards;
+        }
+        .top-right{
+            animation: top-right 1s ease forwards;
+        }
+        @keyframes top-wrong{
+            10%{
+                background: rgb(255, 90, 131);
+            }
+            100%{
+                background: rgb(47, 151, 226);
+            }
+        }
+        @keyframes top-right{
+            10%{
+                background: rgb(66, 255, 113);
+            }
+            100%{
+                background: rgb(47, 151, 226);
+            }
+        }
+        /* top animation */
+        .top-animation-box{
+            position: absolute;
+            width: 70%;
+            height: 70%;
+            top: 7%;
+            left: 15%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .glow{
+            width: 1px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            position: absolute;
+            animation: glow 6s linear infinite;
+        }
+        .top-animation{
+            width: 100px;
+            position: absolute;
+            z-index: 5;
+            animation: idle 4s ease infinite;
+        }
+        .top-animation-dmg{
+            animation: dmg 0.4s ease;
+        }
+        @keyframes idle{
+            0%{
+                transform: rotate(0);
+            }
+            75%{
+                transform: rotate(0);
+            }
+            80%{
+                transform: rotate(15deg);
+            }
+            85%{
+                transform: rotate(-15deg);
+            }
+            90%{
+                transform: rotate(5deg);
+            }
+            95%{
+                transform: rotate(-5deg);
+            }
+            100%{
+                transform: rotate(0);
+            }
+        }
+        @keyframes dmg{
+            20%{
+                transform: translate(10px,-5px);
+            }
+            40%{
+                transform: translate(-10px,5px);
+            }
+            60%{
+                transform: translate(5px,-2.5px);
+            }
+            80%{
+                transform: translate(-5px,2.5px);
+            }
+            100%{
+                transform: translate(0);
+            }
+        }
+        .glow:nth-child(2){
+            animation-delay: 2s;
+        }
+        .glow:nth-child(3){
+            animation-delay: 4s;
+        }
+        @keyframes glow{
+            0%{
+                background: rgba(255, 255, 255, 0);
+            }
+            50%{
+                background: rgba(255, 255, 255, 0.3)
+            }
+            100%{
+                width: 200px;
+                height: 200px;
+                background: rgba(255, 255, 255, 0);
+            }
+        }
+        /* life */
+        .lifes{
+            width: 80%;
+            height: 25px;
+            position: absolute;
+            top: 10px;
+            left: 10%;
+            text-align: center;
+        }
+        .lifes > div {
+            display: inline-block;
+        }
+        .life-boxes{
+            width: 80%;
+            height: 25px;
+            position: absolute;
+            top: 10px;
+            left: 10%;
+            text-align: center;
+        }
+        .life-box{
+            box-sizing: border-box;
+            width: 0px;
+            height: 0px;
+            margin: 12.5px;
+            border: 0px solid rgb(255, 220, 62);
+            background: rgb(255, 220, 62);
+            border-radius: 5px;
+            display: inline-block;
+        }
+        .life-box-dmg{
+            animation: power 0.5s ease ;
+        }
+        .life{
+            height: 25px;
+            margin: 0;
+        }
+        .life-dmg{
+            visibility: hidden;
+        }
+        @keyframes power {
+            0%{
+                width: 0px;
+                height: 0px;
+                margin: 12.5px;
+            }
+            50%{
+                width: 26px;
+                height: 26px;
+                margin: 0px;
+                background: rgb(255, 220, 62);
+            }
+            100%{
+                width: 0px;
+                height: 0px;
+                margin: 12.5px;
+            }
+        }
+        /*mid*/
+        .mid{
+            width: 20%;
+            height: 50px;
+            position: absolute;
+            bottom: 10px;
+            left: 27.5%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 1s ease;
+        }
+        .mid-extend{
+            width: 95%;
+            left: 2.5%;
+        }
+        .mid-hint{
+            color: white;
+            position: absolute;
+            bottom: 65px;
+            width: 100%;
+            height: 20px;
+            font-size: 20px;
+            line-height: 20px;
+            text-align: center;
+        }
+        .mid-text{
+            color: transparent;
+            font-size: 30px;
+            text-align: center;
+            line-height: 40px;
+            width: 40px;
+            height: 40px;
+            margin: 3px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            cursor: default;
+        }
+        .mid-text::selection{
+            color: transparent;
+        }
+        .mid-text-show{
+            color: white;
+        }
+        .mid-text-extend{
+            font-size: 24px;
+            margin: 2px;
+            width: 35px;
+            height: 35px;
+            line-height: 35px;
+        }
+        .mid-text:first-child{
+            display: none;
+        }
+        .mid-text:hover{
+            background: rgba(255, 255, 255, 0.2)
+        }
+        /* bot */
+        .bot{
+            width: 100%;
+            height: 33%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-y: auto;
+        }
+        .bot-mask{
+            width: 100%;
+            height:100%;
+            position: absolute;
+            pointer-events: auto;
+        }
+        .bot-mask-off{
+            pointer-events: none;
+        }
+        .letters{
+            width: 95%;
+            height: 85%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .letter{
+            width: 35px;
+            height: 35px;
+            border: none;
+            margin: 2px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 28px;
+            text-align: center;
+            line-height: 100%;
+            border-radius: 5px;
+            background: rgb(22, 85, 156);
+            cursor: pointer;
+            font-family: 'Concert One', cursive;
+        }
+        .letter:hover{
+            transform: translateY(-3px);
+            background: rgb(29, 102, 185); 
+            box-shadow: 1px 3px 0 rgba(0, 0, 0, 0.4);
+        }
+        .letter:focus{
+            outline: none;
+        }
+        .letter-right{
+            background: rgb(42, 174, 197);
+        }
+        .letter-wrong{
+            background: rgb(156, 22, 62);
+        }
+        .letter-wrong:hover{
+            transform: translateY(0);
+            background: rgb(156, 22, 62);
+            box-shadow: none;
+        }
+        .letter-right:hover{
+            transform: translateY(0);
+            background: rgb(42, 174, 197);
+            box-shadow: none;
+        }
+        @media(max-width: 900px){
+            .canvas{
+                width: 50%;
+                left: 25%;
+            }
+        }
+        @media(max-width: 500px){
+            .canvas{
+                width: 90%;
+                height: 98%;
+                left: 5%;
+            }
+            .title{
+                height: 60px;
+                line-height: 60px;
+            }
+            .top-slider{
+                height: 50%;
+            }
+            .bot{
+                height: 36%;
+            }
+            .letters{
+                height: 95%;
+            }
+            .letter{
+                width: 30px;
+                height: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas">
+        <div class="canvas2">
+            <div class="title">HANGMAN GAME</div>
+            <!-- top -->
+            <div class="top-slider">
+                <div class="top-start">
+                    <div class="top-start-text">READY?<br>TAP TO START!</div>
+                </div>
+                <div class="top">
+                    <div class="top-animation-box">
+                        <img src="pic/lighting.png" class="top-animation">
+                        <div class="glow"></div>
+                        <div class="glow"></div>
+                        <div class="glow"></div>
+                    </div>
+                    <div class="lifes">
+                        <img src="pic/lighting.png" class="life" alt="!">
+                        <img src="pic/lighting.png" class="life" alt="!">
+                        <img src="pic/lighting.png" class="life" alt="!">
+                        <img src="pic/lighting.png" class="life" alt="!">
+                        <img src="pic/lighting.png" class="life" alt="!">
+                        <img src="pic/lighting.png" class="life" alt="!">
+                        <img src="pic/lighting.png" class="life" alt="!">
+                        <img src="pic/lighting.png" class="life" alt="!">
+                    </div>
+                    <div class="life-boxes">
+                        <div class="life-box"></div>
+                        <div class="life-box"></div>
+                        <div class="life-box"></div>
+                        <div class="life-box"></div>
+                        <div class="life-box"></div>
+                        <div class="life-box"></div>
+                        <div class="life-box"></div>
+                        <div class="life-box"></div>
+                    </div>
+                    <div class="mid-hint"></div>
+                </div>
+                <div class="top-end">
+                    <div class="top-end-score">YOUR SCORE: <span id="score"></span></div>
+                    <div id="top-end-text" class="top-end-text">CONGRATULATIONS<br>NEXT TEST?</div>
+                </div>
+                <!-- mid -->
+                <div class="mid">
+                    <div class="mid-text"></div>
+                </div>
+            </div>
+            <div class="bot">
+                <div class="bot-mask"></div>
+                <div class="letters">
+                    <button value="A" class="letter">A</button>
+                    <button value="B" class="letter">B</button>
+                    <button value="C" class="letter">C</button>
+                    <button value="D" class="letter">D</button>
+                    <button value="E" class="letter">E</button>
+                    <button value="F" class="letter">F</button>
+                    <button value="G" class="letter">G</button>
+                    <button value="H" class="letter">H</button>
+                    <button value="I" class="letter">I</button>
+                    <button value="J" class="letter">J</button>
+                    <button value="K" class="letter">K</button>
+                    <button value="L" class="letter">L</button>
+                    <button value="M" class="letter">M</button>
+                    <button value="N" class="letter">N</button>
+                    <button value="O" class="letter">O</button>
+                    <button value="P" class="letter">P</button>
+                    <button value="Q" class="letter">Q</button>
+                    <button value="R" class="letter">R</button>
+                    <button value="S" class="letter">S</button>
+                    <button value="T" class="letter">T</button>
+                    <button value="U" class="letter">U</button>
+                    <button value="V" class="letter">V</button>
+                    <button value="W" class="letter">W</button>
+                    <button value="X" class="letter">X</button>
+                    <button value="Y" class="letter">Y</button>
+                    <button value="Z" class="letter">Z</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    window.onload = function(){
+        var mid = document.querySelector('.mid');
+        var answerArr = [
+            ['FOOD','APPLE','BACON','CUPCAKE','DUMPLING','PUDDING','EGG','PEPPER','PIE','HAMBERGER','ICE_CREAM','YOGURT'],
+            ['SUPERHERO','ANTMAN','BATMAN','CATWOMAN','CAPTAIN_AMERICA','DEAD_POOL','FLASH','GROOT','HULK','IRON_MAN','LOKI','ROBIN','SUPER_MAN','THOR','WOLVERINE'],
+            ['FAIRYTALE','PRINCESS','PRINSE','UNICORN','WITCH','WIZARD','DRAGON','GOBLIN','CASTLE','FAIRY','MAGIC'],
+            ];
+        var answerClass = Math.floor(Math.random()*answerArr.length)
+        var answer = answerArr[answerClass][Math.floor(Math.random()*(answerArr[answerClass].length-1)+1)];
+        var hint = answerArr[answerClass][0];
+        var space = answer.indexOf('_');
+        var guesses = 8;
+        var numberOfDiffrentWords = answer.length;
+        var isTimeOut = false;
+        var score = 0;
+        console.log(answerClass)
+        console.log(answer);
+
+        //基本處理DOM的函式工廠 可以鍊式呼叫
+        var $ = function(selector){
+            var elements = document.querySelectorAll(selector);
+            return{
+                elements,
+                html(newHTML){
+                    this.elements.forEach(function(ele){
+                        ele.innerHTML = newHTML;
+                    })
+                    return this;
+                },
+                css(newCSS){
+                    this.elements.forEach(function(ele){
+                        Object.assign(ele.style,newCSS);
+                    })
+                    return this;
+                },
+                on(event,handler){
+                    this.elements.forEach(function(ele){
+                        ele.addEventListener(event,handler);
+                    })
+                    return this;
+                },
+                remove(event,handler){
+                    this.elements.forEach(function(ele){
+                        ele.removeEventListener(event,handler);
+                    })
+                    return this;
+                },
+                addClass(className){
+                    this.elements.forEach(function(ele){
+                        ele.classList.add(className);
+                    })
+                    return this;
+                },
+                removeClass(className){
+                    this.elements.forEach(function(ele){
+                        ele.classList.remove(className);
+                    })
+                    return this;
+                },
+                toggleClass(className){
+                    this.elements.forEach(function(ele){
+                        ele.classList.toggle(className);
+                    })
+                    return this;
+                },
+            }
+        }
+        //top slider位移
+        const topGotoPage = function(page){
+            var pages = [1,2,3,4];
+            pages.splice(pages.indexOf(page),1);
+            $('.top-slider').addClass(`top-slider-page${page}`);
+            for(i=0;i<pages.length;i++){
+                $('.top-slider').removeClass(`top-slider-page${pages[i]}`);
+            }
+        }
+
+        //字數太多調整css
+        if(answer.length > 12){
+            $('.mid-text').addClass('mid-text-extend');
+            $('.mid').addClass('mid-extend');
+        } else {
+            $('.mid-text').removeClass('mid-text-extend');
+            $('.mid').removeClass('mid-extend');
+        }
+        //根據字數產生空格
+        var midText = document.querySelector('.mid-text');
+        var generateMidText = function(){
+            $('.mid-hint').html('HINT: '+hint);
+            for( i = 0; i < answer.length; i++){
+                if( space > 0 && i == space ){
+                var p = document.createElement("p");
+                var t = document.createTextNode('\u00A0\u00A0');
+                p.appendChild(t);
+                mid.appendChild(p);
+                numberOfDiffrentWords--;
+                } else {
+                var clone = midText.cloneNode();
+                var t = document.createTextNode(answer[i]);
+                clone.appendChild(t);
+                clone.classList.add('mid-text'+i);
+                mid.appendChild(clone);
+                } 
+            }
+        };
+        generateMidText();
+        //確認答案
+        var positions = [];
+        checkAns = function(value){
+            var position = answer.indexOf(value);
+            var isAnswerRight = false;
+            while(position>=0){
+                numberOfDiffrentWords--;
+                positions.push(position);
+                answer = answer.replace(value,"#");
+                position = answer.indexOf(value);
+                // console.log(positions);
+                // console.log(answer);
+                isAnswerRight = true;
+            }
+            if( numberOfDiffrentWords==0 ){ //Game clear
+                for(i=0;i<positions.length;i++){
+                    $(`.mid-text${positions[i]}`).addClass('mid-text-show');
+                }
+                console.log("CLEAR!");
+                score += guesses;
+                $('#score').html(score);
+                $('.top-end').removeClass('top-end-lose');
+                $('.top-end-text').html('CONGRATULATIONS<br>NEXT TEST?');
+                $('.top').addClass('top-right');
+                delay(1100,function(){$('.top').removeClass('top-right')});
+                isMaskOn(true); 
+                delay(1000,function(){topGotoPage(3)});
+                delay(1500,init);
+            } else if( isAnswerRight && guesses > 0 ){ //Right answer
+                //querySelector裡面一定是要字串 如果需要使用變數 可使用模版字符串`${}`
+                for(i=0;i<positions.length;i++){
+                    $(`.mid-text${positions[i]}`).addClass('mid-text-show');
+                }
+                $(`.letter[value="${value}"]`).addClass('letter-right').remove('click',btnFn);
+                $('.top').addClass('top-right');
+                delay(1100,function(){$('.top').removeClass('top-right')});
+                console.log('Correct!');
+            } else { //Wrong answer
+                $(`.letter[value="${value}"]`).addClass('letter-wrong').remove('click',btnFn);
+                $(`.life-box:nth-child(${guesses})`).addClass('life-box-dmg');
+                $(`.life:nth-child(${guesses})`).addClass('life-dmg');
+                $('.top').addClass('top-wrong');
+                $('.top-animation').addClass('top-animation-dmg');
+                delay(500,function(){$('.top-animation').removeClass('top-animation-dmg');})
+                delay(1100,function(){$('.top').removeClass('top-wrong');})
+                guesses--;
+                console.log('wrong  Life: '+ guesses);
+                if( guesses == 0 ){ //Out of life,Game failed
+                    score += guesses;
+                    $('#score').html(score);
+                    $('.top').addClass('top-wrong');
+                    isMaskOn(true); 
+                    $('.top-end').addClass('top-end-lose');
+                    $('.top-end-text').html('REPLAY?'); 
+                    topGotoPage(3);
+                    delay(1100,function(){$('.top').removeClass('top-wrong');})
+                    delay(1100,init);
+                    $('.top-slider').remove('click',startGame).on('click',endGame);
+                    $('.bot-mask').remove('click',startGame).on('click',endGame); 
+                    console.log('GAME OVER');
+                }
+            }  
+        }
+        //字母遮罩
+        isMaskOn = function(value){
+            if(value){
+                $('.bot-mask').removeClass('bot-mask-off');
+            } else {
+                $('.bot-mask').addClass('bot-mask-off');
+            }
+        }
+        //字母按鈕
+        var btnFn = function(){checkAns(this.value)}
+        $('.letter').on('click',btnFn)
+        //delay
+        var delay = function(s,fn){
+            setTimeout(() => {
+                fn();
+            }, s);
+        }
+        //重置
+        var init = function(){
+            answerClass = Math.floor(Math.random()*answerArr.length);
+            answer = answerArr[answerClass][Math.floor(Math.random()*(answerArr[answerClass].length-1)+1)];
+            hint = answerArr[answerClass][0];
+            space = answer.indexOf('_');
+            guesses = 8;
+            positions = [];
+            numberOfDiffrentWords = answer.length;
+            console.log(answer);
+            var childs = mid.childNodes;
+            for(i=childs.length-1;i>1;i--){
+                mid.removeChild(childs[i]);
+            }
+            generateMidText();
+            $('.letter').on('click',btnFn).removeClass('letter-wrong').removeClass('letter-right');
+            $('.life-box').removeClass('life-box-dmg');
+            $('.life').removeClass('life-dmg');
+        }
+        //進入遊戲
+        var startGame = function(){
+            topGotoPage(2);
+            isMaskOn(false);
+        }
+        var endGame = function(){
+            topGotoPage(1);
+            isMaskOn(true);
+            $('.top-slider').remove('click',endGame).on('click',startGame);;
+            $('.bot-mask').remove('click',endGame).on('click',startGame);;
+        }
+        $('.top-slider').on('click',startGame);
+        $('.bot-mask').on('click',startGame);
+    }    
+</script>
+</html>

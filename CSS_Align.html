@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+	<title>垂直置中的幾個方法11122</title>
+    <style>
+    	* {
+    		box-sizing: border-box;
+    		margin: 0;
+    		line-height: 1.5;
+    		letter-spacing: 0.1em;
+    	}
+    	body {
+    		margin: 0;
+    		background: #f0f0f0;
+    		font-family: 'Montserrat', sans-serif;
+    	}
+    	
+    	header {
+    		text-align: center;
+    		color: white;
+    	}
+    	.bar {
+    		background: #242424;
+    		position: fixed;
+    		width: 100%;
+    		height: 50px;
+    		z-index: 10;
+    	}
+    	.logo img{
+    		height: 45px;
+    		margin-top: 3px;
+    	}
+    	.title-pic {
+    		margin-top: 50px;
+    		width: 100%;
+    		height: 250px;
+    		background-size: cover;
+    	}
+    	header h1 {
+    		display: inline-block;
+    		position: relative;
+    		top: -175px;
+    	}
+    	main {
+    		margin: 20px;
+    		text-align: center;
+    	}
+        h1 {
+        	padding: 10px 0;
+        }
+
+    	h2 {
+    		margin: 20px 10px;
+    	}
+    	p {
+    		margin: 20px 10px;
+    	}
+
+    	main > div {
+    		display: inline-block;
+    		vertical-align: top;
+    		text-align: center;
+    		margin: 20px 20px;
+    		width: 25%;
+    		border-radius: 5px;
+    		box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+    		position: relative;
+    	}
+    	.result {
+    		background: #242424;
+    		color: white;
+    		width: 90%;
+            height: 72px;
+            margin: 30px auto;
+            border-radius: 5px;
+            display: flex;
+    		align-items: center;
+    		justify-content: center;
+    	}
+
+    	.result p{
+    		flex: none;
+    	}
+        .box {
+        	width:200px;
+            height:150px;
+            border:1px solid #000;
+            text-align:center;
+            margin: 0 auto;
+        }
+        .content {
+        	background: red;
+        	width: 50px; 
+        	height: 50px; 	
+        }
+        .case1 .box {
+        	line-height:150px;
+        	display: inline-block;
+        }  
+        .case1 .content {
+        	display: inline-block;
+        }
+        .middle{
+        	width: 95%;
+        	height: 340px;
+        	transition: .5s ease-in-out;
+        	opacity: 0;
+        	background: #f0f0f0;
+        	z-index: 5;
+        	position: absolute;
+        	top: 10px;
+        	left: 2.5%;
+        	text-align: left;
+        	margin: 0 auto;
+        	display: flex;
+        	justify-content: center;
+        	align-items: center;
+        }
+        .case1:hover, .case1:active .middle1 {
+        	opacity: 0.95;
+        }
+        .case2 .content {
+        	display:inline-block;
+        	vertical-align: middle;
+        }
+        .case2 .box::before {
+        	content: '';
+        	display: inline-block;
+        	vertical-align: middle;
+        	height: 100%;
+        	width:1px;
+        	background: green;
+        }
+        .case2:hover .middle2 {
+        	opacity: 0.95;
+        }
+        .case3 .box {
+        	display: flex;
+        	justify-content: center;
+        	align-items: center;
+        }
+        .case3:hover .middle3 {
+        	opacity: 0.95;
+        }
+        .case4 .box {
+        	position: relative;
+        }
+        .case4 .content {
+        	position: absolute;
+        	top: 0;
+        	right: 0;
+        	bottom: 0;
+        	left: 0;
+        	margin: auto;
+        }
+        .case4:hover .middle4 {
+        	opacity: 0.95;
+        }
+        footer {
+        	margin-top: 80px;
+        	font-size: 10px;
+        }
+        .footer-green {
+        	background: #0eb997;
+        	width: 100%;
+        	height: 10px;
+        }
+        .footer-black {
+        	background: #242424;
+        	width:100%;
+        	height: 300px;
+        	display: flex;
+        	justify-content: center;
+        	align-items: flex-start;
+        	flex-wrap: wrap;
+        }
+        .footer-black > div {
+        	color: white;
+            flex: none;
+            width: 20%;
+            margin: 20px;
+        }
+        .footer-black-left ul {
+        	margin: 20px 0;
+        	list-style: none;
+        	padding: 0;
+        }
+        .footer-black-left li {
+        	display: inline-block;
+        }
+        .footer-black-left li:not(:last-child):after {
+            content: '|';
+        }
+        .footer-black-left a {
+            text-decoration: none;
+            color: white;
+            margin-right: 5px;
+        }
+        .footer-black-left a:hover {
+        	color: gray;
+        	border-bottom: 1px solid gray;
+        }
+
+        .links {
+        	margin: 20px 0;
+        }
+        .links a {
+        	margin-right: 10px;
+        }
+        .links img{
+            width: 30px;
+        }
+
+        @media(max-width: 1200px){
+        	main > div {
+    		width: 40%;
+    	    }
+        }
+        @media(max-width: 500px){
+        	main > div {
+        		width: 80%;
+        	}
+        	.footer-black{
+        		height: 600px;
+        	}
+        	.footer-black > div{
+        		width: 90%;
+        	}
+        }
+
+
+    </style>
+</head>
+<body>
+	<header>
+		<div class="bar">
+			<div class="logo"><img src="pic/logo.png" ></div>
+		</div>
+		<img class="title-pic" src="pic/header1.jpg">
+		<h1 class="title-text">CSS垂直置中的幾個方法</h1>
+	</header>
+    <main>
+    	<div class="case1">
+    	    <h2>設定行高:只有文字被置中</h2>
+    	    <div class="box">
+    		    <div class="content">單行</div>
+    	    </div>
+    	    <div class="result">
+    	    	<p>只能讓文字置中 box會出問題</p>
+    	    </div>
+    	    <div class="middle middle1"><p>
+    	    	.box {<br>
+    	    	    line-height:150px;<br>
+        	        display: inline-block;<br>
+                } <br>
+                .content {<br>
+        	    display: inline-block;<br>
+                } </p>
+    	    </div>
+        </div>
+        <div class="case2">
+    	    <h2>加入僞元素::before</h2>
+    	    <div class="box">
+    		    <div class="content"></div>
+    	    </div>
+    	    <div class="result">
+    	    	<p>可以多行文字、box置中<br>缺點程式碼行數較多 不易閱讀</p>
+    	    </div>
+    	    <div class="middle middle2">
+    	    	<p>
+    	    		.content {<br>
+        	        display:inline-block;<br>
+        	        vertical-align: middle;<br>
+                    }<br>
+                    .box::before {<br>
+        	        content: '';<br>
+        	        display: inline-block;<br>
+        	        vertical-align: middle;<br>
+        	        height: 100%;<br>
+        	        } <br>
+    	    	</p>
+    	    </div>
+        </div>
+        <div class="case3">
+    	    <h2>使用flexbox</h2>
+    	    <div class="box">
+    		    <div class="content"></div>
+    	    </div>
+    	    <div class="result">
+    	    	<p>超級簡單</p>
+    	    </div>
+    	    <div class="middle middle3">
+    	    	<p>
+    	    		.box {<br>
+        	        display: flex;<br>
+        	        justify-content: center;<br>
+        	        align-items: center;<br>
+                    }<br>
+    	    	</p>
+    	    </div>
+        </div>
+        <div class="case4">
+    	    <h2>使用position:absolute</h2>
+    	    <div class="box">
+    		    <div class="content"></div>
+    	    </div>
+    	    <div class="result">
+    	    	<p>缺點absolute元素會互相重疊<br>在物件多的時候要小心</p>
+    	    </div>
+    	    <div class="middle middle4">
+    	    	<p>
+                    .box {<br>
+        	        position: relative;<br>
+                    }<br>
+                    .content {<br>
+        	        position: absolute;<br>
+        	        top: 0;<br>
+        	        right: 0;<br>
+        	        bottom: 0;<br>
+        	        left: 0;<br>
+        	        margin: auto;<br>
+                    }<br>
+    	    	</p>
+    	    </div>
+        </div>
+    </main>
+    <footer>
+    	<div class="footer-green"></div>
+    	<div class="footer-black">
+    		<div class="footer-black-left">
+    			<div><h1>A Victor's Work</h1></div>
+    			<div>Only for study & practices.<br>
+    			Visit my other practices:</div>
+    			<ul>
+    				<li><a href="CSS_Lesson2.html">CSS Lesson2</a></li>
+    				<li><a href="coffee.html">Coffee</a></li>
+                    <li><a href="中午吃什麼.html">WhatToEat</a></li>
+                    <li><a href="CSS_Align.html">CSS_Align</a></li>
+                    <li><a href="CSS_Flexbox.html">CSS_Flexbox</a></li>
+    			</ul>
+    		</div>
+    		<div class="footer-black-middle">
+    			<div><h1>All rights reserved</h1></div>
+    			<div>Only for study & practices.<br>
+    			</div>
+    		</div>
+    		<div class="footer-black-right">
+    			<div><h1>Contact me</h1></div>
+    			<div>Please contact me on the internet.</div>
+    			<div class="links">
+    			    <a href=""><img src="pic/facebook.png" ></a>
+    			    <a href=""><img src="pic/instagram.png" ></a>
+    			    <a href=""><img src="pic/behance.png" ></a>
+    			    <a href=""><img src="pic/pen.png" ></a>
+    		    </div>
+    		</div>
+    	</div>
+    </footer>
+</body>
+</html>

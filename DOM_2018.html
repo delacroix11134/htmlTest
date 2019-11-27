@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+    <title>DOM maniputation 2018</title>
+    <style>
+        *{
+            margin: 0;
+        }
+        body{
+            box-sizing: border-box;
+            margin: 0;
+            line-height: 1.5;
+            font-family: 'Noto Sans', sans-serif;
+        }
+        main{
+            width: 70%;
+            margin: 60px auto;
+        }
+        header nav{
+            height: 50px;
+            width: 100%;
+            background: rgb(110, 110, 110);
+        }
+        header ul{
+            height: 100%;
+            display: flex;
+            justify-content: center;
+        }
+        header li{
+            width: 8%;
+            height: 100%;
+            display: inline-block;
+            list-style: none;
+            text-align: center;
+            color: white;
+            line-height: 50px;
+            cursor: pointer;
+        }
+        header li:hover{
+            background: #ccc;
+        }
+
+
+
+        /* box */
+        .container{
+            margin: 0;
+            width: 200px;
+            height: 300px;
+            position: absolute;
+            left: 0;
+        }
+        .btns{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .btns > button{
+            position: relative;
+            left: 5px;
+            width: 150px;
+            height: 40px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            transition: 0.4s ease-in-out;
+        }
+        .btns > button:focus{
+            outline: none;
+        }
+        .box{
+            position: absolute;
+            top: 0;
+            width: 5px;
+            height: 40px;
+            background: #aaa;
+            transition: 0.2s ease-out;
+        }
+        .btn1:hover{
+            background: #eee;
+        }
+        .btn2:hover{
+            background: #eee;
+        }
+        .btn3:hover{
+            background: #eee;
+        }
+        .btn1:hover ~ .box{
+            top: 0px;
+        }
+        .btn2:hover ~ .box{
+            top: 40px;
+        }
+        .btn3:hover ~ .box{
+            top: 80px;
+        }
+
+        /* footer */
+        footer{
+            width: 100%;
+            height: 300px;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content:center; 
+            color: white;
+            text-align: center;
+        }
+        footer > div{
+            width: 30%;
+            height: 90%;
+        }
+        footer a{
+            color:#ccc;
+            text-decoration: none;
+            display: block;
+        }
+        footer a:hover{
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li>HOME</li>
+                <li>WORKS</li>
+                <li>EVENTS</li>
+                <li>ABOUT ME</li>
+                <li>CONTACT</li>
+            </ul>
+        </nav>
+    </header>   
+    <main>
+        <section>
+            <div class="container">
+                <div class="btns">
+                    <button class="btn1">Lorem Ipsum</button>
+                    <button class="btn2">Neque porro</button>
+                    <button class="btn3">Maecenas</button>
+                    <div class="box"></div>
+                </div>
+            </div>
+        </section>
+        <section>
+            <div>
+                <h1>Lorem Ipsum</h1>
+                <p>
+                    "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
+                    "There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque non nisi bibendum, accumsan ligula vel, imperdiet elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nulla dignissim ornare diam, eleifend semper nunc malesuada ac. Cras et velit quam. Aliquam urna nibh, maximus ut mattis non, tempus ut massa. Integer eu turpis sagittis magna luctus commodo a ultrices mi. Nulla enim erat, sollicitudin eu urna eu, vulputate fermentum tellus. Cras euismod efficitur enim, ac porta ante feugiat interdum. Praesent varius dapibus nulla nec viverra. In ut pellentesque nisl, vel pretium enim. Donec nibh arcu, ultrices quis mollis vitae, tempor a massa. Nam nec ante varius, dignissim ante nec, malesuada neque. In hac habitasse platea dictumst. Suspendisse potenti.
+                    
+                    Phasellus ut tellus pretium, mollis est nec, consectetur tellus. Sed tristique odio ultricies porttitor mollis. Nunc ut felis in purus maximus semper. Donec orci tellus, feugiat id erat in, mollis hendrerit justo. Quisque velit leo, pharetra at volutpat at, eleifend a eros. Duis vulputate lorem et augue semper, ut rhoncus metus maximus. Sed eu odio condimentum leo tristique lacinia viverra commodo magna. Fusce vitae hendrerit metus. Fusce congue aliquet ante, quis vehicula felis fringilla vitae. Donec congue rutrum mollis. Nunc luctus in sapien sagittis lobortis. Etiam porttitor nibh erat, nec feugiat diam pretium nec. Pellentesque vitae consectetur arcu, quis posuere augue.
+                    
+                    Etiam ultrices sagittis commodo. Mauris id leo facilisis lectus auctor tincidunt. In pulvinar fermentum neque a interdum. Vestibulum bibendum sapien justo, sit amet vehicula purus maximus non. Aenean bibendum ante ac mi elementum posuere. Aenean egestas sit amet ante sed varius. Aenean ultrices purus metus, a pretium felis eleifend vel.</p>
+            </div>
+            <div>
+                <p>Maecenas dui sapien, tincidunt sed cursus ut, porta vitae orci. Mauris tempus malesuada odio, at sollicitudin quam tincidunt vel. Aenean lacus nibh, lobortis ac magna at, egestas laoreet enim. Nunc odio metus, posuere posuere odio accumsan, eleifend faucibus purus. Donec vitae blandit eros. Nunc nunc diam, euismod eu maximus consectetur, tincidunt sed ligula. Suspendisse sit amet interdum sem, quis rhoncus ipsum. Praesent id velit ac nisi vulputate porta. Pellentesque ullamcorper mauris non metus lacinia facilisis et in massa. Suspendisse vitae tincidunt libero.</p>
+            </div>
+        </section>
+        
+    </main>
+    <footer>
+        <div>
+            <h3>Some links</h3>
+            <a href="#">some links</a>
+            <a href="#">some links</a>
+            <a href="#">some links</a>
+        </div>
+        <div>
+            <h3>Something about me</h3>
+        </div>
+        <div>
+            <h3>Social media links</h3>
+        </div>
+    </footer> 
+</body>
+<script>
+    window.onload = function(){
+
+
+
+
+
+
+
+
+    }
+
+</script>
+</html>

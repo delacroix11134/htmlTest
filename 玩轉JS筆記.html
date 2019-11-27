@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Shrikhand" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        body,html{
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            line-height: 1.5;
+            font-family: 'Open Sans', sans-serif;
+        }
+        section{
+            width: 80%;
+        }
+        .sec1 li{
+            list-style: none;
+            display: inline-block;
+            background: rgb(75, 75, 75);
+            width: 100px;
+            height: 60px;
+            margin: 0 5px;
+            text-align: center;
+        }
+        .sec1 a{
+            text-decoration: none;
+            color: white;
+            line-height: 60px;
+        }
+        .sec1 .bt-active{
+            background: rgb(57, 93, 255);
+        }
+        /*sec2*/
+        .box-color{
+            width: 100px;
+            height: 100px;
+            background: rgb(75, 75, 75);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <section class="sec1">
+        <div class="label"><h2>按鈕切換CSS class</h2></div>
+        <p>建立一個臨時變量記錄目前選中的按鈕，利用className屬性切換class</p>
+        <ul>
+            <li id="bt1" class="bt-active"><a href="#">HOME</a></li>
+            <li id="bt2"><a href="#">LINK</a></li>
+            <li id="bt3"><a href="#">CONTACT</a></li>
+        </ul>
+    </section>
+    <section>
+        <div class="label"><h2>按鈕切換隨機顏色</h2></div>
+        <p>隨機hsla顏色，優點是可控制飽和度、明度、透明度為定值</p>
+        <button id="change">Change color</button>
+        <div class="box-color"></div>
+    </section>
+</body>
+<script>
+    //按鈕切換CSS
+    bt1 = document.getElementById("bt1");
+    bt2 = document.getElementById("bt2");
+    bt3 = document.getElementById("bt3");
+
+    var selectedBt = bt1;
+
+    bt1.addEventListener('click',function(){
+        selectedBt.className = '';
+        selectedBt = bt1;
+        selectedBt.className = 'bt-active';
+    })
+    bt2.addEventListener('click',function(){
+        selectedBt.className = '';
+        selectedBt = bt2;
+        selectedBt.className = 'bt-active';
+    })
+    bt3.addEventListener('click',function(){
+        selectedBt.className = '';
+        selectedBt = bt3;
+        selectedBt.className = 'bt-active';
+    })
+
+    //按鈕切換隨機顏色
+    boxColor = document.querySelector('.box-color');
+    changeColor = document.querySelector('#change');
+    changeColor.addEventListener('click',function(){
+        var angle = Math.floor(Math.random()*360);
+        var color = 'hsla(' + angle + ',40%,50%,1)'
+        boxColor.style.background = color;
+        console.log(color)
+    })
+
+
+
+
+    //JS測試
+    //.call()&.apply()
+    //這兩個方法常用在借用函數
+    function Cat(){
+        this.voice = 'miew!';
+        this.say = function(){
+            console.log(this.voice);
+        } 
+    }
+    var blackCat = new Cat;
+    blackCat.say();
+   
+    //Dog建構式裡沒有say()函數
+    function Dog(){
+        this.voice = 'Woof!';
+    }
+    var pug = new Dog;
+    
+    //所以利用blackCat執行say函數 並且用.call把.say函數中的this 換成pug(.call的第一個傳入值)
+    blackCat.say.call(pug)
+
+
+
+
+    //.sort()排序
+    let arrNum = [9,1,2,70,5,3,40];
+    //直接使用.sort會對第一個字做排序 所以會得到[1,2,3,40,5,70,9]
+    console.log( arrNum.sort() );
+    //要給.sort指定一個排序函數代入參數a,b 並return a-b(從小排到大)或 b-a(從大排到小)
+    console.log( arrNum.sort((a,b)=>{ return a-b }) )
+
+    //排序英文字母
+    //sort會直接對字元的編碼做排序(大小寫不同) 所以如果有大小寫的差異需要先用toUpperCase處理
+    let arrLetter = ['f','g','s','c','aa','e','bb' ]
+    console.log( arrLetter.sort() );
+
+    //範例: 對陣列中的物件做排序
+    let members = [
+        {name: 'Adam', age: 21},
+        {name: 'Peter', age: 35},
+        {name: 'Hether', age: 16},
+        {name: 'Betty', age: 8}
+    ]
+    //照姓名排序
+    var sortByName = members.sort( (a,b)=>{
+        if (a.name > b.name){
+            return 1;
+        } else if ( a.name < b.name ){
+            return -1;
+        } else {
+            return 0;
+        }
+    })
+    console.log( sortByName );
+    //照年齡排序
+    var sortByAge = members.sort((a,b)=>{
+        return a.age - b.age;
+    })
+    console.log( sortByAge );
+
+
+
+
+    //求和函數
+    let sum = function(num){
+        //因為arguments不是array 只是array-like object 所以不能直接用以下寫法
+        //arguments.reduce((a,b)=>a+b,0)
+
+        //所以必須用借用的方式.call() 借用array的reduce來用
+        return [].reduce.call(arguments,(a,b)=>a+b);
+    }
+    //可以輸入任意數量的引數
+    console.log(sum(1,2,4,5,9)) // 21
+
+
+
+    //用for in遍歷array
+    const arrName = ['aa','bb','cc','dd','ee']
+    for(i in arrName){
+        console.log(arrName[i])
+    }
+
+
+
+
+    //直接插入排序
+    //一開始把第一個值當作已經排序的 接著拿後面的值跟前面比較
+    //如果比較大則排序不變 比較小則往前插入值
+    var arrUnsort = [12,23,1,13,4,21,18,17,10]
+
+    var i = j= temp = 0;
+    for(i=1; i<arrUnsort.length; i++){
+        temp = arrUnsort[i];
+        for(j=i-1;j>=0;j--){
+            if(temp>arrUnsort[j]){
+                break;
+            } else {
+                arrUnsort[j+1] = arrUnsort[j]
+            }
+        }
+        //arrUnsort[0] = 1 是怎麼賦值的?
+        //當j跑到0還沒有break時 j--等於-1 但是不合for的條件所以跳出
+        //此時arr[0]還沒賦值 此時j=-1(*關鍵)
+        arrUnsort[j+1] = temp;
+        //arr[0]賦值為1
+    } 
+    console.log(arrUnsort)  // [1, 4, 10, 12, 13, 17, 18, 21, 23]
+
+
+
+    //冒泡排序
+    // 把值做兩兩比較 大的排後面 
+    var arrUnsort2 = [12,23,1,13,4,21,18,17,10]
+    var i2 = j2 = temp2 = 0;
+    for(i2=0;i2<arrUnsort2.length;i2++){ //總共要跑幾次
+        //只要跑過一次 最後一個數就排序好了 所以最後一個數不用再排序
+        for(j2=0;j2<arrUnsort2.length-i2;j2++){  //比較所有數並排序
+            if(arrUnsort2[j2]>arrUnsort2[j2+1]){
+                temp2 = arrUnsort2[j2];
+                arrUnsort2[j2] = arrUnsort2[j2+1];
+                arrUnsort2[j2+1] = temp2;
+            }
+        }
+    }
+    console.log(arrUnsort2)  // [1, 4, 10, 12, 13, 17, 18, 21, 23]
+
+
+
+
+   </script>
+</html>

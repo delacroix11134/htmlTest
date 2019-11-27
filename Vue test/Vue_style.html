@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue style</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        .red{
+            color: red;
+        }
+        .bold{
+            font-weight: bold;
+        }
+    
+    </style>
+</head>
+<body>
+    <div id="vue">
+        <!-- :style可以直接套用行內樣式 在快速套用/更改樣式時很方便 -->
+        <!-- 1. 可以直接寫在html屬性裡 -->
+        <div :style="{color:'red',fontWeight:'bold'}">:style可以直接套用行內樣式</div>
+
+        <!-- 2. 也可以用變數控制樣式 以後就可以用程式操控變數就可以改變樣式 -->
+        <div :style="{color:textColor,fontWeight:'bold'}">也可以用變數控制樣式填入的值</div>
+        <select v-model="textColor">
+            <option value="red">紅色</option>
+            <option value="blue">藍色</option>
+            <option value="aqua">水藍色</option>
+        </select>
+
+        <!-- 3. 官方文件建議把設定好的物件存在style 讓:style直接綁定一個物件 -->
+        <div :style="textStyle">官方建議直接綁定一個物件</div>
+
+        <!-- 4. 如果要綁定多個style物件 可以用陣列設定多個物件 -->
+        <div :style="[textStyle,bgStyle]">如果要綁定多個style物件 可以用陣列設定多個物件</div>
+
+        <!-- 5-1. 如果想用程式控制陣列內容 可以使用computed屬性 -->
+        <div :style="setStyle">如果想用程式控制陣列內容 可以使用computed屬性</div>
+    </div>
+</body>
+<script>
+    let myData = {
+        textColor: 'red',
+        
+        textStyle:{
+            color: 'red',
+            fontWeight: 'bold'
+        },
+        bgStyle:{
+            backgroundColor: 'yellow',
+        }
+    }
+    
+    let myComputed = {
+        setStyle: function(){
+            // 5-2. 這裡的陣列內不是字串型別
+            // 5-3. 在這裡可以用更複雜的判斷 再把data中設定好的style物件回傳
+            return [this.textStyle, this.bgStyle]
+        },
+    }
+    let vue = new Vue({
+        el: "#vue",
+        data: myData,
+        computed: myComputed,
+    })
+</script>
+</html>

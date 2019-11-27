@@ -1,0 +1,154 @@
+#overview {
+	margin-top: 20px;
+}
+
+/*圖中間的字*/
+/*利用:before和verticl-align達到垂直置中*/
+#overview > h1{
+	background-image: url("hero.jpg");
+	/*使用cover可以維持相對比例並縮放至填滿x軸或y軸*/
+	background-size: cover;
+	/*向y軸上移10px*/
+	background-position: 0 10px;
+    font-family: 'Lobster', cursive;
+    font-weight: lighter;
+	color: black;
+	font-size: 30px;
+	width: 100%;
+	height: 490px;
+	padding: 10px;
+	display: inline-block;
+	vertical-align: middle;
+	text-align: center;
+}
+
+#overview h1::before {
+    content: '';
+    width: 0;
+    height: 100%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.plan__list {
+	width: 80%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+
+/*設定三個併排方案*/
+.plan {
+	background-color: #d5ffdc;
+	text-align: center;
+	padding: 16px;
+	margin: 8px;
+	display: inline-block;
+	width: 30%;
+	vertical-align: middle;
+}
+
+/*中間方案強調*/
+.plan--hightlighted {
+	background: #19b84c;
+	color: white;
+	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
+}
+
+/*強調字樣式*/
+.plan__annotation {
+	background: white;
+	color: #19b84c;
+	padding: 8px;
+	margin-bottom: 16px ;
+	box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.5);
+	border-radius: 5px;
+}
+
+/*修改方案名稱,價格的樣式*/
+.plan__title {
+	color: #0e4f1f;
+}
+
+.plan__price {
+	color: #858585;
+}
+
+.plan--hightlighted .plan__title {
+	color: white;
+}
+
+.plan--hightlighted .plan__price {
+	color: #0e4f1f;
+}
+
+/*修改list樣式*/
+.plan__features {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+/*list上下間隔*/
+.plan__features li {
+	margin: 8px 0 ;
+}
+
+/*Choose your plan*/
+.section-title {
+	color: #19b84c;
+    padding: 16px;
+    text-align: center;
+}
+
+
+/*去除點擊按鈕後出現的藍色外框*/
+.button:focus {
+	outline: none;
+}
+
+/*粉紅色區域*/
+#key-features {
+	background: #ff1b68;
+	margin-top: 80px;
+	padding: 16px;
+	height: 400px;
+}
+
+#key-features .section-title {
+	color: white;
+	margin: 32px;
+}
+
+/*併排三個項目*/
+.key-features__list {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+.key-feature {
+	display: inline-block;
+	width: 30%;
+	vertical-align: top;
+}
+
+.key-feature__description {
+	text-align: center;
+	font-weight: bold;
+	color: white !important;
+	font-size: 20px;
+	margin-top: 30px;
+}
+
+.key-feature__image {
+	background: #ffcede;
+	height: 128px;
+	width: 128px;
+	margin: 0 auto;
+	border: 10px solid #424242;
+	border-radius: 50%;
+}
+
+

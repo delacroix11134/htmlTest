@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-for</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="vFor">
+        <!-- 基本的寫法 類似for迴圈 -->
+        <div v-for="i in 10">{{i}}</div>
+        <!-- 巢狀迴圈 -->
+        <div v-for="i in 9">
+            <div v-for="j in 9">{{i}} * {{j}} = {{i*j}}</div>
+        </div>
+        <!-- 讀取列表的寫法 類似for in -->
+        <div v-for="item in arr">{{item}}</div>
+        <!-- v-for 可以帶入三個參數: item, key, index -->
+        <div v-for="(item,key,index) in obj">{{index + 1}}. {{key}} is {{item}} years old</div>
+    </div>
+</body>
+<script>
+    var vFor = new Vue({
+        el: "#vFor",
+        data:{
+            arr: ['victor','ikea','pug','bently'],
+            obj:{
+                victor: 30,
+                ikea: 24,
+                pug: 10,
+            }
+        },
+        methods:{
+
+        }
+    })
+</script>
+</html>

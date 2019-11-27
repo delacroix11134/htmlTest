@@ -1,0 +1,68 @@
+*+* {
+	box-sizing: border-box;
+	line-height: 1.5;
+}
+
+body {
+	margin: 0;
+}
+
+
+/*導覽列*/
+nav {
+    display: flex;
+}
+
+nav > .logo {
+	background: #ffcccc;
+	/*設定物件沒有彈性 固定寬度*/
+	flex: none;
+	width: 100px;
+}
+
+nav > .menu {
+	background: #ccccff;
+	/*設定物件自動設定寬度 盡量撐滿容器*/
+	flex: auto;
+}
+
+nav > .user {
+	background: #ccffcc;
+	flex: none;
+	width: 100px;
+}
+
+/*內文*/
+main {
+	background: #cccccc;
+	/*設定容器為flexbox*/
+	display: flex;
+	/*設定項目會自動換行*/
+	flex-wrap: wrap;
+	/*項目水平方向置中*/
+	justify-content: center;
+    /*項目垂直方向對齊 預設是strech*/
+	align-items: flex-start;
+}
+
+main > .item {
+	background: #ffcccc;
+	/*設定物件沒有彈性 固定寬度*/
+	flex: none;
+	width: 270px;
+	margin: 10px;
+}
+
+/*RWD設定*/
+/*設定500px~1200px的螢幕解析度*/
+@media (max-width: 1200px){
+	main > .item {
+		width: 45%;
+	}
+}
+/*設定500px以下的螢幕解析度*/
+@media (max-width: 500px){
+	main > .item {
+		width: 90%;
+	}
+}

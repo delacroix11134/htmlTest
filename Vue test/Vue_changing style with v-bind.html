@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用v-bind改變樣式</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        .box{
+            width: 200px;
+            height: 100px;
+            text-align: center;
+            line-height: 100px;
+        }
+        .blueBox{
+            background-color: rgb(0, 122, 192);
+        }
+        .redBox{
+            background-color: crimson;
+        }
+        .greenBox{
+            background-color: greenyellow;
+        }
+        .pinkBox{
+            background-color: violet;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="vBind">
+        <!-- 0-1. v-bind是用來綁定DOM的各種屬性 像這裡的 :title是滑鼠移入的跳出的說明文字 -->
+        <div class="box" v-bind:title="hint">{{message1}}</div>
+       
+        <!-- 1-1. v-bind:Style 綁定行內樣式 可以直接在JS中直接寫樣式 但是會造成行內樣式 -->
+        <div id='vBindStyle' class="box" v-bind:style='aquaBox'>
+            {{message}}
+        </div>
+
+        <!-- 2-1. v-bind:class 在屬性中寫樣式的開關 在data定義開關的值 把class的樣式寫在style中 可以有多組class開關 是比較好維護的寫法-->
+        <div id='vBindClass' class="box" v-bind:class='{blueBox: checkBlueBox, redBox: checkRedBox}'>
+            {{message2}}
+        </div>
+
+        <!-- 3-1. v-bind:class 可以簡寫 :class 而且如果都把條件寫在行內 雜亂且不好閱讀 -->
+        <div id="vBindClass2" class="box" :class="classList">
+            {{message3}}
+        </div>
+
+    </div>
+</body>
+<script>
+    var vueTest = new Vue({
+        el: '#vBind',
+        data: {
+            message: 'v-Bind:style',
+            message1: '把滑鼠移過來看看',
+            message2: 'v-bind:class',
+            message3: 'v-bind:class',
+            hint: '大俠愛吃漢堡包',
+
+            // 1-2. 直接寫在js裡面的樣式 這樣寫把style和script混在一起 不是很好的寫法(而且是inline style)
+            aquaBox:{
+                width: '200px',
+                height: '100px',
+                backgroundColor : 'rgb(0, 122, 192)'
+            },
+
+            // 2-2. 這裡是兩種樣式的開關
+            checkBlueBox: false,
+            checkRedBox: true,
+
+            // 3-2. 太多選項很複雜 用一個物件包起來
+            classList: {
+                greenBox: true,
+                pinkBox: false,
+            }
+        }
+    })
+</script>
+</html>

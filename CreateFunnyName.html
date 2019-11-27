@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="史上最強中二煞氣ID產生器！取ID沒有靈感嗎？推薦給猶豫不決的你/妳" />
+    <title>煞氣ID產生器</title>
+    <link rel="shortcut icon" href="pic/icon02.png">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC:300" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            letter-spacing: 0.1em;
+        }
+        body{
+            font-family: 'Noto Sans TC', sans-serif;
+            width: 100%;
+            /* height: 1080px; */
+            /* overflow: hidden; */
+            background-color: rgb(85, 85, 85);
+        }
+        #bg{
+            width: 100%;
+            height: 1080px;
+            position: fixed;
+            z-index: -10;
+            background-image: url(pic/miku.jpg);
+            background-size: cover;
+            background-position: center -150px;
+            filter: blur(10px);
+            -webkit-filter: blur(10px);
+            /* opacity: 0.9;*/
+        }
+        header{
+            width: 100%;
+            height: 50px;
+            background-color: rgba(0,0,0,0.8);
+            box-shadow: 0px 2px 5px;
+        }
+        #container-header{
+            width: 90%;
+            height: 100%;
+            margin: 0 auto;
+            position: relative;
+        }
+        #logo{
+            height: 100%;
+            display: inline-block;
+        }
+        #logo img{
+            height: 80%;
+            margin: 5% 
+        }
+        #title{
+            color: white;
+            display: inline-block;
+            position: absolute;
+            top: 15px;
+        } 
+        header ul{
+            position: absolute;
+            display: inline-flex;
+            right: 0;
+        }
+        header li{
+            width: 150px;
+            margin: 0 10px;
+            cursor: pointer;
+            text-align: center;
+        }
+        header li:hover{
+            background-color: rgba(255,255,255,0.1);
+        }
+        header li a{
+            color: white;
+            text-decoration: none;
+            line-height: 50px;
+        }
+        #nav-works:hover ~ .block-works{
+            visibility: visible;
+            top: 50px;
+            transition: 0.5s ease-out;
+            opacity: 1;
+        }
+        .block-works{
+            visibility: hidden;
+            width: 150px;
+            position: absolute;
+            top: 40px;
+            left: 10px;
+            background-color: rgba(0,0,0,0.9);
+            box-shadow: 1px 1px 3px;
+            opacity: 0;
+        }
+        .works:hover{
+            background-color: rgba(255,255,255,0.1);
+        }
+        .block-works:hover{
+            visibility: visible;
+            top: 50px;
+            opacity: 1;
+        }
+        .works{
+            width: 100%;
+            height: 50px;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            line-height: 50px;
+            display: block;
+        }
+        #vue{
+            width: 90%;
+            margin: 0 auto;
+        }
+        #main{
+            width: 100%;
+            height: 500px;
+            margin-top: 100px;
+            text-align: center;
+            color: white;
+            display:flex;
+            align-content: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        #slot-name{
+            width: 100%;
+            height: 100px;
+            font-size: 80px;
+            margin: 0;
+        }
+        .btns{
+            width: 30%;
+            height: 100px;
+            margin-top: 50px;
+        }
+        .btns-m{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+        #btn-copy-m,#btn-share-m{
+            width: 49%;
+        }
+        .btn-ghost{
+            height: 36px;
+            color: white;
+            border-radius: 5px;
+            border: 1px solid white;
+            background: transparent;
+            outline: none;
+            cursor: pointer;
+            align-self: center;
+        }
+        .btn-ghost:hover{
+            color: rgb(70, 70, 70);
+            background: white;
+        }
+        #pannel{
+            width: 100%;
+            height: 200px;
+            border-radius: 5px;
+            background-color: rgba(0,0,0,0.8);
+            box-shadow: 1px 2px 5px;
+            position: relative;
+        }
+        .container-pannel{
+            width: 80%;
+            height: 80%;
+            margin: 0 auto;
+            position: absolute;
+            top: 25px;
+            left: 10%;
+            display: flex;
+            justify-content: space-between;
+        }
+        .block-history{
+            width: 40%;
+            height: 100%;
+        }
+        .history{
+            color: white;
+            height: 30px;
+            width: 100%;
+            cursor: pointer;
+            position: relative;
+        }
+        .btn-copy-s{
+            display: inline-block;
+            width: 60px;
+            height: 25px;
+            position: absolute;
+            top: 2.5px;
+            right: 75px;
+            visibility: hidden;
+        }
+        .btn-share-s{
+            display: inline-block;
+            width: 60px;
+            height: 25px;
+            position: absolute;
+            top: 2.5px;
+            right: 10px;
+            visibility: hidden;
+        }
+        .history:hover{
+            background-color: rgba(255,255,255,0.05)
+        }
+        .history:hover .btn-ghost{
+            visibility: visible;
+        }
+        .block-control{
+            width: 40%;
+            height: 100%;
+        }
+        .input{
+            text-align: end;
+        }
+        .input>div{
+            height: 36px;
+        }
+        .input>div div{
+            text-align: right;
+            margin-right: 10px;
+            display:inline-block;
+            width: 120px;
+            color: white; 
+            vertical-align: bottom;
+        }
+        .input-area{
+            width: 200px;
+            height: 30px;
+            font-size: 18px;
+            color: white;
+            background-color: transparent;
+            outline: none;
+            border: none;
+            border-bottom: 1px solid white;
+        }
+        .input option{
+            background-color: white;
+            color: rgb(196, 196, 196);
+            border: none;
+            height: 30px;
+        }
+        .input input::placeholder{
+            font-size: 18px;
+            font-family: 'Noto Sans TC', sans-serif;
+        }
+        .btns-input{
+            text-align: end;
+            margin-top: 20px;
+        }
+        .btn-solid{
+            width: 45%;
+            height: 36px;
+            border-radius: 5px;
+            color: white;
+            background-color: gray;
+            border: none;
+            display: inline-block;
+            cursor: pointer;
+            outline: none;
+        }
+        #btn-generate{
+            background-color: #094cd5;
+        }
+        #btn-clear{
+            background-color: #64b447;
+            margin-right: 10px;
+        }
+        @media(max-height:1400px){
+            #main{
+                height: 800px;
+            }
+            .block-control,.block-history{
+                width: 50%;
+            }
+        }
+        @media(max-height:1100px){
+            #main{
+                height: 500px;
+            }
+        }
+        @media(max-height:900px){
+            #main{
+                height: 350px;
+            }
+        }
+        @media(max-height:700px){
+            #main{
+                height: 300px;
+            }
+        }
+        @media(max-width: 900px){
+            #title{
+                font-size: 14px;
+            }
+            header li{
+                margin: 0;
+                width: 110px;
+            }
+            header li a{
+                font-size: 14px;
+            } 
+            .btns{
+                width: 70%;
+                margin-top: 5%;
+            }
+            .container-pannel{
+                width: 90%;
+                left: 5%;
+            }
+            #slot-name{
+                font-size: 50px;
+            }
+            .block-control{
+                width: 60%;
+            }
+            .block-works{
+                width: 110px;
+                left: 0;
+            }
+            .block-works a{
+                font-size: 12px;
+            }
+            .input-area{
+                width: 120px;
+            }
+            #btn-clear{
+                margin-right: 5px;
+            }
+            .history{
+                font-size: 16px;
+            }
+            .history:hover .btn-ghost{
+                visibility:hidden;
+            }
+        }
+        @media(max-width: 500px){
+            header{
+                height: 40px;
+            }
+            #container-header{
+                width: 95%;
+            }
+            header ul li:last-child{
+                display: none;
+            }
+            #nav-works:hover ~ .block-works{
+                top: 40px;
+            }
+            .block-works:hover{
+            top: 40px;
+            }
+            #main{
+                height: 300px;
+                margin-top: 20%;
+            }
+            .btns{
+                width: 90%;
+            }
+            .btns-m{
+                text-align: center;
+                flex-direction: column;
+                justify-items: center;
+            }
+            #slot-name{
+                font-size: 30px;
+            }
+            #btn-copy-m, #btn-share-m{
+                margin-top: 10px;
+                width: 60%;
+            }
+            .block-history{
+                display: none;
+            }
+            .block-control{
+                width: 100%;
+            }
+            .input{
+                text-align: center;
+            }
+            .btns-input{
+                text-align: center;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+        <div id="fb-root"></div>
+        <script>
+                window.fbAsyncInit = function() {
+                    FB.init({
+                    appId            : '593668021112283',
+                    autoLogAppEvents : true,
+                    xfbml            : true,
+                    version          : 'v3.2'
+                    });
+                };
+                
+                (function(d, s, id){
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) {return;}
+                    js = d.createElement(s); js.id = id;
+                    js.src = "https://connect.facebook.net/en_US/sdk.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));
+            </script>
+    <div id="bg"></div>
+    <header>
+        <div id="container-header">
+            <div id="logo"><img src="pic/logo.png" alt=""></div>
+            <div id="title">| 中二ID產生器</div>
+            <ul>
+                <li id="nav-works"><a href="#">MY WORKS</a></li>
+                <div class="block-works">
+                    <a href="https://delacroix11134.github.io/TestWebPage/Hangman.html"class="works">Hangman小遊戲</a>
+                    <a href="https://delacroix11134.github.io/TestWebPage/tarot_index.html"class="works">塔羅抽排程式</a>
+                    <a href="https://delacroix11134.github.io/TestWebPage/DOM_Test.html"class="works">動態網頁元素</a>
+                    <a href="https://delacroix11134.github.io/TestWebPage/wheel_event.html"class="works">動態版面設計</a>
+                </div>
+                <li><a href="#">CONTACT ME</a></li>
+            </ul>
+        </div>
+    </header>
+    <div id="vue">
+        <div id = "main">
+            <p>{{text}}</p>
+            <div id="slot-name">{{result}}</div>
+            <div class="btns">
+                <div class="btns-m">
+                    <button id="btn-copy-m"class="btn-ghost"@click="copy">複製文字</button>
+                    <button id="btn-share-m"class="btn-ghost"@click="share">分享至Facebook</button>
+                </div>
+            </div>
+        </div>
+        <div id="pannel">
+            <div class="container-pannel">
+                <div class="block-history">
+                    <div class="history" v-for="(item,index) in resultArr">
+                        <div>{{index + 1}}. {{item}}</div>
+                        <button class="btn-copy-s btn-ghost">複製</button>
+                        <button class="btn-share-s btn-ghost">分享</button>
+                    </div>
+                </div>
+                <div class="block-control">
+                    <div class="input">
+                        <div>
+                            <div>你的性別</div>
+                            <select name="gender" id="gender" class="input-area" v-model="gender">
+                                <option value="none">隨意</option>
+                                <option value="male">男</option>
+                                <option value="female">女</option>
+                            </select>
+                        </div>
+                        <div>
+                            <div>想要填入的字</div>
+                            <input class="input-area" type="text"placeholder="請輸入文字"v-model="name">
+                        </div>
+                    </div>
+                    <div class="btns-input">
+                        <button id="btn-clear"class="btn-solid"@click="clear">清除紀錄</button>
+                        <button id="btn-generate" class="btn-solid" @click="generate">產生ID</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+</body>
+<script>
+    var url=window.location.toString();
+    var vue = new Vue({
+        el: '#vue',
+        data:{
+            title: '中二ID產生器',
+            text: '你的ID是....',
+            result: '',
+            resultArr: [],
+            name:'',
+            gender:'none',
+            dicLetter:['獅','斬','星','爆','黯','黑','王','天','地','閃','電','帝',
+            '雷','鬪','神','夜','翔','鬼','獄','蒼','焱','言','闇','血','霸','傲','絕',
+            '聖','滅','魔','凰','龍','威','噬','弒','羅','毀','毒','魂','煞','敵','狼',
+            '冰','霜','雪','雨','冷','夏','風','炎','暴','熾','凜','颯','嵐','漾','戀',
+            '愛','殤','幻','異','情','玥','月','楓','花','語','姬','極','樂','刃','影',
+            '羽','劍','魂','夢','龍','貓','豪','軒','志','鈞','凱','傑','輝','銘','毅',
+            '宇','宸',
+            ],
+            dicLetterF:['婷','媛','雪','羽','漾','萌','戀','薰','嬡','晞','夏','冷','淚','瞳','玥',
+            '蜜','棠','蓓','若','蕾','紫','戀','晴','音','彩','霞','蝶','喵','優','音','冬','兔','唯'
+            ,'傻','貓','咩','汪','戀','妍','夢','莎','櫻','薇','依','莓','姬','娘','玹','湘','璃','靜'
+            ,'夜','露','妙','沁','薔','琦','淇','葵','蘊','真','詩','瑄','雁','萩','芷','白','瑤','烟'
+            ,'芃','珞','曼','翎','菱','柔','子','宛','卉','苡','筱','霜','藍','嵐','巧'
+            ],
+            dicWord:['煞氣','霸王','南宮','慕容','斬佛','滅世','闇夜','癡情','墮獄','邪眼',
+            '聖月','修羅','紅蓮','漆黑','瞬殺','孤獨','霸氣','天地','邪王','弒神','義氣','傲天',
+            '傻氣','慈悲','稚氣','罪曖','涅槃','破滅','幻凜','寂寞','龍虎','炎煌','葬花','凜月',
+            '星爆','神威','狂嵐','滅殺','無敵','古錐','戀空','慟哭','混沌','咆哮','覺醒','終焉',
+            '審判','剎那','正義','陽炎','蒼穹','死神','疾風','輪迴','深淵','聖粉','放火','聖冥',
+            '靈武','魔煞','惡鬼','楓颯','寂寞','傲天','狂氣','幻煌','流星','天誅','天魔','冰雪',
+            '超星','尊爵','清新','硬硬','癡漢','巨砲','混怒','鎖鏈','黃泉','使徒','現充','反骨',
+            '義氣','母湯'
+            ], 
+            dicWordF:['戀艾','夢幻','夢想','口愛','戀芯','粉色','彩虹','水漾','玥兔','寶貝',
+            '淚痕','冰楓','甜心','閃亮','羽戀','回憶','星星','緻噯','焦糖','奶糖','時尚','夢紫',
+            '夢伊','曖昧','天堂','罪惡','嵐玥','玥月','優雅','華麗','天使','咘咘','迷心','璇律',
+            '迷喵','唯一','紫戀','蔚藍','楓夜','癒心','芯愛','淚光','永恆','凝噯','烟花','寂寞',
+            '冰藍','念念','蜜棠','任性','繽紛','遺忘','茴憶','雲烟','優音','陽玥','咘懂','豬豬',
+            '雨若','萌濛','微熱','觴心','漾雪','傾城','飄流','戀玥','孤單','魅影','微薰','暖暖',
+            '雨濛','妖孽','妖豔','紫魅','萌沐','緋雪','冰綺','雪花','愛哭','爛漫','回憶','迷糊',
+            '透明','灰色','夢蝶','浮生','布丁','果果','凋零','初戀','綻放','默默','動感','晶螢',
+            '公主','女王','雪戀','幽幽','水晶','柳玫','萌萌','氣質','絕殤','阡陌','恬羽','暮光',
+            '日系','理科','蝶舞','傻靚','雨彤','稚氣','獨愛','湘晴','夏語','吹雪','戀痕','璘櫻',
+            '紫韻','祈野','萌戀','傲嬌'
+            ],
+            dicN:['凱蒂貓','佛地魔','孤狼','夜叉','惡鬼','黑龍','神劍','巨神','聖騎','龍騎',
+            '霸天','天尊','帝王','惡魔','屁孩','聖粉','八嘎囧','寶貝','糖果','舞月','墮天使',
+            '薔薇','孤星','妖花','女王','天使','拳婦','野獸','戰神','括約肌','豪哥','姊夫','米蟲',
+            '眼鏡','鼻子','聖光','馬英丸','金正恩','肥宅','傑','鬥神','金城武','血花','不知火','組長',
+            '隊長','暗殺者','憂鬱','癡情','傑哥','神魔','王子','殺手','殺神','總裁','大俠','天尊','陳浩南',
+            '總舵主','修羅','阿姨','騎士','哥布林','魔法師','旅團','狂','武士','伐木工','羽翼','會長',
+            '學姊','學長','老師','教官','巨龍','掠奪者','孤桃','歐吉桑','康妮','女孩','蔡英文','阿伯',
+            '星辰','浪子','囡仔','魯蛇','鳳凰','哥吉拉','大香菇','凱蒂','芭比','唐伯虎','神射手','狂風',
+            '神豬','聖魰','','笨','妞','呆','肛門','洨蹦蹦','懶蛋','香港腳','痔瘡','王仁甫','台客',
+            '前列腺','膀胱','老媽','凱仔','地中海','大報社','夜煞','黑嵐嬌','ㄦ','貴公子','武勇','基多拉',
+            '勇者','肯尼','姆咪','魯小小','盲腸','館長','妹妹','蘿莉','兄貴','教練','女神','正太',
+            '皮卡丘','美心','鬍子','汁男'
+            ],
+            dicSen:[['煞氣','辣台妹'],['進擊','巨人'],['斬佛','凱蒂貓'],['童貞','魔法師'],['李奧納多','皮卡丘'],
+            ['專業','蘿莉控'],['合法','蘿莉'],['巨砲','偽娘'],['光頭','葛格'],['江','西男'],['大盜','韓不住'],
+            ['國民','老婆'],['宅男','女神'],['專業','老司機'],['薩諾斯','屁屁'],['八卦山','下智久'],['台灣','阿童']
+            ,['地方','柯媽媽'],['苗栗','小五郎'],['憂鬱','竹鼠'],['杰哥','不要'],['三上','悠亞'],['肛棍','洩師傅']
+            ,['東京','熱太郎'],['殺氣','紅心A'],['鐵拳無敵','孫中山'],['母湯','克魯斯'],['火雲','邪神'],['非洲','大酋長']
+            ,['庶務課','課長'],['醉拳','甘迺迪'],['銅鑼灣','扛壩子'],['可是','瑞凡'],['魔鬼','筋肉人'],['電光','毒龍鑽']
+            ,['奪命','香雞腿'],['咖哩','魚蛋'],['陽具','總動員'],['秋名山','車神'],['國民','初戀'],['妖豔','賤貨']
+            ,['巨棒堂','男孩'],['不要問','你會怕'],['老爺不要','夫人在看'],['三年起步','最高死刑'],['生中出','呂布']
+            ,['恕我','攔轎'],['暴死','非洲人'],['說好','不打臉'],['薇閣','無慾僧'],['資深','肥宅'],['青眼','白龍'],
+            ['遊戲','BOY'],
+
+        ],
+            dicPP:['a','a','o','@','★','卍','の','の','de','~~','°','i','*','&','＊','♥','x','❤','♀','♂',
+                'δ','ε','φ','〃','ω','ⓒⓤⓣⓔ','†','☆｡oﾟ'
+            ],
+            dicDeco:[['卍'],['乂'],['屮'],['★'],['~'],['ㄨ'],['†'],['✞'],['♪'],['♡'],['◇◆'],
+            ['々'],['§'],['┆'],['灬'],['↙','↗'],['=*^~','~^*='],['Oo','oO'],['㊣~','~㊣'],['↖★乂','乂★↘'],
+            ['Ww','wW'],['↘㊣','㊣↖'],['╰☆','☆╮'],['←','→'],['','ゝ'],['〆','°'],['','√'],['','°'],
+            ['＊°','°★ '],['╭☆､','〞'],['ε','δ'],['+° ','× °'],['･:*:･','･:*:･'],['╭☆ﾟ',' 〞']
+            ],
+            dicMisc:['狠狠愛','愛重來','卡娃伊','5566','很愛玩','愛太深','太難懂','咘懂噯','しovё ','100% ',
+            '赤裸裸','罪琉璃','熱戀中 ','甜心北鼻 ','LoVe ','BaD ','Smile',' QueenA','Kitty','Belle','多多綠',
+            '小時尚','熊寶貝','優雅系','治癒系','水精靈','小天使','粉戀夢','背叛惹','閃亮亮','惡作劇','相信愛情',
+            '輕熟女','微糖少冰','甜美系','棉花糖','粉紅泡泡'
+            ],
+            
+            
+        },
+        methods:{
+            // 隨機選擇0~num間的數字
+            randomNum : function(num){
+                return Math.floor(Math.random()*num);
+            },
+            // 隨機選擇一個填入的引數
+            selector: function(){
+                return arguments[this.randomNum(arguments.length)]
+            },
+            // 從陣列中選機選擇一項
+            arrSelector: function(arr){
+                return arr[this.randomNum(arr.length)]
+            },
+            addDeco: function(arr,borderOrNot){
+                var deco
+                if(!borderOrNot){
+                    deco = this.dicDeco[this.randomNum(10)]
+                    arr.push(deco[0]);
+                    arr.unshift(deco[0]);
+                }else{
+                    deco = this.arrSelector(this.dicDeco)
+                    deco[1] ? ( arr.push(deco[1]) , arr.unshift(deco[0]) ):( arr.push(deco[0]) , arr.unshift(deco[0]) )
+                }
+            },
+            addDecoWord: function(arr){
+                var deco = this.selector(this.dicWord,this.dicWordF)
+                var decoWord = deco[this.randomNum(deco.length)]
+                arr.unshift(decoWord[0])
+                arr.push(decoWord[1])
+            },
+            // 產生第一種句型的結果
+            generateType1: function(){
+                var result = []
+                if(!this.name){
+                    var num = this.randomNum(3) + 3
+                    for(i=0;i<num;i++){
+                        result.push(this.arrSelector(this.dicLetter))
+                    }
+                } else {
+                    var num = this.randomNum(3) + 1
+                    for(i=0;i<num;i++){
+                        result.push(this.arrSelector(this.dicLetter))
+                    }
+                    result.push(this.name)
+                }
+                this.addDeco(result,true)
+                this.result = result.join('')
+                console.log('type1: '+ result.join(' '))
+            },
+            //產生第二種句型的結果
+            generateType2: function(){
+                var result = []
+                var ifDecoWord = this.selector(true,false)
+                var ifBorderDeco = this.selector(true,false)
+                result.push(this.arrSelector(this.selector(this.dicWord,this.dicWordF)))
+                result.push(this.arrSelector(this.dicPP))
+                !this.name?result.push(this.arrSelector(this.selector(this.dicN,this.dicLetter))):result.push(this.name)
+                this.addDeco(result,false)
+                ifDecoWord ? this.addDecoWord(result):'';
+                ifDecoWord ? (ifBorderDeco ? this.addDeco(result,true) : '' ): '';
+                this.result = result.join('')
+                console.log('type2: '+ result.join(' '))
+            },
+            //產生第三種句型的結果
+            generateType3: function(){
+                var result = []
+                result.push(this.arrSelector(this.dicWord))
+                this.addDeco(result,false)
+                result.unshift(this.arrSelector(this.selector(this.dicWord,this.dicWordF)))
+                !this.name?result.push(this.arrSelector(this.selector(this.dicLetter,this.dicN))):result.push(this.name)
+                this.addDeco(result,true)
+                this.result = result.join('')
+                console.log('type3: '+ result.join(' '))
+            },
+            //產生第四種句型的結果
+            generateType4: function(){
+                var result = []
+                result.push(this.arrSelector(this.dicMisc))
+                result.push(this.arrSelector(this.dicPP))
+                !this.name?result.push(this.arrSelector(this.dicWordF)):result.push(this.name)
+                this.addDeco(result,true)
+                this.result = result.join('')
+                console.log('type4: '+ result.join(' '))
+            },
+            //產生第五種句型的結果
+            generateType5: function(){
+                var result = []
+                var ifPP = this.selector(true,true,false)
+                var ifTwoWords = this.selector(true,false)
+                result.push(this.arrSelector(this.dicWordF))
+                ifPP ? result.push(this.arrSelector(this.dicPP)) : ''
+                this.name?result.push(this.name):ifTwoWords?(result.push(this.arrSelector(this.dicLetterF)),result.push(this.arrSelector(this.dicLetterF))):result.push(this.arrSelector(this.dicLetterF))
+                this.addDeco(result,true)
+                this.result = result.join('')
+                console.log('type5: '+ result.join(' '))
+            },
+            //產生第六種句型的結果
+            generateType6: function(){
+                var result = []
+                var ifPP = this.selector(true,true,false)
+                var word = this.arrSelector(this.dicSen)
+                result.push(word[0])
+                ifPP ? result.push(this.arrSelector(this.dicPP)) : ''
+                result.push(word[1])
+                this.selector(this.addDeco(result,true),'')
+                this.result = result.join('')
+                console.log('type6: '+ result.join(' '))
+            },
+            generate: function(){
+                if(this.gender == 'none'){
+                    this.selector(this.generateType1,this.generateType2,this.generateType3,this.generateType4,this.generateType5,this.generateType6)()
+                } else if(this.gender == 'male') {
+                    this.selector(this.generateType1,this.generateType2,this.generateType3)()
+                } else {
+                    this.selector(this.generateType4,this.generateType5)()
+                }
+                this.resultArr.length<5 ? this.resultArr.unshift(this.result) : (this.resultArr.pop(),this.resultArr.unshift(this.result))
+                document.getElementById('btn-copy-m').innerHTML = '複製文字'
+            },
+            clear: function(){
+                var children = document.querySelectorAll('.history')
+                for(i=0;i<children.length;i++){
+                    children[i].innerHTML = '';}
+                this.resultArr = [];
+                this.result = '';
+                document.getElementById('btn-copy-m').innerHTML = '複製文字'
+            },
+            copy: function(){
+                var clip = document.createElement('textarea')
+                clip.textContent = this.result
+                document.body.appendChild(clip)
+                clip.select()
+                document.execCommand('copy')
+                clip.remove()
+                document.getElementById('btn-copy-m').innerHTML = '已複製至剪貼簿!'
+                console.log('copy')
+            },
+            share: function(){
+                console.log('FB')
+                FB.ui({
+                method: 'share',
+                display: 'popup',
+                href: 'https://delacroix11134.github.io/TestWebPage/CreatorFunnyName.html#',
+            }, function(response){
+                console.log("FB share")
+            });
+            }
+            
+        }
+    })
+
+</script>
+</html>

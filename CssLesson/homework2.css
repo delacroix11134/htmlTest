@@ -1,0 +1,105 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.logo {
+	font-size: 20px;
+	font-weight: bold;
+	display: inline-block;
+	padding: 0 20px;
+}
+
+.header {
+	background: yellow;
+	margin-bottom: 10px;
+    width: 100%;
+    height: 60px;
+
+}
+
+.header a{
+	display: inline-block;
+    padding:20px;
+    text-decoration: none;
+    color: black;
+}
+
+.header_nav:hover, .header_nav:active {
+	color: white;
+	background: black;
+}
+
+.box {
+	background: yellow;
+	padding: 10px;
+	border: 4px solid black;
+	margin: 0;
+    height: 300px;
+    width: 48%;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+
+.box:hover {
+	background: black;
+	color: white;
+}
+
+::selection {
+	color: black;
+	background: yellow;
+}
+
+a {
+	color: red;
+}
+
+/*a和class,id中間沒有空白 如果有空白會變成a的子項中的class,id 意義是不同的 */
+/*
+a.tag1 {
+	color: orange;
+}
+*/
+
+.bla {
+	width: 90%;
+	height: 600px;
+	background: yellow;
+	padding: 10px;
+	border: 4px solid black;
+	margin: 5%;
+}
+
+.title {
+	font-size: 20px;
+    font-weight: bold;
+    background: black;
+    color: white;
+    padding: 40px 20px;
+}
+
+.footer {
+	width: 100%;
+	height: 120px;
+	background: black;
+    text-align: center;
+}
+
+a.footer_nav {
+	color: white;
+    padding: 20px;
+    border-left: 2px solid white;
+    display: inline-block;
+    margin: 30px 0;
+    text-decoration: none;
+}
+
+a.first_footer {
+	border-left: none; 
+}

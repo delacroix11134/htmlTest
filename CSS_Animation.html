@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>CSS_Animation</title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js">
+    </script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:300" rel="stylesheet">
+    <link rel="stylesheet" href="css/victorsWork_Shared.css">
+    <style>
+        *{
+            box-sizing: border-box;
+        }
+        body{
+            margin: 0;
+        }
+        /*header*/
+        .title-text{
+            color:rgb(50, 52, 78)
+        }
+        /*main*/
+        main{
+            width: 90%;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            align-content: flex-start;
+            flex-wrap: wrap;
+        }
+        .container{
+            width: 30%;
+            position:relative;
+            margin: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container::before{
+            content:'';
+            padding-top: 100%;
+        }
+        .cube{
+            width: 100px;
+            height: 100px;
+            margin: 60px 60px;
+            display: inline-block;
+            vertical-align: top;
+            background: #aaa;
+        }
+        /*boxes*/
+        .box1{
+            background: rgb(92, 124, 121);
+            transition: 0.5s ease-in-out;
+        }
+        .container1:hover .box1, .container1:active .box1{
+            width: 200px;
+            height: 200px;
+            background: rgb(124, 92, 119);
+        }
+        /*c2*/
+        .box2{
+            transition: width 0.2s ease-in-out, height 0.5s ease-in-out;
+        }
+        .container2:hover .box2, .container2:active .box2{
+            width: 200px;
+            height: 200px;
+            background: rgb(113, 158, 175)
+        }
+        /*c3*/
+        .box3{
+            transform-origin: bottom right;
+            transition: 0.5s ease-in;
+            pointer-events: none;
+        }
+        .container3:hover .box3, .container3:active .box3{
+            transform: rotate( 90deg );
+        }
+        /*c4*/
+        .btn{
+            margin: 40px 40px;
+            width: 120px;
+            height: 60px;
+            border-radius: 40px;
+            display: inline-block;
+            background: rgb(82, 82, 82);
+            position: relative;
+            transition: 0.3s ease;
+        }
+        .btn::before{
+            content: '';
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #aaa;
+            position: absolute;
+            top: 5px;
+            left: 5px; 
+            transition: 0.3s ease;
+        }
+        .check{
+            display: none;
+        }
+        .check:checked + .btn {
+            background: rgb(206, 206, 206);
+        }
+        .check:checked + .btn::before{
+            left: 65px;
+            background: rgb(93, 158, 231);
+        }
+        /*c5*/
+        .outLine{
+            width: 70%;
+            height: 50px;
+            border: 5px solid rgb(66, 66, 66);
+        }
+        .progress-bar{
+            height: 100%;
+            width: 0%;
+            background: rgb(194, 93, 155);
+            transition: 1s ease;
+        }
+        .container5:hover .progress-bar, .container5:active .progress-bar{
+            width:100%;
+        }
+        /*c6*/
+        .ball-ground{
+            width: 80%;
+            height: 100px;
+        }
+        .ball{
+            width: 100px;
+            height: 100px;
+            transition: 2s ease;
+        }
+        .ball > img {
+            width: 100%;
+            height: 100%;
+        }
+        .container6:hover .ball{
+            transform: translateX(500px) rotate(720deg) ;
+        }
+        /*c7*/
+        .container7 {
+            overflow: hidden;
+            
+            position: relative;
+        }
+        .belt {
+            width: 100%;
+            height: 300px; 
+            transition: 0.8s ease-in-out;
+        }
+        .bg1, .bg2{
+            width: 100%;
+            height: 300px;
+            background: rgb(75, 75, 75);
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.6s ease-in-out;
+        }
+        .bg1{
+            transform-origin: center right;
+            z-index: 2;
+        }
+        .bg2{ 
+            background: rgb(82, 82, 82);
+            position: absolute;
+            top: 0px;
+            left: 100%;
+        }
+        .btn1{
+            width: 150px;
+            height: 50px;
+            color: black;
+            font-weight: bold;
+            background: #aaa;
+            text-align: center;
+            line-height: 50px;
+            cursor: pointer;
+            box-shadow: 0 15px 10px -10px rgba(0,0,0,0.5);
+            transition: 0.2s cubic-bezier(0.75, 0.01, 0.25, 1);
+        }
+        .btn1:hover{
+            transform: scale(1.05);
+            box-shadow: 0 25px 15px -15px rgba(0,0,0,0.5);
+        }
+        .is-transitioned .bg1{
+            transform: scale(0.5) rotateY(-120deg);
+            z-index: -1;
+        }
+        .is-transitioned .belt{
+            transform: translateX(-100%);
+        }
+        /*c8*/
+        .card1{
+            width: 80%;
+            height: 300px;
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+            overflow: hidden;
+            text-align: center;
+            position: relative;
+            transition: 0.2s ease;
+        }
+        .pic1{
+            background-image: url("pic/kyoto.jpg");
+            width: 110%;
+            height: 60%; 
+            background-size: 120%;
+            background-position: center center;
+            background-repeat: no-repeat;
+            transition: opacity 0.4s ease-in-out, background-size 0.5s ease-in-out;
+        }
+        .heart1{
+            background-image: url("pic/heart1.png");
+            background-size: 100%;
+            background-repeat: no-repeat;
+            width: 30px;
+            height: 30px;
+            position: absolute;
+            top: 28%;
+            right: 46%;
+            opacity: 0;
+            transition: 0.2s ease-in-out;
+        }
+        .heart2{
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            background-image: url("pic/heart2.png");
+            background-size: 100%;
+            background-repeat: no-repeat;
+            transition: 0.2s ease-in-out;
+        }
+        .heart2-click{
+            opacity:1;
+        }
+        .text-box{
+            margin: 5px 20px;
+            text-align: left;
+        }
+        .card1 h2 {
+            font-size: 1.2em;
+            margin: 5px 0;
+        }
+        .card1 p {
+            font-size: 0.8em;
+            margin: 5px 0;
+        }
+        .pic1:hover {
+            background-size: 125%;
+            opacity: 0.6;
+        }
+        .pic1:hover .heart1{
+            opacity: 1;
+        }
+       /*c9*/
+        .shadow{
+            background: rgb(105, 105, 105);
+            border-radius: 50%;
+            width: 100px;
+            height: 30px;
+            transform: translateX(50px) translateY(150px);
+            animation: shadow 0.5s ease-in-out infinite alternate;
+        }
+        .ball2{
+            width: 100px;
+            height: 100px;
+            background: rgb(93, 95, 185);
+            border-radius: 50%;
+            z-index: 1;
+            animation: bounce 0.5s ease-in infinite alternate;
+            transform: translateX(-50px) translateY(100px);
+        }
+        .ball-spacular {
+            width: 20px;
+            height:20px;
+            background: rgb(130, 132, 228);
+            border-radius: 50%;
+            transform: translateX(20px) translateY(20px)
+        }
+        @keyframes bounce{
+            0% { transform: translateX(-50px) translateY(-110px) scale(1.05, 0.95);}
+            80% { transform: translateX(-50px) translateY(100px);}
+            100%{ transform: translateX(-50px) translateY(120px) scale(1.2, 0.8);}
+        }
+        @keyframes shadow{
+            0% {transform: translateX(50px) translateY(150px) scale(0.6,0.6);}
+            100% {transform: translateX(50px) translateY(150px) scale(1,1);}
+        }
+        /*c10*/
+        .nav{
+            width: 90%;
+            height: 70px;
+            background: rgb(100, 100, 100);
+            border-radius: 5px;
+            position: relative;
+            top: -100px;
+            cursor: pointer;
+        }
+        .nav-list{
+            list-style: none;
+            margin: 0 auto;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nav-list-item {
+            margin: 0;
+            text-align: center;
+            width: 33.33%;
+            height: 70px;
+            line-height: 70px;
+            vertical-align: top;
+        }
+        .nav-list > li:first-child{
+            border-radius: 5px 0 0 5px;
+        }
+        /*子物件hover圓角*/
+        .nav-list-item:last-child{
+            border-radius: 0 5px 5px 0;
+        }
+        .nav-list-item:hover{
+            background: rgb(120,120,120)
+        }
+        /*hover animation要寫在hover裡*/
+        /*分別套用不同的動畫*/
+        .nav-list-item:hover .drop-menu1 li{
+            display: block;
+            opacity: 0;
+            animation: menu-1 0.3s ease forwards;
+        }
+        .nav-list-item:hover .drop-menu2 li{
+            display: block;
+            opacity: 0;
+            animation: menu-2 0.3s ease forwards;
+        }
+        .nav-list-item:hover .drop-menu3 li{
+            display: block;
+            opacity: 0;
+            animation: menu-3 0.3s linear forwards;
+        }
+        .drop-menu{
+            padding: 0;
+            list-style: none;
+            /*加上3D透視*/
+            perspective: 1000px;
+        }
+        .drop-menu > li{
+            display:none;
+            color: white;
+            line-height: 60px;
+            width: 100%;
+            height: 60px;
+            background: rgb(70,70,70);
+        }
+        .drop-menu > li:last-child{
+            border-radius: 0 0 5px 5px;
+        }
+        /*子物件的軸心*/
+        .drop-menu1 > li{
+            transform-origin: center;
+        }
+        .drop-menu2 > li{
+            transform-origin: top center;
+        }
+        .drop-menu3 > li{
+            transform-origin: center;
+        }
+        /*nth-child是寫在子物件上*/
+        .nav-list-item:hover li:nth-child(2){
+            animation-delay: 0.1s;
+        }
+        .nav-list-item:hover li:nth-child(3){
+            animation-delay: 0.2s;
+        }
+        .nav-list-item:hover li:nth-child(4){
+            animation-delay: 0.3s;
+        }
+        .drop-menu > li:hover{
+            background: rgb(90,90,90)
+        }
+        @keyframes menu-1{
+            0% { 
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes menu-2{
+            0% { 
+                opacity: 0;
+                transform: rotateX(100deg);
+            }
+            100% {
+                opacity: 1;
+                transform: rotateX(0deg);
+            }
+        }
+        @keyframes menu-3{
+            0% { 
+                opacity: 0;
+                transform: scale(0) translateY(0px);
+            }
+            75% {
+                transform: scale(1.2) translateY(5px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0px);
+            }
+        }
+        /*container11*/
+        .road{
+            width: 80%;
+            border-bottom: 15px dotted black;
+            transform-origin: right;
+        }
+        .pacman{
+            position: absolute;
+            left: 0;
+            top: 149px;
+            animation: move 5s linear infinite;
+        }
+        .pacman:before, .pacman:after{
+            content: '';
+            display: block;
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            border: 40px solid yellow;
+        }
+        .pacman:before{
+            border-right-color: transparent;
+            border-bottom-color: transparent;
+            animation: chopTop 0.3s linear infinite alternate;
+        }
+        .pacman:after{
+            border-right-color: transparent;
+            border-top-color: transparent;
+            animation: chopBot 0.3s linear infinite alternate;
+        }
+        @keyframes chopTop {
+            0%{
+                transform: rotate(0deg);
+            }
+            100%{
+                transform: rotate(45deg);
+            }
+        }
+        @keyframes chopBot {
+            0%{
+                transform: rotate(0deg);
+            }
+            100%{
+                transform: rotate(-45deg);
+            }
+        }
+        @keyframes move {
+            49%{
+                transform: rotateY(0);
+            }
+            50%{
+                left: 100%;
+                transform: rotateY(180deg);
+            } 
+            99%{
+                transform: rotateY(180deg);
+            }
+            100%{
+                left: 0;
+                transform: rotateY(0);
+            }
+        }
+        /*media querry*/
+        @media (max-width: 1200px){
+            .container{
+                width: 40%;
+            }
+            .card1{
+                width: 90%;
+            }
+        }
+        @media (max-width: 500px){
+            .container{
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="bar">
+            <div class="logo"><img src="pic/logo.png" ></div>
+        </div>
+        <div class="title-pic"></div>
+        <h1 class="title-text">CSS Animation Practices</h1>
+    </header>
+    <main>
+        <div class="container container1">
+            <div class="cube box1"></div>
+        </div>
+        <div class="container container2">
+            <div class="cube box2"></div>
+        </div>
+        <div class="container container3">
+            <div class="cube box3"></div>
+        </div>
+        <div class="container container4">
+            <label for="check" class="label">
+                <input type="checkbox" name="check" id="check" class="check">
+                <span class="btn"></span>
+            </label>
+        </div>
+        <div class="container container5">
+            <div class="outLine">
+                <div class="progress-bar"></div>
+            </div>
+        </div>
+        <div class="container container6">
+            <div class="ball-ground">
+                <div class="ball">
+                    <img src="pic/ball.png" alt="ball">
+                </div>
+            </div>
+        </div>
+        <div class="container container7">
+            <div class="belt">
+                <div class="bg1">
+                    <div class="btn1">NEXT</div>
+                </div>
+                <div class="bg2">
+                    <div class="btn1">BACK</div>
+                </div>
+            </div>
+        </div>
+        <div class="container container8">
+            <div class = "card1">
+                <div class="pic1">
+                    <buttom id="heart1" class="heart1">
+                        <div id="heart2" class="heart2"></div>
+                    </buttom>
+                </div>
+                <div class="text-box">
+                    <h2>The Tourist</h2>
+                    <p>Kyoto (京都, Kyōto) served as Japan's capital and the emperor's residence from 794 until 1868.</p>
+                </div>
+            </div>
+        </div>
+        <div class="container container9">
+            <div class="shadow"></div>
+            <div class="ball2"><div class="ball-spacular"></div></div>
+        </div>
+        <div class="container container10">
+            <nav class="nav">
+                <ul class="nav-list">
+                    <li class="nav-list-item">list1
+                        <ul class="drop-menu drop-menu1">
+                            <li>item1</li>
+                            <li>item2</li>
+                            <li>item3</li>
+                            <li>item4</li>
+                        </ul>
+                    </li>
+                    <li class="nav-list-item">list2
+                        <ul class="drop-menu drop-menu2">
+                            <li>item1</li>
+                            <li>item2</li>
+                            <li>item3</li>
+                            <li>item4</li>
+                        </ul>
+                    </li>
+                    <li class="nav-list-item">list3
+                        <ul class="drop-menu drop-menu3">
+                            <li>item1</li>
+                            <li>item2</li>
+                            <li>item3</li>
+                            <li>item4</li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="container container11">
+            <div class="road"></div>
+            <div class="pacman"></div>
+        </div>
+
+    </main>
+    <!-- footer -->
+    <footer>
+            <div class="footer-green"></div>
+            <div class="footer-black">
+                <div class="footer-black-left">
+                    <div><h1>A Victor's Work</h1></div>
+                    <div>Only for study & practices.<br>
+                    Visit my other practices:</div>
+                    <ul>
+                        <li><a href="DOM_Test.html">DOM_Test</a></li>
+                        <li><a href="CSS_Lesson2.html">CSS Lesson2</a></li>
+                        <li><a href="coffee.html">Coffee</a></li>
+                        <li><a href="中午吃什麼.html">WhatToEat</a></li>
+                        <li><a href="CSS_Align.html">CSS_Align</a></li>
+                        <li><a href="CSS_Flexbox.html">CSS_Flexbox</a></li>
+                    </ul>
+                </div>
+                <div class="footer-black-middle">
+                    <div><h1>All rights reserved</h1></div>
+                    <div>Only for study & practices.<br>
+                    </div>
+                </div>
+                <div class="footer-black-right">
+                    <div><h1>Contact me</h1></div>
+                    <div>Please contact me on the internet.</div>
+                    <div class="links">
+                        <a href=""><img src="pic/facebook.png" ></a>
+                        <a href=""><img src="pic/instagram.png" ></a>
+                        <a href=""><img src="pic/behance.png" ></a>
+                        <a href=""><img src="pic/pen.png" ></a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script>
+            //jQuery toggle
+            $(function(){
+                $('.bg1 .btn1').click(function(){
+                    $(this).parents('.container7').toggleClass('is-transitioned');
+                });
+                $('.bg2 .btn1').click(function(){
+                    $(this).parents('.container7').toggleClass('is-transitioned');
+                });
+            })
+            //js toggle
+            const heart1 = document.getElementById("heart1");
+            const heart2 = document.getElementById("heart2");
+            heart1.addEventListener("click",like);
+            function like(){
+                heart2.classList.toggle("heart2-click");
+            }
+        </script>
+</body>
+</html>

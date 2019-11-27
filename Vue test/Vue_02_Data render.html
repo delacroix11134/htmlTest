@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>02.數據渲染</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>    <!--引入vue庫-->
+    <style>
+        .show{
+            width: 100px;
+            height: 60px;
+            background: red;
+        }
+        .else{
+            width: 100px;
+            height: 60px;
+            background: blue;
+        }
+    
+    </style>
+</head>
+<body>
+    <!-- 創建一個標籤 -->
+    <div id="app">
+        <!-- 1.數據渲染 v-text, v-html, {{}} -->
+            <!-- v-text標籤更新元素的textContent(文字屬性) -->
+            <!-- v-html標籤更新元素的innerHTML(可以加上html tag等等) -->
+            <p v-text="message"></p>
+            <p v-html="message"></p>
+
+            <p v-text="messageWithHtmlTag"></p>
+            <p v-html="messageWithHtmlTag"></p>
+            <!-- v-text可以簡寫成{{}} -->
+            {{message}}
+
+
+        <!-- 2.控制模塊顯示隱藏 v-if, v-show -->
+            <!--條件渲染，當v-if為false 則顯示v-else的內容-->
+            <p class="show" v-if="isShow"></p>
+            <p class="else" v-else></p>         
+            <!--用法和v-if相同 但是沒有else的情況 而且v-show會渲染出來 只是顯示被隱藏-->
+            <p class="show" v-show="isShow"></p>
+
+
+        <!-- 3.列表渲染 v-for-->
+        <!-- 可用在當不知道需要產生的列表長度時 -->
+        <!-- 類似for in的寫法 有以下幾種狀況: -->
+            <!-- 陣列 item是陣列中的元素 index是索引值(optional) -->
+            <ul>
+                <li v-for="(item,index) in array">{{index}}. {{item}}</li>
+            </ul>
+
+            <!-- 物件 item是obj中的元素 key是鍵值 index是索引值 -->
+            <ul>
+                <li v-for="(item,key,index) in obj">{{index}}. {{key}} {{item}} </li>
+            </ul>
+    </div>
+</body>
+    <script>
+        var app = new Vue({     //創建vue對象
+            el: "#app",     // el: 掛載點  
+            data: {         // data: 數據
+                message: "Hello world",
+                messageWithHtmlTag: "<h2>指令學習</h2>",
+                isShow: false,
+                array: ["html","css","js"],
+                obj: {
+                    victor: 31,
+                    ikea: 25,
+                    pug: 12
+                }
+            },
+        })
+    </script>
+</html>

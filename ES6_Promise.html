@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Promise</title>
+    <style>
+    </style>
+</head>
+<body>
+    
+</body>
+<script>
+    window.onload = function(){
+        // **簡單的promise實例
+        // asyncFn執行後會返回一個promise實例對象
+        // 在這裡promise會停留一秒後成功/失敗 返回字串(只能擇一)
+        function asyncFn(){
+            return new Promise(function(resolve,reject){
+                setTimeout(function(){
+                    resolve('solved!');
+                    //reject('WOO')
+                },1000)
+            })
+        }
+        // 調用asyncFn之後用.then()實例方法設定成功時所需調用的callback函數
+        asyncFn().then(function(value){
+            console.log(value);
+            // 調用asyncFn之後用.catch()實例方法設定失敗時所需調用的callback函數
+        }).catch(function(error){
+            console.log(error)
+        })
+
+        // .then也可以用來進行錯誤處理 他可以帶入兩個參數 分別為.then(onFulfilled,onRejected)
+        // .catch可以看做是Promise.then(undefined,onRejected)
+        asyncFn().then(function(){
+            return Promise.reject(new Error('use .then catch error'))
+        }).then(function(){/*do nothing*/},function(err){console.log(err)}) // Error: use .then catch error
+        // 而且.then的onRejected並不能捕獲自身第一個參數所產生的錯誤 
+        // 普遍還是使用.catch較有可讀性
+
+
+
+        
+        // **用異步方式取得HXR對象
+        function getURL(url){
+            return new Promise(function(resolve,reject){
+                // 把XHR請求包在promise中
+                var req = new XMLHttpRequest();
+                // .open()規定請求的類型,URL與是否為異步處理
+                req.open('GET',url,true);
+                // 當請求完成後的處理
+                req.onload = function(){
+                    // 如果status為200(請求已完成)
+                    if(req.status === 200){
+                        // 則promise resolve
+                        resolve(req.responseText)
+                    } else {
+                        // 拋出error
+                        reject(new Error(req.responseText))
+                    }
+                }
+                req.send();
+            })
+        }
+
+        // var URL = "http://httpbin.org/status/500";
+        // getURL(URL).then( // 當請求完成
+        //     function(value){
+        //         console.log(value);
+        //     }
+        // ).catch(function(error){ // 當發生錯誤
+        //     console.log(error);  //在這裡會發生錯誤 因為返回值是500
+        // })
+
+
+
+        // **使用.resolve(), reject()靜態方法
+        Promise.resolve('Static Done!').then(
+            function(value){
+                console.log(value); // Static Done!
+            }
+        )
+        // 使用.resolve(), reject()在編寫測試代碼時非常有用
+
+
+
+        // **使用reject而非throw
+        Promise.resolve().then(
+            function(){
+                //直接返回reject靜態方法的Promise物件
+                return Promise.reject('WOO')
+            }
+        ).catch(function(err){
+            console.log(err)
+        })
+
+
+        // **.then的鍊式調用
+        let promiseCalc = function(value){
+            return new Promise(function(resolve,reject){
+                resolve(value);
+            })
+        } 
+        promiseCalc(1).then(function addOne(value){
+            //.then的返回值仍是一個promise對象 因此可以鏈式調用
+            return value + 1;
+        }).then(function mutiply(value){
+            return value*2;
+        }).then(function print(value){
+            console.log(value);  // 4
+        })
+
+
+
+        // **Promise.all()
+        // Promise.all接收一個陣列做為參數 當陣列中所有promise對象都為fulfilled狀態時才調用.then
+        // 回傳值也是一個陣列 順序同接收的參數
+
+        var promiseTimer = function(time){
+            return new Promise(function(resolve,reject){
+                setTimeout(function(){resolve('resolve in '+time+'s')},time)
+            })
+        }
+        promiseTimer(3000).then(function(i){
+            console.log(i); // 三秒之後solved!
+        })
+        
+        // 使用Promise.all靜態方法
+        Promise.all([promiseTimer(1000),promiseTimer(2000),promiseTimer(3000)]).then(
+            function(value){
+                console.log(value); // "三秒"後回傳 ["resolve!", "resolve!", "resolve!"]
+            } //表示在.all中的所有promise都是同時異步調用 並等到所有都完成才調用.then 
+        )
+
+
+
+        // **Promise.race()
+        // 和.all()類似 .race()只要有一個Promise物件進入fulfulled狀態即調用.then
+
+        var promiseDelay = function(time){
+            return new Promise((resolve,reject)=>{
+                setTimeout(()=>{
+                    resolve('delay '+time+'s');
+                    console.log('promiseDelay '+time+'s is done');
+                    },time);
+            })
+        }
+        
+        Promise.race([promiseDelay(1000),promiseDelay(2000),promiseDelay(3000)]).then(
+            (value)=>{console.log(value)}  // 一秒後回傳 delay 1000s
+        ) 
+        // 並且三個'promiseDelay is done'都會隨著時間出現   
+        // 代表在第一個promise fulfilled之後 並不會取消其他的promise執行
+
+
+
+
+
+    }
+</script>
+</html>

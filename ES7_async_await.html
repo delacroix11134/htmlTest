@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Async & await</title>
+</head>
+<body>
+    
+</body>
+<script>
+    //來看看async function在幹什麼
+    async function testAsync(){
+        return 'Hello!'
+    }
+    console.log(testAsync()) // Promise {<resolved>: "Hello!"}
+    // async function的返回值與一般的函數不同 是一個Promise對象
+
+    // 所以以上等同於這樣的寫法
+    function testAsyncIsLike(){
+        return new Promise(function(resolve,reject){
+            resolve('Hello!')
+        })
+    }
+    console.log(testAsyncIsLike()) // // Promise {<resolved>: "Hello!"}
+
+
+
+    // 如果要得到函數返回值 可以使用.then去接收
+    testAsync().then(function(value){
+        console.log(value); // Hello!
+        })
+
+
+    
+    // 那await運算符是什麼呢?
+    // await只能存在於async函數中
+    // 他的功能在於等待一個返回值 可以是同步或者是異步
+    // await運算符用於組成一個表達式 而他的運算結果取決於他等待的東西(Promise對象/其他任意值)
+    // 當他等到的值是Promise對象時 會阻塞後面的代碼 等待promise執行完成
+    // 得到resolve的值 作為表達式的運算結果
+    // 常見的使用方式： const v1 = await AsyncFn();
+
+    function delay(time){ // 模擬一個需要長時間執行完成的異步函數
+        return new Promise(resolve=>{setTimeout(()=>resolve('time out!'),time)})
+    }
+
+    function doSometingSync(){ //一個同步的函數
+        return 'Someting sync done!'
+    }
+
+    async function showAwait(){
+        const v1 = await delay(2000);
+        const v2 = await doSometingSync(); // await也可以用於同步函數 所以這個函數是可以執行的
+        console.log(v1 , v2)
+    }
+    showAwait(); // time out! Someting sync done!
+
+
+
+    // 那await等到了異步回傳 跟使用promise有什麼不同?
+
+    function takeLongTime(time){ // 模擬一個需要長時間執行完成的異步函數
+        return new Promise(resolve=>{setTimeout(()=>{
+            resolve(time + 200); // 每次的執行時間都再加上200ms
+            console.log('solved with '+time+'ms');
+        },time)})
+    }
+    
+    // **使用promise處理
+    const solveWithPromise = function(){
+        console.time('solveWithPromise'); // 取得總執行時間
+        takeLongTime(3000) // solved with 3000ms
+        .then(function(time){return takeLongTime(time)}) // solved with 3200ms
+        .then(function(time){return takeLongTime(time)}) // solved with 3400ms
+        .then(function(){
+            console.timeEnd('solveWithPromise'); // solveWithPromise: 9606.383ms
+        })
+    }
+    solveWithPromise();
+    // 總執行時間是3000 + 3200 + 3400 = 9600(ms) 和console.time取得的時間一致
+
+
+    // **使用async/await處理
+    solveWithAsync = async function(){
+        console.time('solveWithAsync'); // 取得總執行時間
+        const time1 = 3000;
+        const time2 = await takeLongTime(time1); // solved with 3000ms
+        const time3 = await takeLongTime(time2); // solved with 3200ms
+        const result = await takeLongTime(time3); // solved with 3400ms
+        console.timeEnd('solveWithAsync'); // solveWithPromise: 9607.102ms
+    }
+    solveWithAsync();
+    // 總執行時間是3000 + 3200 + 3400 = 9600(ms) 和console.time取得的時間一致
+
+    // 從以上寫法可以看出await用於處理參數清楚許多 幾乎跟同步代碼相同
+    // 尤其是有多個then鍊需要處理時 因此await可以看作用於優化.then()寫法的語法糖
+
+</script>
+</html>

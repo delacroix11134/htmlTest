@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue組件</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="vue">
+        <!-- *掛載vue組件在vue實體中 -->
+        <test></test>
+
+        <test2></test2>
+    </div>
+</body>
+<script>
+    // 1. 註冊組件
+    // 註冊組件就是利用Vue.component()方法 傳入兩個參數: 1.組件名稱 2.組件內容
+    // 以下就是一個最簡單的vue組件 可以在DOM元素中使用他*
+    Vue.component('test',{
+        template: `<div>這是一個自訂義組件</div>`
+    })
+
+
+    // 2. 模板的要求
+    // 2-1. 模板的組件只能有一個根元素
+    // 2-2. 組件中的data必須是個函數(為了避免多個組件間共用data中的資料)
+    Vue.component('test2',{
+        template: `
+                <div>
+                    <div>{{message}}</div>
+                    <ul>   
+                        <li v-for="element in elements">{{element}}</li>
+                    </ul>
+                </div>`,
+        data(){
+            return {
+                message: 'I like....',
+                elements: ['dog','cat','pug']
+            }
+        }
+    })
+
+
+    // 3. props屬性
+    // Vue組件可以使用props屬性來聲明一個自己的屬性 然後父組件可以往裡面傳遞參數
+
+    
+
+
+    // 實例化
+    let vue = new Vue({
+        el: '#vue',
+    })
+
+</script>
+</html>

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <style>
+        *{
+            line-height: 1.5;
+        }
+        body{
+            margin: 0 0 100px 10px;
+        }
+        .bold{
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .out{
+            width: 300px;
+            height: 200px;
+            background-color: rgb(46, 46, 46)
+        }
+        .mid{
+            width: 200px;
+            height: 100px;
+            background-color: rgb(182, 56, 52)
+        }
+        .in{
+            width: 100px;
+            height: 50px;
+            background-color: rgb(253, 194, 31);
+            border: none;
+            outline: none;
+        }
+        .out:active{
+            background-color: rgb(39, 41, 179)
+        }
+        .mid:active{
+            background-color: rgb(182, 52, 176)
+        }
+        .in:active{
+            background-color: rgb(31, 253, 87);
+        }
+        #keySlot ul{
+            margin: 10px 0;
+            padding: 0;
+        }
+        #keySlot li{
+            width: 300px;
+            height: 40px;
+            padding: 0 0 0 10px;
+            list-style: none;
+            line-height: 40px;
+        }
+        #keySlot li:nth-child(2n+1){
+            background-color: rgb(223, 223, 223);
+        }
+        #keySlot li:nth-child(2n){
+            background-color: rgb(245, 245, 245);
+        }
+
+    </style>
+</head>
+<body>
+    <div id="vue">
+        <!-- 1. $event 指有時需要獲取事件的觸發事件物件 可以使用$event特殊關鍵字來取得 -->
+        <!-- 1-2. 在事件中帶入 $event引數 -->
+        <div class="bold">用$event取得事件物件</div>
+        <button @click="getEvent($event)">取得事件物件</button>
+        <br><br>
+
+
+        <!-- 2-1. .lazy修飾符 -->
+        <div class="bold">.lazy修飾符</div>
+        <div>{{text}}</div>
+        <input type="text" name="" id="" v-model="text">
+
+        <div>{{textLazy}}</div>
+        
+        <!-- 2-2. 原本的v-model是雙向綁定 加上.lazy會變成用change監聽 當觸發事件才做更新 -->
+        <input type="text" name="" id="" v-model.lazy="textLazy">
+        <br><br>
+
+
+        <!-- 3. .number修飾符可以把輸入的資料強制型轉成number型別 -->
+        <div class="bold">.number將輸入的數字轉成number型別</div>
+        <div>輸入: {{str}}</div>
+        <div>資料類型: {{strType}}</div>
+        <input type="text" v-model="str" placeholder="沒有用.number">
+
+        <div>輸入: {{number}}</div>
+        <div>資料類型: {{numberType}}</div>
+        <input v-model.number="number" placeholder="加上.number">
+        <br><br>
+
+
+        <!-- 4. 加上.trim修飾符 在離開輸入框會自動去頭尾的空白 常用做驗證帳號密碼的輸入等 -->
+        <div class="bold">.trim可以把輸入資料去掉頭尾的空白</div>
+        <div>{{textTrim}}</div>
+        <input type="text"v-model.trim="textTrim">
+        <br><br>
+
+
+        <!-- 5. .stop用來防止事件冒泡 -->
+        <div class="bold">.stop用來防止事件冒泡</div>
+        <div>未使用.stop 點擊按鈕會連外部的父層一起被觸發(事件冒泡)</div>
+        <div class="out" @click="outClick">
+            <div class="mid" @click="midClick">
+                <button class="in" @click="inClick">按鈕</button>
+            </div>
+        </div>
+        <br>
+        <div>使用.stop(在console中不會印出父層的onClick函數功能)</div>
+        <div class="out" @click="outClick">
+            <div class="mid" @click.stop="midClick">
+                <button class="in" @click.stop="inClick">按鈕</button>
+            </div>
+        </div>
+        <br><br>
+
+
+        <!-- 6. .prevent讓DOM失去它原本的功能 只執行自行設定的事件 -->
+        <!-- 例如: 在a標籤下事件時 在執行完事件就會跳轉網址 使用.prevent可以避免他跳轉網址 -->
+        <div class="bold">.prevent取消DOM元素原本的功能</div>
+        <div>一般的link標籤 按下後會跳轉網址</div>
+        <a id="link" href="#" @click="noPrevent">這是一個連結</a>
+        <div>加上.prevent修飾詞 不會跳轉網址</div>
+        <a id="linkPrevent" href="#" @click.prevent="prevent">這是一個連結</a>
+        <br><br>
+
+
+        <!-- 7. .once修飾詞 -->
+        <div class="bold">加上.once修飾詞的事件只會觸發一次 可用在節省效能</div>
+        <button @click.once="once">只會執行一次log</button>
+        <br><br>
+
+
+
+        <!-- 8. 按鍵修飾符 用來對應鍵盤上的按鍵觸發事件(常用在@keyup) -->
+        <div class="bold">按鍵修飾符 用來對應鍵盤上的按鍵觸發事件</div>
+        <div>輸入文字後 綁定按下Enter鍵會在底下生成list</div>
+        <input type="text" @keyup.enter="key" v-model="keyText">
+        <div id="keySlot">
+            <ul>
+                <li v-for="item in keyArr">{{item}}</li>
+            </ul>
+        </div>
+
+
+        <br><br>
+    </div>
+</body>
+<script>
+    let myData = {
+        text:'一般的v-model',
+        textLazy: '加上.lazy修飾符',
+
+        str:'',
+        number: '',
+        strType:'',
+        numberType:'',
+
+        textTrim: '請輸入文字',
+
+        clickNoPrevent: false,
+        click: false,
+        
+        keyText:'',
+        keyArr:[],
+    }
+    let myMethods = {
+        getEvent: function(event){
+            // 在這裡只把事件物件印出來
+            console.log(event)
+        },
+        outClick: function(){
+            console.log('OUT')
+        },
+        midClick: function(){
+            console.log('MID')
+        },
+        inClick: function(){
+            console.log('IN')
+        },
+        noPrevent: function(){
+            let link = document.getElementById('link')
+            !this.clickNoPrevent ? (link.innerHTML = '跳轉網址了',this.clickNoPrevent = !this.clickNoPrevent) : (link.innerHTML = '這是一個連結',this.clickNoPrevent = !this.clickNoPrevent)
+            console.log('LINK NO PREVENT')
+        },
+        prevent: function(){
+            let link = document.getElementById('linkPrevent')
+            !this.click ? (link.innerHTML = '沒有跳轉網址',this.click = !this.click) : (link.innerHTML = '這是一個連結',this.click = !this.click)
+            console.log('LINK')
+        },
+        once:   function(){
+            console.log('這個事件只會觸發一次')
+        },
+        key: function(){
+            this.keyArr.push(this.keyText)
+        }
+        
+    }
+    let myWatch = {
+        // watch裡的函數名都要有對應的變數在data裡面 不然會undefined
+        str: function(val){
+            this.str ? this.strType = typeof val : this.strType = ''
+        },
+        number: function(val){
+            this.number ? this.numberType = typeof val : this.numberType = ''
+        }
+    }
+    let vue = new Vue({
+        el: '#vue',
+        data: myData,
+        methods: myMethods,
+        watch: myWatch,
+    })
+</script>
+</html>

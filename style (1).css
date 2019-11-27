@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'MotionPicture';
+  src: url(MotionPicture.ttf) format('opentype');
+}
+
+body{
+  background-color: yellow;
+}
+
+.heading{
+  border: 1px solid black;
+  margin: 0 auto;
+  padding-top: 50px;
+  text-align: center;
+  height: 200px;
+  width: 100%;
+  
+}
+
+h1 {
+  font-family: MotionPicture ;
+  font-size: 50px;
+  letter-spacing: 0.2em;
+}
+
+nav {
+  border: 1px solid black;
+  width: 15%;
+  vertical-align: top;
+  background-color: gray;
+}
+
+li {
+  height: 50px;
+  border: 1px solid black;
+  text-align: center;
+  padding-top: 20px; 
+
+}

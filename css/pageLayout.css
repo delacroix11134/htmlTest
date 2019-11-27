@@ -1,0 +1,35 @@
+body {
+	background: #f1f1f1;
+}
+
+.site-header {
+	background-color: #30A9DE;
+}
+
+.site-header-inner {
+	height: 100px;
+	width: 1024px;
+	margin: 0 auto;
+
+}
+
+.site-main {
+	background-color: #f1f1f1;
+}
+
+.site-main-inner {
+	width: 1024px;
+	height: 1000px;
+	margin: 0 auto;
+
+}
+
+.site-footer {
+	background-color: #ddd;
+}
+
+.site-footer-inner {
+	width: 1024px;
+	height: 100px;
+	margin: 0 auto;
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ES6 Class</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 傳統要生成實例對象的寫法是利用構造函數
+    let Person = function(){
+        this.name = 'John'
+        this.firstName = 'Doe'
+        this.sayName = function(){
+            console.log(this.name + ' ' + this.firstName)
+        }
+    }
+
+    // *傳統寫法如果要把方法定義在prototype上要另外寫
+    Person.prototype.sayHi = function(){
+        console.log('Hi!')
+    }
+
+
+    // ES6提供更接近OOP語言的寫法 通過class關鍵字定義'類'
+    // 基本上class只是語法糖 只是寫法可以讓對象的原型更清楚更好閱讀
+    class PersonWithClass{
+        // 這裡的constructor其實就是構造函數
+        constructor(name,firstName){
+            this.name = 'John'
+            this.firstName = 'Doe'
+            // *如果把方法寫在constructor裡才會是"實例方法"
+            this.sayHi = function(){
+                console.log('Hi!')
+            }
+        }
+
+        // 注意：項目之間不須加逗號，加了會報錯
+        // 注意：方法不須寫function() 直接把函數定義放進去即可
+        // 另外，class的方法都是定義在prototype上，這點和傳統的構造函數不同*
+        sayName(){
+            console.log(this.name + ' ' + this.firstName)
+        }
+    }
+
+
+    // class裡的特權方法和私有變數
+    // 私有變數指存在於class的prototype中 實例化的instance沒辦法直接存取的變數
+    // 特權方法(Privileged Method)指可以令instance存取到私有變數的方法
+    class Person2{
+        constructor(){
+            this.name = 'John Doe'
+
+            // 註: 定義在constructor的方法才是實例方法
+            this.getName = function(){
+                console.log('His name is ' + this.name)
+            }
+        }
+        // 註: 不是定義在constructor中的方法 都是定義在calss的prototype上
+        getState(){
+            // 這裡的state就是私有變數 實例沒辦法直接存取
+            const state = 'Taiwan'
+            console.log(this.name + ' is from ' + state)
+        }
+
+    }
+    // 實例化
+    let man = new Person2()
+    man.getName()             // His name is John Doe
+    console.log(man.state)    // undefined (實例無法存取私有變數)
+    man.getState()            // John Doe is from Taiwan (透過特權方法存取私有變數)
+
+
+
+
+    // 在class的內部可以使用get和set關鍵字
+    // 用來對某個屬性設置存值函數和取值函數 攔截該屬性的取值行為
+    class Rody{
+        constructor(){
+            //this.name = 'Rody'
+        }
+        get name(){
+            return 'getter'
+        } 
+        set name(val){
+            console.log( 'set name: ' + val )
+        }
+    }
+
+    // 實例化
+    let red = new Rody()
+
+    // 對name取值
+    console.log(red.name)   // 會返回'getter'
+
+    // 對name賦值
+    red.name = 'Red rody'   // 返回 set name: Red rody
+
+
+
+    // 靜態方法
+    class Methods{
+        constructor(){
+            this.instantMethod = function(){
+                console.log('This is an instant method in every instance')
+            }
+        }
+        instantMethodInPrototype(){
+            console.log('This is an instant method in prototype')
+        }
+
+        // 使用static關鍵字定義靜態方法
+        static staticMethod(){
+            console.log('This is a static method')
+        }
+    }
+
+    // 實例化
+    let instance = new Methods
+    
+    // 調用實例方法1
+    instance.instantMethod()    // This is an instant method in every instance
+
+    // 調用實例方法(prototype)
+    instance.instantMethodInPrototype()    // This is an instant method in prototype
+
+    // 調用靜態方法
+    Methods.staticMethod()    // This is a static method
+</script>
+</html>

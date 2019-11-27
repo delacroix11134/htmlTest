@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Call & apply & bind</title>
+</head>
+<body>
+    
+</body>
+<script>
+// call、apply、bind 三者都是 JavaScript Function 的內建函式
+// 主要功能有兩個: 1. 改變函數指向的this / 2. 呼叫函數 等價於()
+// function.call(this,arg1,arg2,arg3....) 第一個參數會被指定為目標函數的this 第二個以後則為函數所帶入的值
+let obj1 = {
+    name : 'John',
+    getAge : function(age){
+        console.log(this.name + ' is ' + age + ' years old.')
+    }
+}
+let obj2 = {
+    name : 'Jane'
+}
+
+obj1.getAge(30)     // John is 30 years old.
+
+// .call()
+// 因為obj2沒有getAge方法 因此可以用call借用obj1的函數 但是把this指向obj2
+obj1.getAge.call(obj2,20)        // Jane is 20 years old. (這裡印出的是在obj2裡的name和引數20)
+
+
+// .apply()
+// apply和call不同的是 第二個參數以後需用陣列傳入
+obj1.getAge.apply(obj2,[20])      // Jane is 20 years old. 
+
+
+// .bind()
+// bind與call,apply不同的是 他會回傳一個新的函數
+let getJanesAge = obj1.getAge.bind(obj2,20)
+getJanesAge()       // Jane is 20 years old. 
+
+// 也可以先不寫入引數
+let getJanesAgeLater = obj1.getAge.bind(obj2)
+getJanesAgeLater(22)        // Jane is 22 years old.
+
+
+
+// 另一個例子
+let getName = function(){
+    console.log('My name is ' + this.name + '.')
+}
+
+getName()       // undefined (因為這個函數的this會指向最外層的執行域 但是最外層並沒有name這個變數 因此是undefined)
+getName.call(obj1)      // My name is John.
+
+
+
+// 再一個例子
+let obj3 = {
+    name: 'Victor',
+    greet: function(){
+        return function(){
+            console.log("Hello,I'm " + this.name)
+        }
+    },
+    greetOld: function(){
+        // 用一個變數儲存this
+        let _this = this
+        return function(){
+            console.log("Hello,I'm " + _this.name)
+        }
+    },
+    greetTrue: function(){
+        return function(){
+            console.log("Hello,I'm " + this.name)
+        }.bind(this)    // 在這裡的this指obj3 雖然上面的方法也可以 但是用bind可以更優雅的解決問題
+    }
+}
+obj3.greet()()      // undefined (包在函數中的函數 this指向最外層執行域)
+obj3.greetOld()()   // Hello,I'm Victor
+obj3.greetTrue()()  // Hello,I'm Victor
+
+
+</script>
+</html>

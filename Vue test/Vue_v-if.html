@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-if,show/else條件渲染實例</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="vIf">
+        <p>{{title}}</p>
+        <!-- 把input的值接在文字後面也是可以的 -->
+        <p>大俠愛吃{{input}}</p>   
+
+        <!-- 2. 下拉式選單的版本 用v-model取得input的值(在這裡是option的value) -->
+        <select v-model="input">
+            <option value="漢堡包">漢堡包</option>
+            <option value="黑貓貓">黑貓貓</option>
+        </select>
+
+        <!-- 3. 輸入框的版本 用v-model取得input的值 -->
+        <input type="text" v-model="input">
+
+        <!-- 4. v-if,v-else-if,v-else可直接把條件寫在屬性裡做判斷 -->
+        <h1 v-if="input == '漢堡包'">純正牛肉吃到飽</h1>
+        <!-- 當
+            input為空 -->
+        <h1 v-else-if="!input"></h1>
+        <h1 v-else>神經牛肉全是毛</h1>
+
+        <!-- 用來debug的 -->
+        <p style="color:#aaa">{{$data}}</p>
+    </div>
+</body>
+<script>
+    var data ={
+        title: '請輸入通關密語:',
+        // 1. 設定好判斷用的變數"input" 一開始是空字串
+        input: '',  
+    }
+    var vIf = new Vue({
+        el: '#vIf',
+        data: data
+    })
+</script>
+</html>

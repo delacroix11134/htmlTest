@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		table {
+			width: 400px;
+			border: 1px solid #888888; 
+			/*border-collapse讓邊線合成為ㄧ條*/
+            border-collapse: collapse;
+		}
+		
+        #table2 {
+			width: 800px;
+			border: 1px solid #888888; 
+			/*border-collapse讓邊線合成為ㄧ條*/
+            border-collapse: collapse;
+		}
+
+		td , th {
+			border-bottom: 1px solid #888888;
+			padding: 10px;
+		}
+		
+		/*tr:nth-child(1) tr中的第一個子項目*/
+		tr:nth-child(1) {
+			color: white;
+            background-color: #7788aa;
+		}
+        /*tr:nth-child(even) tr中偶數項的子項目*/
+        tr:nth-child(even) {
+        	background-color: #e8e8e8;
+        }
+	</style>
+</head>
+<body>
+	<table>
+		<tr>
+			<td>球隊</td>
+			<td>勝</td>
+			<td>敗</td>
+		</tr>
+		<tr>
+			<td>紐約洋基隊</td>
+			<td>10</td>
+			<td>8</td>
+		</tr>
+		<tr>
+			<td>波士頓紅襪隊</td>
+			<td>9</td>
+			<td>9</td>
+		</tr>
+		<tr>
+			<td>多倫多藍鳥隊</td>
+			<td>8</td>
+			<td>9</td>
+		</tr>
+	</table>
+<br>
+	<table id = "table2">
+		<tr align="left">
+			<th>blabla</th>
+			<th>blabla</th>
+			<th>blabla</th>
+		</tr>
+		<tr>
+			<td>blabla</td>
+			<td>blabla</td>
+			<td>blabla</td>
+		</tr>
+	</table>
+</body>
+<script src="js_test/Promise_setTimeOut.js"></script>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-model的雙向綁定</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id='vModel'>
+        <!-- 1. 利用v-model綁定輸入框的參數 即時更新下面div顯示的內容 -->
+        <input type="text" v-model='message'>
+        <div>{{message}}</div>
+        <br><br>
+        
+        <!-- 5. 加上.lazy之後 會變成只有在onChange之後才會重新綁定資料 -->
+        <input type="text"v-model.lazy="lazy">
+        <div>{{lazy}}</div>
+        <br><br>
+
+        <!-- 6. select的用法 和 v-for一起混用 在這裡 v-model會自動抓取 :value 的值 -->
+        <select name="gender" id="gender" v-model="gender">
+            <option v-for="list in lists":value="list">{{list}}</option>
+        </select>
+        <div>所以你是一個{{gender}}</div>
+        <br><br>
+        
+
+
+        <!-- 4. 這裡是debug的方法 $data是下面var data的內容 -->
+        <div>{{ $data | json }}</div>
+    </div>
+</body>
+<script>
+    // 2. 把data提出來 當未來參數變得非常複雜時 為了方便維護 建議這樣寫
+    var data = {    
+        // 3. 在這裡的message設定的是初始值 當上面的input內容改變時 這裡也會及時被更新
+        message: '請輸入文字',
+        lazy: '',
+        lists:['男生','女生','甲甲'],
+        gender:'',
+        
+    }
+
+    var vModel = new Vue({
+        el: '#vModel',
+        data: data
+    })
+</script>
+</html>
